@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { projects } from '../data/projects';
 import { SEO } from '../components/SEO';
@@ -23,6 +23,7 @@ export const ProjectDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [videoError, setVideoError] = useState(false);
 
   const currentIndex = projects.findIndex((p) => p.id === id);
   const project = projects[currentIndex];
@@ -30,7 +31,27 @@ export const ProjectDetail: React.FC = () => {
   // Scroll to top when project ID changes
   useEffect(() => {
     window.scrollTo(0, 0);
+    setVideoError(false);
   }, [id]);
+
+  // Robust video initialization for mobile & desktop
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || !project?.video || videoError) return;
+
+    video.defaultMuted = true;
+    video.muted = true;
+    video.setAttribute('muted', '');
+    video.setAttribute('playsinline', '');
+    video.setAttribute('webkit-playsinline', '');
+
+    const playPromise = video.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {
+        // Autoplay prevented by browser policy (e.g. low power mode)
+      });
+    }
+  }, [project?.video, videoError]);
 
   if (!project) {
     return (
@@ -166,18 +187,21 @@ export const ProjectDetail: React.FC = () => {
 
           {/* Video or Visual Canvas */}
           <div className="relative aspect-video w-full bg-[#02040A] overflow-hidden flex items-center justify-center">
-            {project.video ? (
+            {project.video && !videoError ? (
               <video
                 ref={videoRef}
-                src={project.video}
                 autoPlay
                 muted
                 loop
                 controls
                 playsInline
                 preload="metadata"
+                onError={() => setVideoError(true)}
                 className="w-full h-full object-cover"
-              />
+              >
+                <source src={project.video} type="video/mp4" />
+                Your browser does not support HTML5 video streaming.
+              </video>
             ) : (
               <div className="p-12 text-center space-y-4 relative">
                 <div

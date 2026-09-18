@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Project } from '../types';
 import { ArrowUpRight, Check, ExternalLink, Globe, Shield, Sparkles } from 'lucide-react';
@@ -11,14 +11,18 @@ interface ProjectCardProps {
 export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onSelect }) => {
   const navigate = useNavigate();
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [videoError, setVideoError] = useState(false);
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!video || !project.video) return;
+    if (!video || !project.video || videoError) return;
 
     video.defaultMuted = true;
     video.muted = true;
     video.loop = true;
+    video.setAttribute('muted', '');
+    video.setAttribute('playsinline', '');
+    video.setAttribute('webkit-playsinline', '');
 
     let isMounted = true;
 
@@ -103,18 +107,20 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onSelect }) =
 
         {/* Video / Visual Showcase Container */}
         <div className="relative h-48 sm:h-52 w-full bg-[#02050B] overflow-hidden border-b border-white/[0.08]">
-          {project.video ? (
+          {project.video && !videoError ? (
             <>
               <video
                 ref={videoRef}
-                src={project.video}
                 autoPlay
                 muted
                 loop
                 playsInline
                 preload="metadata"
+                onError={() => setVideoError(true)}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
+              >
+                <source src={project.video} type="video/mp4" />
+              </video>
               <div className="absolute inset-0 bg-gradient-to-t from-[#070D18] via-transparent to-black/30 pointer-events-none" />
             </>
           ) : (
