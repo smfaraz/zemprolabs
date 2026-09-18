@@ -6,7 +6,7 @@ import { ServicesRiverHero } from '../components/ServicesRiverHero';
 import { ServicesHarborDocks } from '../components/ServicesHarborDocks';
 import { ServicesRiverTransitBlueprint } from '../components/ServicesRiverTransitBlueprint';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Compass, ShieldCheck, Anchor, Navigation, Radio } from 'lucide-react';
+import { ArrowRight, Compass, ShieldCheck, Layers, Radio } from 'lucide-react';
 
 export const Services: React.FC = () => {
   const [activeDiscipline, setActiveDiscipline] = useState<string>('all');
@@ -33,7 +33,7 @@ export const Services: React.FC = () => {
         canonicalPath="/services"
       />
 
-      {/* 1. Coastal Lighthouse River Hero with Navigating Vessel & Sweeping Beam */}
+      {/* 1. Full-Stack Engineering Studio Hero */}
       <ServicesRiverHero
         activeDiscipline={activeDiscipline}
         onSelectDiscipline={handleSelectDiscipline}
@@ -91,7 +91,7 @@ export const Services: React.FC = () => {
           <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#FF6B00] to-transparent opacity-75" />
 
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#10B981]/10 border border-[#10B981]/30 text-[#10B981] text-xs font-mono">
-            <Anchor className="w-3.5 h-3.5" />
+            <ShieldCheck className="w-3.5 h-3.5" />
             <span>DIRECT DEVELOPER ACCESS // ESTIMATE IN 48 HOURS</span>
           </div>
 

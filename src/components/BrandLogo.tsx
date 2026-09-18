@@ -65,7 +65,9 @@ export const BrandLogo: React.FC<BrandLogoProps> = ({
               ZEMPROLABS
             </span>
             <span
-              className={`font-mono uppercase text-[#94A3B8] font-medium tracking-[0.16em] sm:tracking-[0.19em] ${taglineSizes[size]} mt-1 leading-none`}
+              className={`font-mono uppercase text-[#94A3B8] font-medium tracking-[0.16em] sm:tracking-[0.19em] ${taglineSizes[size]} mt-1 leading-none ${
+                variant === 'responsive' ? 'hidden xs:block' : ''
+              }`}
             >
               TECHNOLOGY • COMMERCE • BEYOND
             </span>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Anchor, Compass, CheckCircle2, Shield, ArrowRight, Radio, Waves, Navigation } from 'lucide-react';
+import { CheckCircle2, Shield, ArrowRight, Layers, Workflow } from 'lucide-react';
 
 interface TransitStage {
   num: string;
@@ -81,15 +81,15 @@ export const ServicesRiverTransitBlueprint: React.FC = () => {
 
   return (
     <section className="px-4 sm:px-6 lg:px-8 py-16 sm:py-24 bg-[#03060E] border-t border-white/[0.08] relative overflow-hidden">
-      {/* Subtle River Wave Watermark */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-96 bg-[#06B6D4]/[0.02] blur-3xl pointer-events-none" />
+      {/* Ambient Radial Lighting */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-96 bg-[#FF6B00]/[0.02] blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         
         {/* Section Header */}
         <div className="max-w-3xl mb-12 sm:mb-16">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FF6B00]/10 border border-[#FF6B00]/25 text-[#FF6B00] text-xs font-mono mb-3">
-            <Navigation className="w-3.5 h-3.5" />
+            <Workflow className="w-3.5 h-3.5 text-[#FF6B00]" />
             <span>HOW WE WORK // 4 SIMPLE STEPS</span>
           </div>
 
@@ -102,9 +102,9 @@ export const ServicesRiverTransitBlueprint: React.FC = () => {
           </p>
         </div>
 
-        {/* River Channel Progress Rail with Stepping Waypoints */}
+        {/* Sprint Delivery Progress Rail with Stepping Waypoints */}
         <div className="relative mb-10">
-          {/* River Current Track */}
+          {/* Progress Track */}
           <div className="hidden md:block absolute top-1/2 left-0 right-0 h-1 bg-white/[0.08] -translate-y-1/2 rounded-full overflow-hidden">
             <div
               className="h-full bg-gradient-to-r from-[#FF6B00] via-[#06B6D4] to-[#10B981] transition-all duration-500 ease-out"
@@ -135,7 +135,7 @@ export const ServicesRiverTransitBlueprint: React.FC = () => {
                   {/* Floating Indicator above active waypoint */}
                   {isSelected && (
                     <div className="hidden lg:flex absolute -top-8 left-1/2 -translate-x-1/2 items-center gap-1 text-[10px] font-mono text-[#FF6B00] animate-bounce">
-                      <Navigation className="w-3.5 h-3.5 fill-[#FF6B00]" />
+                      <Workflow className="w-3.5 h-3.5 fill-[#FF6B00]" />
                       <span>ACTIVE PHASE</span>
                     </div>
                   )}
@@ -187,7 +187,7 @@ export const ServicesRiverTransitBlueprint: React.FC = () => {
             {/* Left Col: Station Overview (7 cols) */}
             <div className="lg:col-span-7 space-y-4">
               <div className="flex items-center gap-2 text-xs font-mono font-bold" style={{ color: activeStage.color }}>
-                <Compass className="w-4 h-4" />
+                <Workflow className="w-4 h-4" />
                 <span>STEP {activeStage.num} // HOW WE WORK TOGETHER</span>
               </div>
 

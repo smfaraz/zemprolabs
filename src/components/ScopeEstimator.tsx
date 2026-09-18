@@ -42,7 +42,7 @@ export const ScopeEstimator: React.FC = () => {
   const formatUSD = (val: number) => '$' + val.toLocaleString('en-US');
 
   return (
-    <div className="rounded-2xl bg-[#0B0F17] border border-[rgba(148,163,184,0.18)] p-6 sm:p-10 shadow-2xl space-y-8">
+    <div className="rounded-2xl bg-[#0B0F17] border border-[rgba(148,163,184,0.18)] p-4 sm:p-8 md:p-10 shadow-2xl space-y-8">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-[rgba(148,163,184,0.12)] gap-4">
         <div>
@@ -171,7 +171,7 @@ export const ScopeEstimator: React.FC = () => {
         </div>
 
         {/* Results Column (Spans 5 cols) */}
-        <div className="lg:col-span-5 flex flex-col justify-between rounded-xl bg-[#05070D] border border-[rgba(148,163,184,0.15)] p-6 sm:p-7 space-y-6">
+        <div className="lg:col-span-5 flex flex-col justify-between rounded-xl bg-[#05070D] border border-[rgba(148,163,184,0.15)] p-4 sm:p-6 md:p-7 space-y-6">
           <div className="space-y-5">
             <div className="text-xs font-mono uppercase tracking-wider text-[#94A3B8] pb-3 border-b border-[rgba(148,163,184,0.1)]">
               // STRUCTURED ESTIMATION BREAKDOWN

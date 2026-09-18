@@ -8,19 +8,19 @@ interface ServiceCardProps {
   isSelected?: boolean;
 }
 
-const serviceMeta: Record<string, { tag: string; beaconColor: string; subtitle: string }> = {
-  development: { tag: 'MOST POPULAR', beaconColor: '#FF6B00', subtitle: 'Websites, Online Stores & Mobile Apps' },
-  'seo-growth': { tag: 'HIGH IMPACT', beaconColor: '#38BDF8', subtitle: 'Google Search Ranking & Fast Loading' },
-  enterprise: { tag: 'BUSINESS AUTOMATION', beaconColor: '#10B981', subtitle: 'ServiceNow & Custom Workflows' },
-  marketing: { tag: 'CUSTOMER ACQUISITION', beaconColor: '#F59E0B', subtitle: 'Google & Social Media Ads' },
-  research: { tag: 'DECISION SUPPORT', beaconColor: '#A855F7', subtitle: 'Market Analysis & Technical Feasibility' },
-  recruitment: { tag: 'TALENT SOURCING', beaconColor: '#0EA5E9', subtitle: 'Doctors, Nurses & Senior Developers' },
+const serviceMeta: Record<string, { tag: string; accentColor: string; subtitle: string }> = {
+  development: { tag: 'MOST POPULAR', accentColor: '#FF6B00', subtitle: 'Websites, Online Stores & Mobile Apps' },
+  'seo-growth': { tag: 'HIGH IMPACT', accentColor: '#38BDF8', subtitle: 'Google Search Ranking & Fast Loading' },
+  enterprise: { tag: 'BUSINESS AUTOMATION', accentColor: '#10B981', subtitle: 'ServiceNow & Custom Workflows' },
+  marketing: { tag: 'CUSTOMER ACQUISITION', accentColor: '#F59E0B', subtitle: 'Google & Social Media Ads' },
+  research: { tag: 'DECISION SUPPORT', accentColor: '#A855F7', subtitle: 'Market Analysis & Technical Feasibility' },
+  recruitment: { tag: 'TALENT SOURCING', accentColor: '#0EA5E9', subtitle: 'Doctors, Nurses & Senior Developers' },
 };
 
 export const ServiceCard: React.FC<ServiceCardProps> = ({ service, isSelected = false }) => {
   const meta = serviceMeta[service.id] || {
     tag: 'SERVICE',
-    beaconColor: '#FF6B00',
+    accentColor: '#FF6B00',
     subtitle: 'Digital Capability'
   };
 
@@ -45,14 +45,14 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({ service, isSelected = 
           <div className="flex items-center gap-2">
             <span
               className="w-2 h-2 rounded-full animate-pulse"
-              style={{ backgroundColor: meta.beaconColor }}
+              style={{ backgroundColor: meta.accentColor }}
             />
             <span className="font-bold tracking-wider text-slate-300">
               SERVICE {service.num}
             </span>
           </div>
 
-          <span className="text-[10px] font-mono tracking-wide px-2 py-0.5 rounded bg-white/[0.04] border border-white/[0.08]" style={{ color: meta.beaconColor }}>
+          <span className="text-[10px] font-mono tracking-wide px-2 py-0.5 rounded bg-white/[0.04] border border-white/[0.08]" style={{ color: meta.accentColor }}>
             {meta.tag}
           </span>
         </div>

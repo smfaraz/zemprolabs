@@ -441,7 +441,7 @@ export const ProjectEstimation: React.FC = () => {
               <div className="space-y-2.5 text-xs font-mono">
                 <div className="p-2.5 rounded-lg bg-[#040812] border border-white/5 flex items-center justify-between">
                   <span className="text-slate-400">Platform:</span>
-                  <span className="text-white font-bold truncate max-w-[210px] text-right">
+                  <span className="text-white font-bold truncate max-w-[130px] sm:max-w-[210px] text-right">
                     {selectedTypeObj.name}
                   </span>
                 </div>
@@ -453,7 +453,7 @@ export const ProjectEstimation: React.FC = () => {
 
                 <div className="p-2.5 rounded-lg bg-[#040812] border border-white/5 flex items-center justify-between">
                   <span className="text-slate-400">Status:</span>
-                  <span className="text-white font-bold truncate max-w-[210px] text-right">
+                  <span className="text-white font-bold truncate max-w-[130px] sm:max-w-[210px] text-right">
                     {selectedStageObj.name}
                   </span>
                 </div>

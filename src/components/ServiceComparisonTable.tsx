@@ -35,7 +35,7 @@ export const ServiceComparisonTable: React.FC = () => {
   };
 
   return (
-    <div className="rounded-2xl bg-[#0B0F17] border border-[rgba(148,163,184,0.18)] p-6 sm:p-8 shadow-xl space-y-6">
+    <div className="rounded-2xl bg-[#0B0F17] border border-[rgba(148,163,184,0.18)] p-4 sm:p-6 md:p-8 shadow-xl space-y-6">
       <div className="text-left space-y-2">
         <div className="text-xs font-mono text-[#FF6B00] uppercase tracking-wider">
           // SERVICE COVERAGE MATRIX

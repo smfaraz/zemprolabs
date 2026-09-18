@@ -90,7 +90,7 @@ export const ContactForm: React.FC = () => {
   const whatsappLink = `https://wa.me/917447557577?text=${whatsappMessage}`;
 
   return (
-    <div className="rounded-2xl bg-[#0B0F17] border border-[rgba(148,163,184,0.18)] p-6 sm:p-10 shadow-2xl">
+    <div className="rounded-2xl bg-[#0B0F17] border border-[rgba(148,163,184,0.18)] p-4 sm:p-8 md:p-10 shadow-2xl">
       {/* Production Direct Dispatch Confirmation State */}
       {status === 'dev_notice' && (
         <div className="space-y-6">

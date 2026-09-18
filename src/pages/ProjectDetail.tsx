@@ -13,7 +13,6 @@ import {
   Layers,
   Sparkles,
   Radio,
-  Anchor,
   Lock,
   ChevronLeft,
   ChevronRight
@@ -174,9 +173,9 @@ export const ProjectDetail: React.FC = () => {
               <span className="w-3 h-3 rounded-full bg-emerald-500/60"></span>
             </div>
 
-            <div className="px-4 py-1 rounded-lg bg-white/[0.04] border border-white/[0.08] text-slate-300 text-xs flex items-center gap-2">
-              <Globe className="w-3.5 h-3.5 text-[#FF6B00]" />
-              <span>https://{project.domain.split(' ')[0]}</span>
+            <div className="px-3 sm:px-4 py-1 rounded-lg bg-white/[0.04] border border-white/[0.08] text-slate-300 text-xs flex items-center gap-2">
+              <Globe className="w-3.5 h-3.5 text-[#FF6B00] shrink-0" />
+              <span className="truncate max-w-[130px] xs:max-w-[200px] sm:max-w-none">https://{project.domain.split(' ')[0]}</span>
             </div>
 
             <div className="text-[11px] text-slate-400 flex items-center gap-1.5">
@@ -429,13 +428,13 @@ export const ProjectDetail: React.FC = () => {
         </div>
       </section>
 
-      {/* 5. Safe Harbor Closing CTA (Docked pb-0 into Footer) */}
+      {/* 5. Production Closing CTA */}
       <section className="px-4 sm:px-6 lg:px-8 py-16 sm:py-20 max-w-7xl mx-auto text-center relative overflow-hidden">
         <div className="p-8 sm:p-14 rounded-3xl bg-[#060C18] border border-white/[0.12] max-w-4xl mx-auto space-y-6 shadow-2xl relative">
           <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#FF6B00] to-transparent opacity-75" />
 
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#10B981]/10 border border-[#10B981]/30 text-[#10B981] text-xs font-mono">
-            <Anchor className="w-3.5 h-3.5" />
+            <ShieldCheck className="w-3.5 h-3.5" />
             <span>DIRECT DEVELOPER ACCESS // ESTIMATE IN 48 HOURS</span>
           </div>
 

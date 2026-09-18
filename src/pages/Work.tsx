@@ -4,7 +4,7 @@ import { projects } from '../data/projects';
 import { ProjectCard } from '../components/ProjectCard';
 import { ProjectModal } from '../components/ProjectModal';
 import { Project } from '../types';
-import { Sparkles, Radio, CheckCircle2, Shield, ArrowRight, Layers, Anchor, Code2, Users2, Lock } from 'lucide-react';
+import { Sparkles, Radio, CheckCircle2, Shield, ArrowRight, Layers, Code2, Users2, Lock } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { WorkHeroIllustration } from '../components/WorkHeroIllustration';
 
@@ -201,14 +201,14 @@ export const Work: React.FC = () => {
         )}
       </section>
 
-      {/* 4. Safe Harbor Closing CTA Banner (Docked with pb-0 into Footer) */}
+      {/* 4. Production Closing CTA Banner */}
       <section className="px-4 sm:px-6 lg:px-8 py-16 sm:py-20 max-w-7xl mx-auto text-center relative overflow-hidden">
         <div className="p-8 sm:p-14 rounded-3xl bg-[#060C18] border border-white/[0.12] max-w-4xl mx-auto space-y-6 shadow-2xl relative">
           {/* Top Accent Gradient */}
           <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#FF6B00] to-transparent opacity-75" />
 
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#10B981]/10 border border-[#10B981]/30 text-[#10B981] text-xs font-mono">
-            <Anchor className="w-3.5 h-3.5" />
+            <Shield className="w-3.5 h-3.5" />
             <span>DIRECT DEVELOPER ACCESS // ESTIMATE IN 48 HOURS</span>
           </div>
 

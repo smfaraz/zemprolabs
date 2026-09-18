@@ -68,7 +68,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onSelect }) =
           </div>
 
           {/* Domain Address Bar Pill */}
-          <div className="flex items-center gap-1.5 px-3 py-1 rounded-md bg-white/[0.04] border border-white/[0.08] text-slate-300 text-[11px] truncate max-w-[200px]">
+          <div className="flex items-center gap-1.5 px-3 py-1 rounded-md bg-white/[0.04] border border-white/[0.08] text-slate-300 text-[11px] truncate max-w-[130px] xs:max-w-[160px] sm:max-w-[200px]">
             <Globe className="w-3 h-3 text-[#FF6B00] shrink-0" />
             <span className="truncate">{project.domain}</span>
           </div>

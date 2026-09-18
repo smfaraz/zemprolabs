@@ -8,14 +8,6 @@ interface Project3DScrollTrackerProps {
   onSelectProject: (project: Project) => void;
 }
 
-// Beacon optical wavelengths & telemetry labels
-const beaconMeta = [
-  { freq: '590nm', wave: 'AMBER-SOLAR', label: 'BEACON 01 // BAEMEDS', angle: -8 },
-  { freq: '470nm', wave: 'COBALT-DEEP', label: 'BEACON 02 // ERUS', angle: -2 },
-  { freq: '510nm', wave: 'EMERALD-FLUX', label: 'BEACON 03 // AUVIA', angle: 4 },
-  { freq: '490nm', wave: 'CYAN-AEGIS', label: 'BEACON 04 // MEDUSCORE', angle: 10 }
-];
-
 export const Project3DScrollTracker: React.FC<Project3DScrollTrackerProps> = ({
   projects,
   onSelectProject
@@ -23,9 +15,7 @@ export const Project3DScrollTracker: React.FC<Project3DScrollTrackerProps> = ({
   const [activeIndex, setActiveIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
-  const [pulseKey, setPulseKey] = useState(0);
-  const [isPulsing, setIsPulsing] = useState(false);
-  const [cardTilt, setCardTilt] = useState({ x: 4, y: -3 });
+  const [cardTilt, setCardTilt] = useState({ x: 3, y: -2 });
   
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const progressTimerRef = useRef<number | null>(null);
@@ -35,15 +25,6 @@ export const Project3DScrollTracker: React.FC<Project3DScrollTrackerProps> = ({
 
   const total = projects.length;
   const activeProject = projects[activeIndex] || projects[0];
-  const activeMeta = beaconMeta[activeIndex] || beaconMeta[0];
-
-  // Trigger optical beacon flash shockwave
-  const triggerBeaconFlash = useCallback(() => {
-    setPulseKey((k) => k + 1);
-    setIsPulsing(true);
-    const t = setTimeout(() => setIsPulsing(false), 800);
-    return () => clearTimeout(t);
-  }, []);
 
   // Intersection observer to pause timer when off-screen
   useEffect(() => {
@@ -79,7 +60,6 @@ export const Project3DScrollTracker: React.FC<Project3DScrollTrackerProps> = ({
       if (pct >= 100) {
         setActiveIndex((prev) => (prev + 1) % total);
         setProgressPercent(0);
-        triggerBeaconFlash();
         start = performance.now();
       }
 
@@ -91,7 +71,7 @@ export const Project3DScrollTracker: React.FC<Project3DScrollTrackerProps> = ({
     return () => {
       if (progressTimerRef.current) cancelAnimationFrame(progressTimerRef.current);
     };
-  }, [activeIndex, isInView, isHovered, isPaused, total, triggerBeaconFlash]);
+  }, [activeIndex, isInView, isHovered, isPaused, total]);
 
   // Handle active video playback cleanly without multiple video lockups
   useEffect(() => {
@@ -112,7 +92,6 @@ export const Project3DScrollTracker: React.FC<Project3DScrollTrackerProps> = ({
     if (idx === activeIndex) return;
     setActiveIndex(idx);
     setProgressPercent(0);
-    triggerBeaconFlash();
   };
 
   const handlePrev = () => {
@@ -142,25 +121,12 @@ export const Project3DScrollTracker: React.FC<Project3DScrollTrackerProps> = ({
   return (
     <div
       ref={containerRef}
-      className="relative w-full py-6 sm:py-10 select-none"
+      className="relative w-full py-6 sm:py-10 select-none overflow-hidden"
     >
-      {/* Dynamic Keyframes for Light Pulse Shockwaves */}
-      <style>{`
-        @keyframes pulseShockwave {
-          0% { transform: scale(0.2); opacity: 0.95; }
-          50% { opacity: 0.6; }
-          100% { transform: scale(6.5); opacity: 0; }
-        }
-        @keyframes flareBurst {
-          0% { transform: scale(1); opacity: 0.8; }
-          30% { transform: scale(1.9); opacity: 1; }
-          100% { transform: scale(1); opacity: 0.8; }
-        }
-      `}</style>
 
       {/* Volumetric Radial Ambient Glow */}
       <div
-        className="absolute top-1/2 left-1/3 -translate-y-1/2 -translate-x-1/2 w-[600px] sm:w-[900px] h-[500px] rounded-full blur-[120px] opacity-20 pointer-events-none transition-colors duration-700 ease-out z-0"
+        className="absolute top-1/2 left-1/3 -translate-y-1/2 -translate-x-1/2 w-[600px] sm:w-[900px] max-w-full h-[500px] rounded-full blur-[120px] opacity-20 pointer-events-none transition-colors duration-700 ease-out z-0"
         style={{
           background: `radial-gradient(circle, ${activeProject.color} 0%, rgba(5,7,13,0) 70%)`
         }}
@@ -183,10 +149,10 @@ export const Project3DScrollTracker: React.FC<Project3DScrollTrackerProps> = ({
             </span>
             
             <div className="flex items-center gap-2 text-xs font-mono font-bold tracking-wider text-white">
-              <span>// OPTICAL BEACON SYSTEM</span>
+              <span>// PRODUCTION SYSTEMS</span>
               <span className="text-slate-500">&bull;</span>
               <span style={{ color: activeProject.color }}>
-                {activeMeta.freq} ({activeMeta.wave})
+                {activeProject.category}
               </span>
               <span className="text-slate-500">&bull;</span>
               <span className="text-slate-400">
@@ -196,7 +162,7 @@ export const Project3DScrollTracker: React.FC<Project3DScrollTrackerProps> = ({
 
             <div className="hidden md:inline-flex items-center gap-1.5 text-[11px] font-mono px-2 py-0.5 rounded bg-white/[0.04] border border-white/[0.08] text-slate-400">
               <Radio className="w-3 h-3 text-[#10B981] animate-pulse" />
-              <span>{isPulsing ? 'TRANSMITTING PULSE' : 'LOCKED ON TARGET'}</span>
+              <span>LIVE CLUSTER ACTIVE</span>
             </div>
           </div>
 
@@ -234,157 +200,20 @@ export const Project3DScrollTracker: React.FC<Project3DScrollTrackerProps> = ({
           </div>
         </div>
 
-        {/* Main Split Showcase: 3D Cockpit & Integrated Lighthouse (Left 7 cols) + Telemetry Specs (Right 5 cols) */}
+        {/* Main Split Showcase: 3D Cockpit (Left 7 cols) + Telemetry Specs (Right 5 cols) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
           
-          {/* Left Column: Lighthouse Beacon + 3D Chassis */}
-          <div className="lg:col-span-7 relative flex items-center justify-center min-h-[380px] sm:min-h-[460px]">
-            
-            {/* 1. Volumetric SVG Light Beam (Rotates based on active project angle) */}
-            <div className="absolute -left-2 sm:-left-6 md:-left-10 bottom-2 z-0 w-28 sm:w-36 md:w-44 h-64 sm:h-80 md:h-96 pointer-events-none overflow-visible">
-              <svg viewBox="0 0 160 320" className="w-full h-full overflow-visible">
-                <defs>
-                  <linearGradient id="optBeamGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.95" />
-                    <stop offset="10%" stopColor={activeProject.color} stopOpacity="0.65" />
-                    <stop offset="60%" stopColor={activeProject.color} stopOpacity="0.2" />
-                    <stop offset="100%" stopColor={activeProject.color} stopOpacity="0" />
-                  </linearGradient>
-                </defs>
-
-                {/* Rotating Beam */}
-                <g
-                  style={{
-                    transformOrigin: '75px 110px',
-                    transform: `rotate(${activeMeta.angle}deg)`,
-                    transition: 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)'
-                  }}
-                >
-                  <polygon
-                    points="75,108 1150,-120 1200,340 75,112"
-                    fill="url(#optBeamGrad)"
-                    style={{ opacity: 0.85 }}
-                  />
-                  <line
-                    x1="75"
-                    y1="110"
-                    x2="950"
-                    y2="110"
-                    stroke="#FFFFFF"
-                    strokeWidth="2"
-                    strokeOpacity="0.4"
-                  />
-                </g>
-
-                {/* Photonic Shockwaves on pulse */}
-                {pulseKey > 0 && (
-                  <g key={pulseKey}>
-                    <circle
-                      cx="75"
-                      cy="110"
-                      r="35"
-                      fill="none"
-                      stroke="#FFFFFF"
-                      strokeWidth="2"
-                      style={{
-                        transformOrigin: '75px 110px',
-                        animation: 'pulseShockwave 0.8s cubic-bezier(0.1, 0.8, 0.3, 1) forwards'
-                      }}
-                    />
-                    <circle
-                      cx="75"
-                      cy="110"
-                      r="35"
-                      fill="none"
-                      stroke={activeProject.color}
-                      strokeWidth="2.5"
-                      style={{
-                        transformOrigin: '75px 110px',
-                        animation: 'pulseShockwave 1s cubic-bezier(0.15, 0.85, 0.35, 1) forwards'
-                      }}
-                    />
-                  </g>
-                )}
-              </svg>
-            </div>
-
-            {/* 2. The Coastal Lighthouse Tower (Standing at the Left Coast) */}
+          {/* Left Column: 3D Engineering Production Chassis */}
+          <div className="lg:col-span-7 relative flex items-center justify-center min-h-[260px] sm:min-h-[420px] lg:min-h-[460px]">
+            {/* Ambient Project Brand Glow */}
             <div
-              onClick={triggerBeaconFlash}
-              className="absolute -left-2 sm:-left-6 md:-left-10 bottom-2 z-30 w-28 sm:w-36 md:w-44 h-64 sm:h-80 md:h-96 cursor-pointer group select-none"
-              title="Click Lighthouse Tower to transmit optical beacon pulse"
-            >
-              <svg viewBox="0 0 160 320" className="w-full h-full overflow-visible drop-shadow-[0_10px_30px_rgba(0,0,0,0.95)]">
-                <defs>
-                  <linearGradient id="lhShaftGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="#1E293B" />
-                    <stop offset="50%" stopColor="#F8FAFC" />
-                    <stop offset="100%" stopColor="#0F172A" />
-                  </linearGradient>
-                  <linearGradient id="lhAccentStrip" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor={activeProject.color} stopOpacity="0.8" />
-                    <stop offset="50%" stopColor="#FFFFFF" stopOpacity="0.9" />
-                    <stop offset="100%" stopColor={activeProject.color} stopOpacity="0.8" />
-                  </linearGradient>
-                </defs>
+              className="absolute inset-4 rounded-3xl blur-3xl opacity-20 transition-all duration-700 pointer-events-none"
+              style={{ backgroundColor: activeProject.color }}
+            />
 
-                {/* Rocky Cliff Outcrop */}
-                <polygon points="0,290 35,280 80,283 140,285 160,320 0,320" fill="#0A0E17" stroke="#1E293B" strokeWidth="1.5" />
-                
-                {/* Stone Plinth Foundation */}
-                <polygon points="40,283 110,283 116,272 34,272" fill="#1E293B" stroke="#334155" strokeWidth="1" />
-                <rect x="37" y="266" width="76" height="6" rx="2" fill="#334155" />
-
-                {/* Tapered Tower Shaft with Striping */}
-                <polygon points="41,266 109,266 104,230 46,230" fill="url(#lhShaftGrad)" />
-                <polygon points="46,230 104,230 99,195 51,195" fill="url(#lhAccentStrip)" />
-                <polygon points="51,195 99,195 95,160 55,160" fill="url(#lhShaftGrad)" />
-                <polygon points="55,160 95,160 91,130 59,130" fill="url(#lhAccentStrip)" />
-
-                {/* Windows */}
-                <rect x="71" y="240" width="8" height="13" rx="2" fill="#05070D" stroke={activeProject.color} strokeWidth="1" />
-                <rect x="72" y="175" width="6" height="11" rx="2" fill="#05070D" stroke={activeProject.color} strokeWidth="0.8" />
-
-                {/* Balcony & Lantern Room */}
-                <polygon points="54,130 96,130 100,122 50,122" fill="#1E293B" stroke="#475569" strokeWidth="1" />
-                <line x1="48" y1="115" x2="102" y2="115" stroke="#94A3B8" strokeWidth="1.2" />
-                <rect x="58" y="98" width="34" height="24" fill="rgba(255,255,255,0.15)" stroke="#64748B" strokeWidth="1" />
-
-                {/* Copper Roof Dome */}
-                <path d="M 56 98 Q 75 80, 94 98 Z" fill="#0F172A" stroke="#334155" strokeWidth="1.2" />
-                <circle cx="75" cy="83" r="2.5" fill={activeProject.color} />
-                <line x1="75" y1="80" x2="75" y2="68" stroke={activeProject.color} strokeWidth="1.2" />
-
-                {/* Glowing Fresnel Lens Core */}
-                <circle
-                  cx="75"
-                  cy="110"
-                  r={isPulsing ? 10 : 7}
-                  fill="#FFFFFF"
-                  style={{
-                    filter: `drop-shadow(0 0 14px #FFFFFF)`,
-                    transition: 'r 0.2s ease'
-                  }}
-                />
-                <circle
-                  cx="75"
-                  cy="110"
-                  r={isPulsing ? 22 : 16}
-                  fill={activeProject.color}
-                  opacity="0.75"
-                  style={{ transition: 'r 0.2s ease' }}
-                />
-              </svg>
-
-              {/* Status Tooltip Pill */}
-              <div className="absolute top-10 -right-2 px-2 py-0.5 rounded-full bg-[#05070D]/90 border border-white/20 text-[9px] font-mono text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-md">
-                CLICK TO TRANSMIT
-              </div>
-            </div>
-
-            {/* 3. High-Performance 3D Cockpit Browser Chassis */}
+            {/* High-Performance 3D Browser Chassis */}
             <div
-              className="relative z-20 w-full max-w-[580px] ml-auto sm:pl-10 cursor-pointer group"
+              className="relative z-20 w-full max-w-[620px] mx-auto cursor-pointer group"
               style={{ perspective: '1200px' }}
               onMouseEnter={() => setIsHovered(true)}
               onMouseMove={handleMouseMove}
@@ -578,7 +407,6 @@ export const Project3DScrollTracker: React.FC<Project3DScrollTrackerProps> = ({
             {projects.map((proj, idx) => {
               const isActive = idx === activeIndex;
               const isPassed = idx < activeIndex;
-              const meta = beaconMeta[idx] || beaconMeta[0];
 
               return (
                 <button
@@ -596,7 +424,7 @@ export const Project3DScrollTracker: React.FC<Project3DScrollTrackerProps> = ({
                         isActive ? 'text-[#FF6B00]' : 'text-slate-400 group-hover:text-slate-300'
                       }`}
                     >
-                      0{idx + 1} &bull; {meta.freq}
+                      0{idx + 1} &bull; {proj.category}
                     </span>
                     <span
                       className="w-2 h-2 rounded-full transition-colors"

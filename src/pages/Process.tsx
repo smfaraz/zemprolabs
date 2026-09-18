@@ -383,15 +383,15 @@ export const Process: React.FC = () => {
         </div>
 
         <div className="rounded-2xl border border-white/10 bg-[#070D1A] overflow-hidden shadow-2xl">
-          {/* Table Header */}
-          <div className="grid grid-cols-12 bg-[#040812] p-4 sm:p-5 border-b border-white/10 text-xs font-mono uppercase tracking-wider">
-            <div className="col-span-12 sm:col-span-3 text-slate-400 font-bold mb-2 sm:mb-0">
+          {/* Table Header (Hidden on mobile where rows stack vertically) */}
+          <div className="hidden sm:grid grid-cols-12 bg-[#040812] p-4 sm:p-5 border-b border-white/10 text-xs font-mono uppercase tracking-wider">
+            <div className="sm:col-span-3 text-slate-400 font-bold">
               Feature / Experience
             </div>
-            <div className="col-span-6 sm:col-span-4 text-[#FF6B00] font-bold flex items-center gap-1.5">
+            <div className="sm:col-span-4 text-[#FF6B00] font-bold flex items-center gap-1.5">
               <span>Zemprolabs (Our Way)</span>
             </div>
-            <div className="col-span-6 sm:col-span-5 text-slate-500 font-bold flex items-center gap-1.5">
+            <div className="sm:col-span-5 text-slate-500 font-bold flex items-center gap-1.5">
               <span>Traditional Agency</span>
             </div>
           </div>

@@ -39,7 +39,7 @@ export default function App() {
     <ErrorBoundary>
       <BrowserRouter>
         <ScrollToTop />
-        <div className="min-h-screen bg-[#05070D] text-[#F8FAFC] flex flex-col relative selection:bg-[#FF6B00] selection:text-black">
+        <div className="min-h-screen bg-[#05070D] text-[#F8FAFC] flex flex-col relative w-full max-w-full overflow-x-hidden selection:bg-[#FF6B00] selection:text-black">
           {/* Atmospheric Background Pattern */}
           <div className="bg-grid-pattern"></div>
 
@@ -47,7 +47,7 @@ export default function App() {
           <Navbar />
 
           {/* Dynamic Route Pages with Code-Splitting */}
-          <main className="flex-1">
+          <main className="flex-1 w-full max-w-full overflow-x-hidden">
             <Suspense fallback={<RouteSuspenseFallback />}>
               <Routes>
                 <Route path="/" element={<Home />} />
