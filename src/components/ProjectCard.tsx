@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Project } from '../types';
-import { ArrowUpRight, Check, ExternalLink, Globe, Shield, Sparkles } from 'lucide-react';
+import { ArrowUpRight, Check, ExternalLink, Globe, Shield, Sparkles, Play } from 'lucide-react';
 
 interface ProjectCardProps {
   project: Project;
@@ -12,7 +12,10 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onSelect }) =
   const navigate = useNavigate();
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [videoError, setVideoError] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
 
+  // Stream only on hover/interaction - eliminates initial page load bandwidth
   useEffect(() => {
     const video = videoRef.current;
     if (!video || !project.video || videoError) return;
@@ -24,50 +27,27 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onSelect }) =
     video.setAttribute('playsinline', '');
     video.setAttribute('webkit-playsinline', '');
 
-    let isMounted = true;
-
-    const attemptPlay = () => {
-      if (!video || !isMounted) return;
-      video.defaultMuted = true;
-      video.muted = true;
+    if (isHovered) {
       const playPromise = video.play();
       if (playPromise !== undefined) {
-        playPromise.catch(() => {
-          // Handled autoplay policy gracefully
-        });
-      }
-    };
-
-    if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (!isMounted) return;
-            if (entry.isIntersecting) {
-              attemptPlay();
-            } else {
-              if (!video.paused) {
-                video.pause();
-              }
-            }
+        playPromise
+          .then(() => setIsPlaying(true))
+          .catch(() => {
+            // Handled browser policy gracefully
           });
-        },
-        { threshold: 0.1, rootMargin: '100px 0px' }
-      );
-
-      observer.observe(video);
-
-      return () => {
-        isMounted = false;
-        observer.disconnect();
-      };
+      }
     } else {
-      attemptPlay();
+      if (!video.paused) {
+        video.pause();
+        setIsPlaying(false);
+      }
     }
-  }, [project.video]);
+  }, [isHovered, project.video, videoError]);
 
   return (
     <div
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       onClick={() => {
         if (onSelect) onSelect(project);
         navigate(`/work/${project.id}`);
@@ -111,17 +91,26 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onSelect }) =
             <>
               <video
                 ref={videoRef}
-                autoPlay
                 muted
                 loop
                 playsInline
-                preload="metadata"
+                preload="none"
                 onError={() => setVideoError(true)}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
               >
                 <source src={project.video} type="video/mp4" />
               </video>
               <div className="absolute inset-0 bg-gradient-to-t from-[#070D18] via-transparent to-black/30 pointer-events-none" />
+
+              {/* Stream On-Demand Indicator (0 Initial Bandwidth) */}
+              {!isPlaying && (
+                <div className="absolute inset-0 z-10 flex items-center justify-center pointer-events-none transition-opacity duration-300">
+                  <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#03060E]/85 border border-white/15 text-xs font-mono text-slate-300 group-hover:border-[#FF6B00] group-hover:text-[#FF6B00] group-hover:bg-[#03060E]/95 transition-all shadow-xl">
+                    <Play className="w-3 h-3 fill-current" />
+                    <span>Hover to Stream</span>
+                  </div>
+                </div>
+              )}
             </>
           ) : (
             <div className="w-full h-full flex items-center justify-center p-6 relative">
