@@ -1,0 +1,2256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zemprolabs · Software, ServiceNow, Marketing &amp; Managed Support</title>
+  <meta name="description" content="Zemprolabs is your single digital partner: custom software, ServiceNow enterprise tooling, growth marketing, and a dedicated human assistant for everything digital.">
+  <link rel="canonical" href="https://zemprolabs.com/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Zemprolabs">
+  <meta property="og:title" content="Zemprolabs · Software, ServiceNow, Marketing &amp; Managed Support">
+  <meta property="og:description" content="Zemprolabs is your single digital partner: custom software, ServiceNow enterprise tooling, growth marketing, and a dedicated human assistant for everything digital.">
+  <meta property="og:url" content="https://zemprolabs.com/">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Zemprolabs · Software, ServiceNow, Marketing &amp; Managed Support">
+  <meta name="twitter:description" content="Zemprolabs is your single digital partner: custom software, ServiceNow enterprise tooling, growth marketing, and a dedicated human assistant for everything digital.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Zemprolabs",
+    "url": "https://zemprolabs.com",
+    "description": "Zemprolabs is an end-to-end digital partner: software, ServiceNow tooling, marketing, and a dedicated human assistant for everything digital.",
+    "email": "hello@zemprolabs.com"
+  }
+  </script>
+
+  <style>
+    /* ==========================================================================
+       DESIGN TOKENS
+       ========================================================================== */
+    :root {
+      --bg-void: #05070d;
+      --bg-dark: #080b12;
+      --bg-surface: #0d111b;
+      --bg-card: #10141f;
+      --bg-card-hover: #161c2b;
+      --bg-elevated: #1a2233;
+      --bg-input: #0a0e16;
+
+      --accent-indigo: #6366f1;
+      --accent-indigo-soft: rgba(99, 102, 241, 0.14);
+      --accent-indigo-glow: rgba(99, 102, 241, 0.35);
+      --accent-violet: #8b5cf6;
+      --accent-cyan: #06b6d4;
+      --accent-emerald: #10b981;
+      --accent-emerald-glow: rgba(16, 185, 129, 0.25);
+
+      --text-main: #f8fafc;
+      --text-muted: #97a1b5;
+      --text-dim: #5b6478;
+
+      --border-color: rgba(255, 255, 255, 0.08);
+      --border-strong: rgba(255, 255, 255, 0.16);
+      --border-highlight: rgba(99, 102, 241, 0.45);
+
+      --font-heading: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 22px;
+      --radius-full: 999px;
+
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --fast: 0.2s var(--ease);
+      --normal: 0.4s var(--ease);
+      --container-max: 1240px;
+    }
+
+    /* Reduced motion off-switch: JS toggles this class on <html> */
+    .reduce-motion, .reduce-motion * {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+
+    /* ==========================================================================
+       RESET / BASE
+       ========================================================================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg-void);
+      color: var(--text-main);
+      font-size: 16px;
+    }
+
+    body {
+      font-family: var(--font-body);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      position: relative;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    img { max-width: 100%; height: auto; display: block; }
+    button, input, select, textarea { font-family: inherit; }
+    button { background: none; border: none; }
+
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    textarea:focus-visible,
+    [tabindex]:focus-visible {
+      outline: 2px solid var(--accent-cyan);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    /* Background atmosphere: orbs + hairline grid, purely decorative */
+    .bg-atmosphere {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -2;
+      overflow: hidden;
+    }
+
+    .bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      background-size: 64px 64px;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, #000 0%, transparent 75%);
+    }
+
+    .bg-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.16;
+      will-change: transform;
+    }
+
+    .bg-orb-1 { width: 620px; height: 620px; top: -180px; left: -160px; background: var(--accent-indigo); animation: drift1 26s ease-in-out infinite; }
+    .bg-orb-2 { width: 520px; height: 520px; top: 30%; right: -220px; background: var(--accent-cyan); animation: drift2 30s ease-in-out infinite; }
+    .bg-orb-3 { width: 560px; height: 560px; bottom: -220px; left: 15%; background: var(--accent-violet); animation: drift3 34s ease-in-out infinite; }
+
+    @keyframes drift1 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(60px, 40px); } }
+    @keyframes drift2 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-50px, 60px); } }
+    @keyframes drift3 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(40px, -50px); } }
+
+    /* Scroll progress bar */
+    .scroll-progress {
+      position: fixed;
+      top: 0; left: 0;
+      height: 2.5px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent-indigo), var(--accent-cyan));
+      z-index: 999;
+      transition: width 0.1s linear;
+    }
+
+    /* Cursor glow (desktop only, decorative) */
+    .cursor-glow {
+      position: fixed;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.10) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      will-change: transform;
+    }
+    .cursor-glow.active { opacity: 1; }
+
+    /* Layout utilities */
+    .container { width: 100%; max-width: var(--container-max); margin: 0 auto; padding: 0 1.5rem; }
+    .section { padding: 6rem 0; position: relative; }
+    .section-tight { padding: 3.5rem 0; }
+
+    h1, h2, h3, h4, h5 {
+      font-family: var(--font-heading);
+      color: #fff;
+      line-height: 1.15;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+    }
+    h2 { font-size: clamp(1.9rem, 3.2vw, 2.6rem); }
+    h3 { font-size: 1.35rem; }
+
+    .section-head { max-width: 640px; margin-bottom: 2.75rem; }
+    .section-head p { color: var(--text-muted); margin-top: 0.75rem; font-size: 1.05rem; }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--accent-indigo);
+      background: var(--accent-indigo-soft);
+      padding: 0.4rem 0.9rem;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(99, 102, 241, 0.22);
+      margin-bottom: 1.25rem;
+    }
+    .eyebrow::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent-indigo);
+      box-shadow: 0 0 8px var(--accent-indigo);
+    }
+    .eyebrow-emerald { color: var(--accent-emerald); background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.25); }
+    .eyebrow-emerald::before { background: var(--accent-emerald); box-shadow: 0 0 8px var(--accent-emerald); }
+    .eyebrow-cyan { color: var(--accent-cyan); background: rgba(6, 182, 212, 0.1); border-color: rgba(6, 182, 212, 0.25); }
+    .eyebrow-cyan::before { background: var(--accent-cyan); box-shadow: 0 0 8px var(--accent-cyan); }
+
+    .text-mono { font-family: var(--font-mono); }
+    .text-gradient {
+      background: linear-gradient(135deg, #ffffff 10%, #a5b4fc 60%, var(--accent-cyan) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .text-center { text-align: center; }
+    .mx-auto { margin-left: auto; margin-right: auto; }
+    .max-w-md { max-width: 620px; }
+    .max-w-lg { max-width: 820px; }
+
+    /* Reveal-on-scroll */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
+    .reveal.in-view { opacity: 1; transform: translateY(0); }
+    .reveal-stagger.in-view > * { transition-delay: calc(var(--i, 0) * 70ms); }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      padding: 0.9rem 1.7rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border-radius: var(--radius-md);
+      transition: transform var(--fast), box-shadow var(--fast), background var(--fast), border-color var(--fast);
+      cursor: pointer;
+      border: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent-indigo) 0%, #4f46e5 100%);
+      color: #fff;
+      box-shadow: 0 4px 22px var(--accent-indigo-glow);
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.28) 45%, transparent 60%);
+      transform: translateX(-120%);
+      transition: transform 0.6s var(--ease);
+    }
+    .btn-primary:hover::before { transform: translateX(120%); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(99, 102, 241, 0.45); }
+    .btn-primary:active { transform: translateY(0); }
+
+    .btn-outline {
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+    }
+    .btn-outline:hover { background: rgba(255, 255, 255, 0.07); border-color: var(--border-strong); transform: translateY(-2px); }
+
+    .btn-mono { font-family: var(--font-mono); font-size: 0.86rem; }
+    .btn-block { width: 100%; }
+
+    /* ==========================================================================
+       HEADER / NAV
+       ========================================================================== */
+    .statusbar {
+      background: #030509;
+      border-bottom: 1px solid var(--border-color);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      padding: 0.55rem 0;
+      color: var(--text-dim);
+    }
+    .statusbar__inner { display: flex; justify-content: space-between; align-items: center; }
+    .statusbar__dot {
+      display: inline-block; width: 6px; height: 6px;
+      background: var(--accent-emerald); border-radius: 50%;
+      margin-right: 8px; box-shadow: 0 0 8px var(--accent-emerald);
+      animation: pulse 2.4s infinite;
+    }
+    @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.45; transform: scale(0.8); } }
+    .statusbar__right { display: flex; gap: 1.5rem; }
+    .statusbar__right a:hover { color: var(--text-muted); }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(5, 7, 13, 0.72);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid transparent;
+      transition: background var(--fast), border-color var(--fast);
+    }
+    .site-header.scrolled {
+      background: rgba(5, 7, 13, 0.92);
+      border-bottom-color: var(--border-color);
+    }
+
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 74px; }
+
+    .logo {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      letter-spacing: -0.02em;
+      cursor: pointer;
+    }
+    .logo__bracket { color: var(--accent-indigo); }
+
+    .nav__links { display: flex; align-items: center; gap: 0.25rem; }
+    .nav__link {
+      font-size: 0.92rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      padding: 0.55rem 0.9rem;
+      position: relative;
+      cursor: pointer;
+      border-radius: var(--radius-full);
+      transition: color var(--fast), background var(--fast);
+    }
+    .nav__link:hover { color: #fff; background: rgba(255,255,255,0.04); }
+    .nav__link.active { color: #fff; }
+    .nav__link.active::after {
+      content: '';
+      position: absolute;
+      bottom: 3px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--accent-indigo);
+      box-shadow: 0 0 8px var(--accent-indigo);
+    }
+
+    .nav__cta { margin-left: 0.75rem; }
+
+    .nav__toggle {
+      display: none;
+      color: #fff;
+      cursor: pointer;
+      padding: 0.5rem;
+      z-index: 210;
+      position: relative;
+    }
+    .nav__toggle span {
+      display: block;
+      width: 22px; height: 2px;
+      background: #fff;
+      margin: 5px 0;
+      transition: transform 0.3s var(--ease), opacity 0.3s var(--ease);
+      border-radius: 2px;
+    }
+    .nav__toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav__toggle.open span:nth-child(2) { opacity: 0; }
+    .nav__toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    .mobile-menu {
+      position: fixed;
+      inset: 0;
+      background: rgba(5, 7, 13, 0.98);
+      backdrop-filter: blur(24px);
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 2rem 2rem;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-12px);
+      transition: opacity 0.35s var(--ease), transform 0.35s var(--ease), visibility 0.35s;
+    }
+    .mobile-menu.open { opacity: 1; visibility: visible; transform: translateY(0); }
+    .mobile-menu .nav__link {
+      font-size: 1.6rem;
+      font-family: var(--font-heading);
+      font-weight: 600;
+      padding: 0.65rem 0;
+      color: var(--text-main);
+      border-radius: 0;
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
+    }
+    .mobile-menu.open .nav__link { opacity: 1; transform: translateY(0); }
+    .mobile-menu.open .nav__link:nth-child(1) { transition-delay: 0.05s; }
+    .mobile-menu.open .nav__link:nth-child(2) { transition-delay: 0.1s; }
+    .mobile-menu.open .nav__link:nth-child(3) { transition-delay: 0.15s; }
+    .mobile-menu.open .nav__link:nth-child(4) { transition-delay: 0.2s; }
+    .mobile-menu.open .nav__link:nth-child(5) { transition-delay: 0.25s; }
+    .mobile-menu__cta { margin-top: 1.5rem; opacity: 0; transform: translateY(14px); transition: opacity 0.4s var(--ease) 0.3s, transform 0.4s var(--ease) 0.3s; }
+    .mobile-menu.open .mobile-menu__cta { opacity: 1; transform: translateY(0); }
+
+    /* ==========================================================================
+       PAGE ROUTER
+       ========================================================================== */
+    .page-view { display: none; }
+    .page-view.active-page { display: block; animation: pageIn 0.5s var(--ease) forwards; }
+    @keyframes pageIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .page-header {
+      padding: 4.5rem 0 3rem;
+      border-bottom: 1px solid var(--border-color);
+      background: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+      position: relative;
+    }
+    .page-header h1 { font-size: clamp(2.3rem, 4.4vw, 3.4rem); margin: 0.6rem 0 1rem; max-width: 16ch; }
+    .page-header p { font-size: 1.12rem; color: var(--text-muted); max-width: 680px; }
+
+    /* ==========================================================================
+       HERO
+       ========================================================================== */
+    .hero { padding: 4.5rem 0 3rem; position: relative; }
+    .hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 3.5rem; align-items: center; }
+
+    .hero__content > * { opacity: 0; transform: translateY(18px); animation: heroIn 0.7s var(--ease) forwards; }
+    .hero__content .eyebrow { animation-delay: 0.05s; }
+    .hero__content h1 { animation-delay: 0.15s; }
+    .hero__content .hero__sub { animation-delay: 0.28s; }
+    .hero__content .hero__actions { animation-delay: 0.4s; }
+    .hero__content .hero__trust { animation-delay: 0.52s; }
+    @keyframes heroIn { to { opacity: 1; transform: translateY(0); } }
+
+    .hero__headline {
+      font-size: clamp(2.6rem, 4.6vw, 4.1rem);
+      margin-bottom: 1.35rem;
+      letter-spacing: -0.025em;
+    }
+    .hero__cursor {
+      display: inline-block;
+      width: 10px; height: 0.85em;
+      background: var(--accent-indigo);
+      margin-left: 5px;
+      vertical-align: middle;
+      animation: blink 1.1s step-end infinite;
+      border-radius: 1px;
+    }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+    .hero__sub { font-size: 1.15rem; color: var(--text-muted); margin-bottom: 2.25rem; line-height: 1.65; max-width: 560px; }
+    .hero__actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; }
+
+    .hero__trust { display: flex; gap: 1.6rem; flex-wrap: wrap; align-items: center; }
+    .hero__trust-item {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-family: var(--font-mono); font-size: 0.8rem;
+      color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.06em;
+    }
+    .hero__trust-item::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--text-dim); }
+
+    /* Hero interactive command-center widget */
+    .hero__visual {
+      position: relative;
+      opacity: 0;
+      transform: translateY(18px) scale(0.98);
+      animation: heroIn 0.8s var(--ease) 0.35s forwards;
+    }
+
+    .hero-glow-backdrop {
+      position: absolute;
+      inset: -60px;
+      background: radial-gradient(circle at 60% 40%, rgba(99, 102, 241, 0.22), transparent 65%);
+      filter: blur(10px);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .hero-interactive-card {
+      position: relative;
+      z-index: 2;
+      background: linear-gradient(180deg, rgba(16, 20, 31, 0.9), rgba(13, 17, 27, 0.96));
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255,255,255,0.02) inset;
+      transform-style: preserve-3d;
+      transition: transform 0.15s ease-out;
+    }
+
+    .interactive-card__header {
+      background: #090c13;
+      padding: 0.8rem 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .window-dots { display: flex; gap: 6px; }
+    .dot { width: 9px; height: 9px; border-radius: 50%; }
+    .dot-red { background: #ef4444; }
+    .dot-yellow { background: #f59e0b; }
+    .dot-green { background: #10b981; }
+
+    .interactive-tabs { display: flex; gap: 0.3rem; }
+    .tab-btn {
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      padding: 0.32rem 0.65rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--fast);
+    }
+    .tab-btn.active { background: rgba(255, 255, 255, 0.08); color: var(--text-main); }
+    .tab-btn:hover { color: var(--text-main); }
+
+    .interactive-card__body { padding: 1.6rem; font-family: var(--font-mono); font-size: 0.83rem; min-height: 260px; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; animation: fadeQuick 0.35s var(--ease); }
+    @keyframes fadeQuick { from { opacity: 0; } to { opacity: 1; } }
+
+    .code-line { margin-bottom: 0.5rem; display: flex; gap: 1rem; }
+    .line-num { color: var(--text-dim); user-select: none; }
+    .code-keyword { color: #f472b6; }
+    .code-func { color: #60a5fa; }
+    .code-string { color: #34d399; }
+    .code-comment { color: #6b7280; font-style: italic; }
+
+    .support-widget { display: flex; flex-direction: column; gap: 1rem; }
+    .chat-bubble { padding: 0.85rem 1rem; border-radius: var(--radius-md); font-family: var(--font-body); font-size: 0.875rem; max-width: 88%; }
+    .chat-bubble.user { background: rgba(255, 255, 255, 0.05); align-self: flex-start; border-top-left-radius: 3px; }
+    .chat-bubble.assistant { background: rgba(99, 102, 241, 0.14); border: 1px solid rgba(99, 102, 241, 0.3); align-self: flex-end; border-top-right-radius: 3px; }
+    .chat-sender { font-family: var(--font-mono); font-size: 0.68rem; color: var(--accent-indigo); margin-bottom: 0.25rem; display: flex; align-items: center; gap: 0.35rem; }
+    .status-flow { display: flex; align-items: center; gap: 0.5rem; margin-top: 1rem; font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-dim); flex-wrap: wrap; }
+    .status-pill { padding: 0.25rem 0.6rem; border-radius: var(--radius-full); border: 1px solid var(--border-color); }
+    .status-pill.done { color: var(--accent-emerald); border-color: rgba(16,185,129,0.3); }
+    .status-pill.active { color: var(--accent-indigo); border-color: rgba(99,102,241,0.35); background: rgba(99,102,241,0.08); }
+
+    /* Floating micro-badges around the hero card */
+    .hero__float {
+      position: absolute;
+      background: rgba(16, 20, 31, 0.85);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 0.6rem 0.85rem;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      animation: floaty 6s ease-in-out infinite;
+    }
+    .hero__float span.led { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-emerald); box-shadow: 0 0 8px var(--accent-emerald); }
+    .hero__float--1 { top: -18px; right: 12%; animation-delay: 0s; }
+    .hero__float--2 { bottom: -16px; left: -10px; animation-delay: 1.4s; }
+    @keyframes floaty { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+
+    /* Stats */
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
+    .stat {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 1.85rem 1.5rem;
+      border-radius: var(--radius-md);
+      transition: transform var(--normal), border-color var(--fast);
+    }
+    .stat:hover { border-color: var(--border-highlight); transform: translateY(-4px); }
+    .stat__num {
+      font-family: var(--font-heading);
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 0.6rem;
+      background: linear-gradient(135deg, #fff 0%, var(--accent-indigo) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .stat__label { font-size: 0.9rem; color: var(--text-muted); }
+
+    /* Services / pillar cards */
+    .pillars-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-top: 2rem; }
+    .pillar-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 2.25rem;
+      position: relative;
+      transition: transform var(--normal), border-color var(--fast), background var(--fast);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .pillar-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(500px circle at var(--mx, 50%) var(--my, 0%), rgba(99, 102, 241, 0.12), transparent 55%);
+      opacity: 0;
+      transition: opacity var(--fast);
+      pointer-events: none;
+    }
+    .pillar-card:hover::before { opacity: 1; }
+    .pillar-card:hover { border-color: var(--border-highlight); background: var(--bg-card-hover); transform: translateY(-5px); }
+    .pillar__num { font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent-indigo); margin-bottom: 1rem; display: block; }
+    .pillar-card h3 { font-size: 1.5rem; margin-bottom: 0.75rem; }
+    .pillar-card p { color: var(--text-muted); font-size: 0.975rem; margin-bottom: 1.5rem; }
+    .pillar-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; position: relative; z-index: 1; }
+    .tag-chip {
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-color);
+      padding: 0.22rem 0.65rem;
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      transition: border-color var(--fast), color var(--fast);
+    }
+    .pillar-card:hover .tag-chip { border-color: rgba(99,102,241,0.3); color: var(--text-main); }
+    .pillar__arrow { font-family: var(--font-mono); font-size: 0.875rem; color: #fff; display: flex; align-items: center; gap: 0.5rem; font-weight: 500; position: relative; z-index: 1; }
+    .pillar__arrow span { transition: transform var(--fast); color: var(--accent-indigo); }
+    .pillar-card:hover .pillar__arrow span { transform: translateX(6px); }
+
+    /* Why Zemprolabs — vendor comparison */
+    .compare-wrap { display: grid; grid-template-columns: 1fr auto 1fr; gap: 2rem; align-items: center; margin-top: 2.5rem; }
+    .compare-col { display: flex; flex-direction: column; gap: 0.9rem; }
+    .compare-label { font-family: var(--font-mono); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); margin-bottom: 0.5rem; }
+    .compare-node {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.15rem;
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      position: relative;
+    }
+    .compare-node::after {
+      content: '↓';
+      position: absolute;
+      left: 50%; bottom: -1.55rem;
+      transform: translateX(-50%);
+      color: var(--text-dim);
+      font-size: 0.9rem;
+    }
+    .compare-node:last-child::after { display: none; }
+    .compare-col--old .compare-node { opacity: 0.75; }
+    .compare-divider {
+      width: 1px;
+      align-self: stretch;
+      background: linear-gradient(180deg, transparent, var(--border-strong), transparent);
+    }
+    .compare-col--new .compare-node {
+      border-color: rgba(99, 102, 241, 0.35);
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(16, 185, 129, 0.04));
+    }
+    .compare-node.hero-node {
+      color: #fff;
+      font-weight: 600;
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      border-color: var(--accent-indigo);
+      box-shadow: 0 0 0 1px rgba(99,102,241,0.15), 0 12px 30px rgba(99,102,241,0.15);
+    }
+    .compare-node.result-node { color: var(--accent-emerald); font-family: var(--font-mono); font-size: 0.85rem; }
+
+    /* Callout */
+    .callout {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%);
+      border: 1px solid rgba(99, 102, 241, 0.25);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+      margin-top: 3rem;
+    }
+    .callout__icon {
+      background: var(--accent-indigo);
+      color: #fff;
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; flex-shrink: 0;
+    }
+    .callout h3 { font-size: 1.35rem; margin-bottom: 0.5rem; }
+    .callout p { color: var(--text-muted); font-size: 1rem; }
+
+    /* Tech stack chips */
+    .tech-cloud { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
+    .tech-chip {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 0.55rem 1.1rem;
+      border-radius: var(--radius-full);
+      font-family: var(--font-mono);
+      font-size: 0.83rem;
+      color: var(--text-muted);
+      transition: transform var(--fast), border-color var(--fast), color var(--fast);
+    }
+    .tech-chip:hover { transform: translateY(-3px); border-color: var(--border-highlight); color: var(--text-main); }
+    .tech-chip .led { width: 5px; height: 5px; border-radius: 50%; background: var(--accent-emerald); }
+
+    /* Portfolio */
+    .filter-bar { display: flex; gap: 0.5rem; margin-top: 1.5rem; margin-bottom: 2.5rem; overflow-x: auto; padding-bottom: 0.5rem; }
+    .filter-btn {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 0.5rem 1.25rem;
+      border-radius: var(--radius-full);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: var(--fast);
+    }
+    .filter-btn:hover { border-color: var(--border-strong); color: var(--text-main); }
+    .filter-btn.active { background: var(--accent-indigo); color: #fff; border-color: var(--accent-indigo); }
+
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.75rem; }
+
+    .case-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: transform var(--normal), border-color var(--fast), box-shadow var(--normal);
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+    }
+    .case-card:hover { transform: translateY(-7px); border-color: var(--border-strong); box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45); }
+
+    .case-thumb { background: #08090f; border-bottom: 1px solid var(--border-color); overflow: hidden; }
+    .case-thumb__bar { padding: 0.6rem 0.85rem; display: flex; align-items: center; gap: 0.75rem; border-bottom: 1px solid rgba(255, 255, 255, 0.04); background: rgba(0, 0, 0, 0.3); }
+    .case-thumb__dots { display: flex; gap: 4px; }
+    .case-thumb__dot { width: 8px; height: 8px; border-radius: 50%; }
+    .case-thumb__dot--r { background: #ef4444; }
+    .case-thumb__dot--y { background: #f59e0b; }
+    .case-thumb__dot--g { background: #10b981; }
+    .case-thumb__url { font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-dim); }
+
+    .case-thumb__preview {
+      height: 180px;
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+      background: radial-gradient(circle at center, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+      transition: transform var(--normal);
+    }
+    .case-card:hover .case-thumb__preview { transform: scale(1.03); }
+    .case-thumb__watermark { font-family: var(--font-mono); font-size: 1.25rem; font-weight: 700; color: rgba(255, 255, 255, 0.15); letter-spacing: -0.02em; transition: color var(--normal); }
+    .case-card:hover .case-thumb__watermark { color: rgba(255,255,255,0.24); }
+
+    .case-card__body { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; }
+    .card__tag { font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; color: var(--accent-emerald); margin-bottom: 0.5rem; letter-spacing: 0.05em; }
+    .case-card h4 { font-size: 1.1rem; margin-bottom: 0.5rem; line-height: 1.35; }
+    .case-card p { font-size: 0.875rem; color: var(--text-muted); margin-bottom: 1.25rem; flex-grow: 1; }
+    .case-card__meta { display: flex; align-items: center; justify-content: space-between; font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-dim); border-top: 1px solid var(--border-color); padding-top: 0.75rem; }
+    .case-card__meta .view-link { color: var(--accent-indigo); display: inline-flex; align-items: center; gap: 0.3rem; transition: transform var(--fast); }
+    .case-card:hover .case-card__meta .view-link { transform: translateX(3px); }
+
+    /* Process timeline */
+    .timeline { position: relative; margin-top: 3rem; padding-left: 2.2rem; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0.5rem; bottom: 0.5rem;
+      width: 2px;
+      background: var(--border-color);
+    }
+    .timeline::after {
+      content: '';
+      position: absolute;
+      left: 0; top: 0.5rem;
+      width: 2px;
+      height: var(--fill, 0%);
+      background: linear-gradient(180deg, var(--accent-indigo), var(--accent-cyan));
+      box-shadow: 0 0 10px var(--accent-indigo-glow);
+      transition: height 0.2s ease-out;
+    }
+    .timeline-item { position: relative; margin-bottom: 3rem; opacity: 0.45; transition: opacity 0.5s var(--ease); }
+    .timeline-item.active { opacity: 1; }
+    .timeline-item:last-child { margin-bottom: 0; }
+    .timeline-dot {
+      position: absolute; left: -2.75rem; top: 0;
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: var(--bg-void);
+      border: 3px solid var(--border-strong);
+      transition: border-color 0.4s var(--ease), box-shadow 0.4s var(--ease);
+    }
+    .timeline-item.active .timeline-dot { border-color: var(--accent-indigo); box-shadow: 0 0 12px var(--accent-indigo-glow); }
+    .timeline-content { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 1.75rem; transition: border-color 0.4s var(--ease); }
+    .timeline-item.active .timeline-content { border-color: rgba(99,102,241,0.3); }
+    .timeline-step { font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent-emerald); text-transform: uppercase; margin-bottom: 0.5rem; display: block; }
+    .timeline-content h3 { font-size: 1.35rem; margin-bottom: 0.75rem; }
+    .timeline-content p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1rem; }
+    .timeline-deliverables { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+    /* Pricing */
+    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 3rem; }
+    .price-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 2.25rem 1.75rem;
+      display: flex; flex-direction: column; justify-content: space-between;
+      position: relative;
+      transition: transform var(--normal), border-color var(--fast);
+    }
+    .price-card:hover { transform: translateY(-5px); }
+    .price-card.featured {
+      border-color: var(--accent-indigo);
+      background: linear-gradient(180deg, rgba(99, 102, 241, 0.09) 0%, var(--bg-card) 100%);
+      box-shadow: 0 15px 40px rgba(99, 102, 241, 0.18);
+    }
+    .price-badge {
+      position: absolute; top: -12px; right: 20px;
+      background: var(--accent-indigo); color: #fff;
+      font-family: var(--font-mono); font-size: 0.72rem;
+      padding: 0.22rem 0.75rem; border-radius: var(--radius-full);
+      text-transform: uppercase; letter-spacing: 0.04em;
+    }
+    .price-card h3 { font-size: 1.35rem; margin-bottom: 0.5rem; }
+    .price-card .price-desc { color: var(--text-muted); font-size: 0.875rem; margin-bottom: 1.5rem; }
+    .price-amount { font-family: var(--font-heading); font-size: 2.6rem; color: #fff; font-weight: 700; margin-bottom: 1.5rem; }
+    .price-amount span { font-size: 1rem; color: var(--text-dim); font-weight: 400; }
+    .price-features { list-style: none; margin-bottom: 2rem; display: flex; flex-direction: column; gap: 0.75rem; }
+    .price-features li { font-size: 0.9rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.6rem; }
+    .price-features li span { color: var(--accent-emerald); font-weight: bold; }
+
+    /* Estimator */
+    .estimator-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 2.5rem;
+      margin-top: 3rem;
+    }
+    .estimator-options { display: flex; flex-direction: column; gap: 1.1rem; }
+    .estimator-option {
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-color);
+      padding: 1rem 1.25rem;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: var(--fast);
+    }
+    .estimator-option:hover, .estimator-option.selected { border-color: var(--accent-indigo); background: rgba(99, 102, 241, 0.06); }
+    .estimator-option input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--accent-indigo); flex-shrink: 0; margin-left: 1rem; }
+    .estimator-result {
+      background: #08090f;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 2rem;
+      display: flex; flex-direction: column; justify-content: space-between; text-align: center;
+    }
+    .est-price { font-family: var(--font-heading); font-size: 3rem; color: var(--accent-emerald); margin: 1rem 0; transition: transform 0.2s var(--ease); }
+    .est-price.bump { transform: scale(1.08); }
+
+    /* FAQ */
+    .faq-list { display: flex; flex-direction: column; gap: 1rem; margin-top: 2.5rem; max-width: 800px; margin-left: auto; margin-right: auto; }
+    .faq-item { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-md); overflow: hidden; transition: border-color var(--fast); }
+    .faq-item.active { border-color: rgba(99,102,241,0.3); }
+    .faq-question {
+      padding: 1.25rem 1.5rem; width: 100%; text-align: left;
+      color: #fff; font-family: var(--font-heading); font-size: 1.05rem; font-weight: 600;
+      display: flex; justify-content: space-between; align-items: center; cursor: pointer; gap: 1rem;
+    }
+    .faq-question::after {
+      content: '+';
+      font-family: var(--font-mono); font-size: 1.25rem; color: var(--accent-indigo);
+      transition: transform 0.3s var(--ease); flex-shrink: 0;
+    }
+    .faq-item.active .faq-question::after { transform: rotate(45deg); }
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.35s var(--ease); padding: 0 1.5rem; color: var(--text-muted); font-size: 0.95rem; }
+    .faq-item.active .faq-answer { max-height: 300px; padding-bottom: 1.25rem; }
+
+    /* Contact / form */
+    .contact-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 3rem; max-width: 720px; margin: 2.5rem auto 0; }
+    .form-group { margin-bottom: 1.25rem; text-align: left; }
+    .form-label { display: block; font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.04em; }
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 0.85rem 1rem;
+      color: #fff;
+      font-size: 0.95rem;
+      transition: border-color var(--fast), box-shadow var(--fast);
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      outline: none; border-color: var(--accent-indigo); box-shadow: 0 0 0 3px var(--accent-indigo-glow);
+    }
+    .form-textarea { resize: vertical; min-height: 110px; }
+
+    /* Toast */
+    .toast-message {
+      position: fixed; bottom: 30px; right: 30px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--accent-emerald);
+      color: #fff; padding: 1rem 1.5rem;
+      border-radius: var(--radius-md);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+      z-index: 1000; max-width: 380px;
+      transform: translateY(20px); opacity: 0; visibility: hidden;
+      transition: transform 0.4s var(--ease), opacity 0.4s var(--ease), visibility 0.4s;
+    }
+    .toast-message.show { transform: translateY(0); opacity: 1; visibility: visible; }
+
+    /* Footer */
+    .site-footer { background: #030509; border-top: 1px solid var(--border-color); padding: 4rem 0 2rem; margin-top: 4rem; }
+    .footer-grid { display: grid; grid-template-columns: 2fr repeat(3, 1fr); gap: 3rem; margin-bottom: 3rem; }
+    .footer-grid h5 { font-family: var(--font-mono); font-size: 0.82rem; color: #fff; margin-bottom: 1.25rem; text-transform: uppercase; letter-spacing: 0.06em; }
+    .footer-grid ul { display: flex; flex-direction: column; gap: 0.75rem; }
+    .footer-grid a { font-size: 0.9rem; color: var(--text-muted); cursor: pointer; transition: color var(--fast); }
+    .footer-grid a:hover { color: #fff; }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border-color); padding-top: 2rem; font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-dim); }
+    .footer-status { display: inline-flex; align-items: center; gap: 0.4rem; }
+
+    /* Cinematic CTA */
+    .cta-band {
+      position: relative;
+      border-radius: var(--radius-lg);
+      padding: 3.5rem 2.5rem;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      background: linear-gradient(135deg, rgba(99,102,241,0.14), rgba(6,182,212,0.08) 50%, rgba(139,92,246,0.1));
+      background-size: 200% 200%;
+      animation: gradientShift 12s ease infinite;
+      text-align: center;
+    }
+    @keyframes gradientShift { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+    .cta-band h2 { max-width: 22ch; margin: 0 auto; }
+    .cta-band p { margin-top: 1rem; }
+    .cta-band .hero__actions { justify-content: center; margin-top: 2rem; margin-bottom: 0; }
+
+    /* ==========================================================================
+       RESPONSIVE
+       ========================================================================== */
+    @media (max-width: 992px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .hero__visual { order: -1; max-width: 460px; margin: 0 auto; }
+      .pillars-grid { grid-template-columns: 1fr; }
+      .grid-4 { grid-template-columns: repeat(2, 1fr); }
+      .grid-3 { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .estimator-box { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+      .compare-wrap { grid-template-columns: 1fr; }
+      .compare-divider { width: auto; height: 1px; }
+      .cursor-glow { display: none; }
+    }
+
+    @media (max-width: 768px) {
+      .nav__links, .nav__cta { display: none; }
+      .nav__toggle { display: block; }
+      .grid-4 { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+      .statusbar__right span:nth-child(1) { display: none; }
+      .section { padding: 4rem 0; }
+      .contact-card { padding: 1.75rem; }
+      .estimator-box, .callout { padding: 1.75rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Decorative background -->
+  <div class="bg-atmosphere" aria-hidden="true">
+    <div class="bg-grid"></div>
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
+    <div class="bg-orb bg-orb-3"></div>
+  </div>
+  <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+  <!-- Status bar -->
+  <div class="statusbar">
+    <div class="container statusbar__inner">
+      <span><span class="statusbar__dot"></span>zemprolabs — status: online</span>
+      <div class="statusbar__right">
+        <span>build: software × marketing × support</span>
+        <a href="mailto:hello@zemprolabs.com">hello@zemprolabs.com</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main nav -->
+  <header class="site-header" id="siteHeader">
+    <div class="container">
+      <nav class="nav">
+        <a href="#home" class="logo" onclick="navigateTo('home'); return false;" aria-label="Zemprolabs home">
+          <span class="logo__bracket">&lt;</span>zemprolabs<span class="logo__bracket">/&gt;</span>
+        </a>
+        <ul class="nav__links">
+          <li><span class="nav__link" data-page="services" onclick="navigateTo('services')">Services</span></li>
+          <li><span class="nav__link" data-page="work" onclick="navigateTo('work')">Work</span></li>
+          <li><span class="nav__link" data-page="process" onclick="navigateTo('process')">Process</span></li>
+          <li><span class="nav__link" data-page="pricing" onclick="navigateTo('pricing')">Pricing</span></li>
+          <li><span class="nav__link" data-page="about" onclick="navigateTo('about')">About</span></li>
+        </ul>
+        <div class="nav__cta">
+          <button onclick="navigateTo('start-a-project')" class="btn btn-primary btn-mono">Start a project →</button>
+        </div>
+        <button class="nav__toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" onclick="toggleMobileMenu()">
+          <span></span><span></span><span></span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Mobile menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <span class="nav__link" data-page="services" onclick="navigateTo('services')">Services</span>
+    <span class="nav__link" data-page="work" onclick="navigateTo('work')">Work</span>
+    <span class="nav__link" data-page="process" onclick="navigateTo('process')">Process</span>
+    <span class="nav__link" data-page="pricing" onclick="navigateTo('pricing')">Pricing</span>
+    <span class="nav__link" data-page="about" onclick="navigateTo('about')">About</span>
+    <div class="mobile-menu__cta">
+      <button onclick="navigateTo('start-a-project')" class="btn btn-primary btn-mono btn-block">Start a project →</button>
+    </div>
+  </div>
+
+  <main id="app-content">
+
+    <!-- ============================== HOME ============================== -->
+    <div id="page-home" class="page-view active-page">
+
+      <section class="hero">
+        <div class="container">
+          <div class="hero-grid">
+            <div class="hero__content">
+              <span class="eyebrow">End-to-end digital partner</span>
+              <h1 class="hero__headline">We build it, grow it, and stay on call for it<span class="hero__cursor"></span></h1>
+              <p class="hero__sub">Zemprolabs is the single vendor you need for digital work: custom software, ServiceNow tooling, marketing and SEO — backed by a dedicated human assistant, not a support ticket.</p>
+              <div class="hero__actions">
+                <button onclick="navigateTo('start-a-project')" class="btn btn-primary">Start a project →</button>
+                <button onclick="navigateTo('work')" class="btn btn-outline btn-mono">See selected work</button>
+              </div>
+              <div class="hero__trust">
+                <span class="hero__trust-item">Software</span>
+                <span class="hero__trust-item">ServiceNow</span>
+                <span class="hero__trust-item">Marketing</span>
+                <span class="hero__trust-item">Digital Support</span>
+              </div>
+            </div>
+
+            <!-- Hero interactive widget -->
+            <div class="hero__visual" id="heroVisual">
+              <div class="hero-glow-backdrop"></div>
+              <div class="hero__float hero__float--1"><span class="led"></span>Deploy: success</div>
+              <div class="hero__float hero__float--2"><span class="led"></span>SLA: &lt;24h response</div>
+
+              <div class="hero-interactive-card" id="tiltCard">
+                <div class="interactive-card__header">
+                  <div class="window-dots">
+                    <span class="dot dot-red"></span>
+                    <span class="dot dot-yellow"></span>
+                    <span class="dot dot-green"></span>
+                  </div>
+                  <div class="interactive-tabs">
+                    <button class="tab-btn active" onclick="switchTab(event, 'tab-code')">App.tsx</button>
+                    <button class="tab-btn" onclick="switchTab(event, 'tab-support')">Assistant</button>
+                    <button class="tab-btn" onclick="switchTab(event, 'tab-growth')">Growth.log</button>
+                  </div>
+                </div>
+
+                <div class="interactive-card__body">
+                  <div id="tab-code" class="tab-content active">
+                    <div class="code-line"><span class="line-num">1</span> <span class="code-keyword">import</span> { ZemprolabsTeam } <span class="code-keyword">from</span> <span class="code-string">'@zemprolabs/core'</span>;</div>
+                    <div class="code-line"><span class="line-num">2</span></div>
+                    <div class="code-line"><span class="line-num">3</span> <span class="code-keyword">export default function</span> <span class="code-func">DigitalStack</span>() {</div>
+                    <div class="code-line"><span class="line-num">4</span> &nbsp;&nbsp;<span class="code-keyword">return</span> (</div>
+                    <div class="code-line"><span class="line-num">5</span> &nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="code-func">ZemprolabsTeam</span></div>
+                    <div class="code-line"><span class="line-num">6</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;software={<span class="code-string">"Custom Web & Apps"</span>}</div>
+                    <div class="code-line"><span class="line-num">7</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;serviceNow={<span class="code-string">"Enterprise Workflows"</span>}</div>
+                    <div class="code-line"><span class="line-num">8</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;support={<span class="code-string">"Dedicated Human Lead"</span>}</div>
+                    <div class="code-line"><span class="line-num">9</span> &nbsp;&nbsp;&nbsp;&nbsp;/&gt;</div>
+                    <div class="code-line"><span class="line-num">10</span> &nbsp;&nbsp;);</div>
+                    <div class="code-line"><span class="line-num">11</span> }</div>
+                  </div>
+
+                  <div id="tab-support" class="tab-content">
+                    <div class="support-widget">
+                      <div class="chat-bubble user">
+                        <div class="chat-sender">CLIENT</div>
+                        "Hey! We need to push an emergency update to the booking system &amp; boost SEO for next week."
+                      </div>
+                      <div class="chat-bubble assistant">
+                        <div class="chat-sender">⚡ DEDICATED ASSISTANT</div>
+                        "On it! Deploying the hotfix now — marketing is reviewing keyword targeting. ETA 20 mins."
+                      </div>
+                    </div>
+                    <div class="status-flow">
+                      <span class="status-pill done">Assigned</span> → <span class="status-pill done">In progress</span> → <span class="status-pill active">Completed</span>
+                    </div>
+                  </div>
+
+                  <div id="tab-growth" class="tab-content">
+                    <div class="code-line"><span class="code-comment">// Monthly growth report</span></div>
+                    <div class="code-line"><span class="code-keyword">STATUS</span>: 200 OK</div>
+                    <div class="code-line">Organic search traffic: <span class="code-string">trending up</span></div>
+                    <div class="code-line">Conversion rate: <span class="code-string">improving</span></div>
+                    <div class="code-line">Page speed index: <span class="code-string">99 / 100</span></div>
+                    <div class="code-line">Active retainer: <span class="code-func">Managed Support — active</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Stats -->
+      <section class="section-tight">
+        <div class="container">
+          <div class="grid-4 reveal reveal-stagger" id="statsGrid">
+            <div class="stat" style="--i:0"><div class="stat__num" data-count="4">0</div><div class="stat__label">Disciplines in one team</div></div>
+            <div class="stat" style="--i:1"><div class="stat__num" data-count="1">0</div><div class="stat__label">Dedicated human point of contact</div></div>
+            <div class="stat" style="--i:2"><div class="stat__num" data-count="0">0</div><div class="stat__label">Third-party vendors to manage</div></div>
+            <div class="stat" style="--i:3"><div class="stat__num" data-suffix="h" data-count="24">0</div><div class="stat__label">Typical response window</div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Services teaser -->
+      <section class="section">
+        <div class="container">
+          <div class="section-head reveal">
+            <span class="eyebrow">Core capabilities</span>
+            <h2>Everything digital. One team.</h2>
+            <p>Four disciplines, one accountable partner. Click any pillar to see the full technology stack and deliverables.</p>
+          </div>
+
+          <div class="pillars-grid reveal reveal-stagger">
+            <div class="pillar-card" style="--i:0" onclick="navigateTo('services')">
+              <div>
+                <span class="pillar__num">01 / Software Engineering</span>
+                <h3>Custom Software &amp; Platforms</h3>
+                <p>Scalable web applications, mobile platforms, and enterprise architecture built for long-term reliability.</p>
+                <div class="pillar-tags">
+                  <span class="tag-chip">React / Next.js</span>
+                  <span class="tag-chip">Node.js</span>
+                  <span class="tag-chip">iOS / Android</span>
+                </div>
+              </div>
+              <div class="pillar__arrow">Explore software services <span>→</span></div>
+            </div>
+
+            <div class="pillar-card" style="--i:1" onclick="navigateTo('services')">
+              <div>
+                <span class="pillar__num">02 / Enterprise Automation</span>
+                <h3>ServiceNow &amp; Tooling</h3>
+                <p>Custom ServiceNow workflows, snowCMS integration, portal UI development, and platform conflict audits.</p>
+                <div class="pillar-tags">
+                  <span class="tag-chip">snowCMS</span>
+                  <span class="tag-chip">ITSM / CSM</span>
+                  <span class="tag-chip">Custom Portals</span>
+                </div>
+              </div>
+              <div class="pillar__arrow">Explore ServiceNow services <span>→</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Why Zemprolabs -->
+      <section class="section">
+        <div class="container">
+          <div class="section-head reveal">
+            <span class="eyebrow eyebrow-emerald">Why Zemprolabs</span>
+            <h2>Stop managing three different vendors.</h2>
+            <p>Most teams end up briefing a development shop, a marketing agency, and a freelancer separately — then repeating the context every time something breaks.</p>
+          </div>
+
+          <div class="compare-wrap reveal">
+            <div class="compare-col compare-col--old">
+              <span class="compare-label">Traditional setup</span>
+              <div class="compare-node">Client</div>
+              <div class="compare-node">Development Agency</div>
+            </div>
+            <div class="compare-divider"></div>
+            <div class="compare-col compare-col--new">
+              <span class="compare-label">With Zemprolabs</span>
+              <div class="compare-node hero-node">Client</div>
+              <div class="compare-node">One Accountable Digital Partner</div>
+              <div class="compare-node result-node">Software + Growth + Support</div>
+            </div>
+          </div>
+
+          <div class="callout reveal">
+            <div class="callout__icon">→</div>
+            <div>
+              <h3>Every client gets a dedicated person, not a support ticket.</h3>
+              <p>Most agencies hand you a deliverable and disappear. We stay — one assigned person who knows your project, handles the small stuff, and escalates the big stuff.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tech stack -->
+      <section class="section">
+        <div class="container">
+          <div class="section-head reveal">
+            <span class="eyebrow eyebrow-cyan">Built with</span>
+            <h2>Technology we actually ship with.</h2>
+          </div>
+          <div class="tech-cloud reveal">
+            <span class="tech-chip"><span class="led"></span>React</span>
+            <span class="tech-chip"><span class="led"></span>Next.js</span>
+            <span class="tech-chip"><span class="led"></span>Node.js</span>
+            <span class="tech-chip"><span class="led"></span>TypeScript</span>
+            <span class="tech-chip"><span class="led"></span>Python</span>
+            <span class="tech-chip"><span class="led"></span>ServiceNow</span>
+            <span class="tech-chip"><span class="led"></span>iOS</span>
+            <span class="tech-chip"><span class="led"></span>Android</span>
+            <span class="tech-chip"><span class="led"></span>HTML / CSS / JS</span>
+            <span class="tech-chip"><span class="led"></span>Technical SEO</span>
+            <span class="tech-chip"><span class="led"></span>Analytics</span>
+            <span class="tech-chip"><span class="led"></span>Cloud</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Selected work teaser -->
+      <section class="section">
+        <div class="container">
+          <div class="section-head reveal">
+            <span class="eyebrow eyebrow-emerald">Selected work</span>
+            <h2>Work that solves real problems.</h2>
+            <p>A sample of the software, healthcare, e-commerce, and enterprise projects we've shipped.</p>
+          </div>
+          <div class="grid-3 reveal reveal-stagger">
+            <div class="case-card" style="--i:0" onclick="navigateTo('work')">
+              <div class="case-thumb">
+                <div class="case-thumb__bar">
+                  <div class="case-thumb__dots"><span class="case-thumb__dot case-thumb__dot--r"></span><span class="case-thumb__dot case-thumb__dot--y"></span><span class="case-thumb__dot case-thumb__dot--g"></span></div>
+                  <span class="case-thumb__url">baemeds.com</span>
+                </div>
+                <div class="case-thumb__preview"><span class="case-thumb__watermark">&lt;e-commerce/&gt;</span></div>
+              </div>
+              <div class="case-card__body">
+                <span class="card__tag">E-Commerce</span>
+                <h4>BaeMeds — Multi-National DME Platform</h4>
+                <p>Multi-national e-commerce platform for a Durable Medical Equipment business operating in the USA and India.</p>
+                <div class="case-card__meta"><span>BaeMeds</span><span class="view-link">View →</span></div>
+              </div>
+            </div>
+            <div class="case-card" style="--i:1" onclick="navigateTo('work')">
+              <div class="case-thumb">
+                <div class="case-thumb__bar">
+                  <div class="case-thumb__dots"><span class="case-thumb__dot case-thumb__dot--r"></span><span class="case-thumb__dot case-thumb__dot--y"></span><span class="case-thumb__dot case-thumb__dot--g"></span></div>
+                  <span class="case-thumb__url">erusacademy.in</span>
+                </div>
+                <div class="case-thumb__preview"><span class="case-thumb__watermark">&lt;software/&gt;</span></div>
+              </div>
+              <div class="case-card__body">
+                <span class="card__tag">Software</span>
+                <h4>Erus Academy — Full LMS Platform</h4>
+                <p>High-grade LMS project featuring a web portal alongside native iOS and Android mobile applications.</p>
+                <div class="case-card__meta"><span>Erus Academy</span><span class="view-link">View →</span></div>
+              </div>
+            </div>
+            <div class="case-card" style="--i:2" onclick="navigateTo('work')">
+              <div class="case-thumb">
+                <div class="case-thumb__bar">
+                  <div class="case-thumb__dots"><span class="case-thumb__dot case-thumb__dot--r"></span><span class="case-thumb__dot case-thumb__dot--y"></span><span class="case-thumb__dot case-thumb__dot--g"></span></div>
+                  <span class="case-thumb__url">ServiceNow Enterprise</span>
+                </div>
+                <div class="case-thumb__preview"><span class="case-thumb__watermark">&lt;servicenow/&gt;</span></div>
+              </div>
+              <div class="case-card__body">
+                <span class="card__tag">ServiceNow</span>
+                <h4>snowCMS — ServiceNow Automation Tool</h4>
+                <p>ServiceNow automation tool built to streamline content management, instance updates, and workflows.</p>
+                <div class="case-card__meta"><span>Enterprise Client</span><span class="view-link">View →</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="text-center reveal" style="margin-top: 2.5rem;">
+            <button onclick="navigateTo('work')" class="btn btn-outline btn-mono">See all work →</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Cinematic CTA -->
+      <section class="section">
+        <div class="container">
+          <div class="cta-band reveal">
+            <span class="eyebrow">Ready when you are</span>
+            <h2>Ready to build something better?</h2>
+            <p class="max-w-md mx-auto" style="color: var(--text-muted);">One team. One point of contact. Software, growth, and support included.</p>
+            <div class="hero__actions">
+              <button onclick="navigateTo('start-a-project')" class="btn btn-primary">Start a project →</button>
+              <button onclick="navigateTo('work')" class="btn btn-outline btn-mono">See our work</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ============================== SERVICES ============================== -->
+    <div id="page-services" class="page-view">
+      <div class="page-header">
+        <div class="container">
+          <span class="eyebrow">Our services</span>
+          <h1>Comprehensive digital capabilities</h1>
+          <p>Four specialized pillars engineered to handle every stage of your product lifecycle — from the first line of code to growth and daily maintenance.</p>
+        </div>
+      </div>
+
+      <section class="section">
+        <div class="container">
+          <div class="pillars-grid reveal reveal-stagger">
+            <div class="pillar-card" style="--i:0">
+              <div>
+                <span class="pillar__num">01 / Software Development</span>
+                <h3>Custom Software &amp; Web Applications</h3>
+                <p>High-performance web platforms, SaaS applications, and native mobile apps — built with clean architecture, maintainable codebases, and fast load times.</p>
+                <div style="margin-bottom: 1.5rem;">
+                  <h5 style="color: #fff; font-size: 0.9rem; margin-bottom: 0.5rem;">Key deliverables</h5>
+                  <ul style="color: var(--text-muted); font-size: 0.875rem; list-style: disc; padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.3rem;">
+                    <li>Full-stack web applications (React, Next.js, Node.js)</li>
+                    <li>iOS &amp; Android mobile apps (React Native, Flutter)</li>
+                    <li>REST &amp; GraphQL API architecture &amp; integrations</li>
+                    <li>Cloud infrastructure, serverless &amp; DevOps setup</li>
+                  </ul>
+                </div>
+                <div class="pillar-tags">
+                  <span class="tag-chip">Next.js</span><span class="tag-chip">TypeScript</span><span class="tag-chip">PostgreSQL</span><span class="tag-chip">AWS</span>
+                </div>
+              </div>
+              <button onclick="navigateTo('start-a-project')" class="btn btn-outline btn-mono" style="margin-top: 1rem;">Scope a software project →</button>
+            </div>
+
+            <div class="pillar-card" style="--i:1">
+              <div>
+                <span class="pillar__num">02 / Enterprise Workflows</span>
+                <h3>ServiceNow Platform &amp; Custom Tooling</h3>
+                <p>Deep expertise in ServiceNow instance customization, ITSM/CSM portals, automated conflict detection, and our proprietary snowCMS content manager.</p>
+                <div style="margin-bottom: 1.5rem;">
+                  <h5 style="color: #fff; font-size: 0.9rem; margin-bottom: 0.5rem;">Key deliverables</h5>
+                  <ul style="color: var(--text-muted); font-size: 0.875rem; list-style: disc; padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.3rem;">
+                    <li>snowCMS integration &amp; automated publishing</li>
+                    <li>Service portal UI/UX customization</li>
+                    <li>Workflow &amp; integration hub automation</li>
+                    <li>Instance health, upgrade &amp; conflict audits</li>
+                  </ul>
+                </div>
+                <div class="pillar-tags">
+                  <span class="tag-chip">ServiceNow</span><span class="tag-chip">snowCMS</span><span class="tag-chip">ITSM</span><span class="tag-chip">JavaScript</span>
+                </div>
+              </div>
+              <button onclick="navigateTo('start-a-project')" class="btn btn-outline btn-mono" style="margin-top: 1rem;">Inquire about ServiceNow →</button>
+            </div>
+
+            <div class="pillar-card" style="--i:2">
+              <div>
+                <span class="pillar__num">03 / Digital Growth</span>
+                <h3>Growth Marketing &amp; Technical SEO</h3>
+                <p>Software is only effective if people use it. We implement technical SEO, performance campaigns, conversion rate optimization, and data-driven content.</p>
+                <div style="margin-bottom: 1.5rem;">
+                  <h5 style="color: #fff; font-size: 0.9rem; margin-bottom: 0.5rem;">Key deliverables</h5>
+                  <ul style="color: var(--text-muted); font-size: 0.875rem; list-style: disc; padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.3rem;">
+                    <li>Technical SEO audits &amp; Core Web Vitals optimization</li>
+                    <li>Content strategy &amp; programmatic SEO pipelines</li>
+                    <li>Campaign management &amp; analytics dashboards</li>
+                    <li>Funnel &amp; conversion rate optimization</li>
+                  </ul>
+                </div>
+                <div class="pillar-tags">
+                  <span class="tag-chip">Technical SEO</span><span class="tag-chip">GA4</span><span class="tag-chip">CRO</span><span class="tag-chip">Campaigns</span>
+                </div>
+              </div>
+              <button onclick="navigateTo('start-a-project')" class="btn btn-outline btn-mono" style="margin-top: 1rem;">Talk about growth →</button>
+            </div>
+
+            <div class="pillar-card" style="--i:3">
+              <div>
+                <span class="pillar__num">04 / Managed Digital Assistant</span>
+                <h3>Dedicated Human Support Lead</h3>
+                <p>Never worry about disappearing contractors or slow ticketing systems again. Get a dedicated human lead who knows your brand and code inside-out.</p>
+                <div style="margin-bottom: 1.5rem;">
+                  <h5 style="color: #fff; font-size: 0.9rem; margin-bottom: 0.5rem;">Key deliverables</h5>
+                  <ul style="color: var(--text-muted); font-size: 0.875rem; list-style: disc; padding-left: 1.25rem; display: flex; flex-direction: column; gap: 0.3rem;">
+                    <li>Direct Slack / Teams / email channel with your lead</li>
+                    <li>Guaranteed sub-24-hour turnaround SLA</li>
+                    <li>Ongoing maintenance, minor enhancements &amp; bug fixes</li>
+                    <li>Proactive uptime &amp; security monitoring</li>
+                  </ul>
+                </div>
+                <div class="pillar-tags">
+                  <span class="tag-chip">Direct channel</span><span class="tag-chip">No tickets</span><span class="tag-chip">&lt;24h SLA</span><span class="tag-chip">Maintenance</span>
+                </div>
+              </div>
+              <button onclick="navigateTo('start-a-project')" class="btn btn-outline btn-mono" style="margin-top: 1rem;">Get a dedicated assistant →</button>
+            </div>
+          </div>
+
+          <div class="callout reveal">
+            <div class="callout__icon">💡</div>
+            <div>
+              <h3>Need a custom bundled stack?</h3>
+              <p>Most clients combine software development with growth marketing and a dedicated assistant retainer. Use the pricing calculator to estimate your bundle.</p>
+              <button onclick="navigateTo('pricing')" class="btn btn-primary btn-mono" style="margin-top: 1rem;">View pricing calculator →</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ============================== WORK ============================== -->
+    <div id="page-work" class="page-view">
+      <div class="page-header">
+        <div class="container">
+          <span class="eyebrow eyebrow-emerald">Selected work</span>
+          <h1>Case studies &amp; proven impact</h1>
+          <p>How we've helped enterprises, healthcare providers, e-commerce brands, and edtech platforms build reliable digital experiences.</p>
+        </div>
+      </div>
+
+      <section class="section">
+        <div class="container">
+          <div class="filter-bar reveal">
+            <button class="filter-btn active" onclick="filterWork('all', event)">All projects</button>
+            <button class="filter-btn" onclick="filterWork('ecommerce', event)">E-Commerce</button>
+            <button class="filter-btn" onclick="filterWork('software', event)">Software &amp; Apps</button>
+            <button class="filter-btn" onclick="filterWork('healthcare', event)">Healthcare</button>
+            <button class="filter-btn" onclick="filterWork('servicenow', event)">ServiceNow</button>
+          </div>
+
+          <div class="grid-3" id="portfolio-grid">
+            <div class="case-card reveal in-view" data-category="ecommerce">
+              <div class="case-thumb">
+                <div class="case-thumb__bar">
+                  <div class="case-thumb__dots"><span class="case-thumb__dot case-thumb__dot--r"></span><span class="case-thumb__dot case-thumb__dot--y"></span><span class="case-thumb__dot case-thumb__dot--g"></span></div>
+                  <span class="case-thumb__url">baemeds.com / baemeds.in</span>
+                </div>
+                <div class="case-thumb__preview"><span class="case-thumb__watermark">&lt;e-commerce/&gt;</span></div>
+              </div>
+              <div class="case-card__body">
+                <span class="card__tag">E-Commerce</span>
+                <h4>BaeMeds — Multi-National DME Platform</h4>
+                <p>Multi-national e-commerce platform for Durable Medical Equipment operating across the USA &amp; India with automated compliance and currency routing.</p>
+                <div class="case-card__meta"><span>BaeMeds · USA &amp; India</span><span class="view-link">View →</span></div>
+              </div>
+            </div>
+
+            <div class="case-card reveal in-view" data-category="software">
+              <div class="case-thumb">
+                <div class="case-thumb__bar">
+                  <div class="case-thumb__dots"><span class="case-thumb__dot case-thumb__dot--r"></span><span class="case-thumb__dot case-thumb__dot--y"></span><span class="case-thumb__dot case-thumb__dot--g"></span></div>
+                  <span class="case-thumb__url">erusacademy.in</span>
+                </div>
+                <div class="case-thumb__preview"><span class="case-thumb__watermark">&lt;software/&gt;</span></div>
+              </div>
+              <div class="case-card__body">
+                <span class="card__tag">Software</span>
+                <h4>Erus Academy — Full LMS Platform</h4>
+                <p>Comprehensive edtech platform featuring an administrative web portal alongside native iOS and Android learning applications.</p>
+                <div class="case-card__meta"><span>Erus Academy</span><span class="view-link">View →</span></div>
+              </div>
+            </div>
+
+            <div class="case-card reveal in-view" data-category="healthcare">
+              <div class="case-thumb">
+                <div class="case-thumb__bar">
+                  <div class="case-thumb__dots"><span class="case-thumb__dot case-thumb__dot--r"></span><span class="case-thumb__dot case-thumb__dot--y"></span><span class="case-thumb__dot case-thumb__dot--g"></span></div>
+                  <span class="case-thumb__url">auviatherapy.com</span>
+                </div>
+                <div class="case-thumb__preview"><span class="case-thumb__watermark">&lt;healthcare/&gt;</span></div>
+              </div>
+              <div class="case-card__body">
+                <span class="card__tag">Healthcare</span>
+                <h4>Auvia Behavioral Centers Website</h4>
+                <p>Modern web platform and patient intake portal for an autism therapy clinic network based in Austin, Texas.</p>
+                <div class="case-card__meta"><span>Auvia Behavioral Centers · Austin, TX</span><span class="view-link">View →</span></div>
+              </div>
+            </div>
+
+            <div class="case-card reveal in-view" data-category="software">
+              <div class="case-thumb">
+                <div class="case-thumb__bar">
+                  <div class="case-thumb__dots"><span class="case-thumb__dot case-thumb__dot--r"></span><span class="case-thumb__dot case-thumb__dot--y"></span><span class="case-thumb__dot case-thumb__dot--g"></span></div>
+                  <span class="case-thumb__url">talenthunters.com</span>
+                </div>
+                <div class="case-thumb__preview"><span class="case-thumb__watermark">&lt;recruitment/&gt;</span></div>
+              </div>
+              <div class="case-card__body">
+                <span class="card__tag">Software &amp; Portal</span>
+                <h4>Talent Hunters Corporate Portal</h4>
+                <p>Corporate platform and candidate application tracking portal for an international talent acquisition firm.</p>
+                <div class="case-card__meta"><span>Talent Hunters Consultancy</span><span class="view-link">View →</span></div>
+              </div>
+            </div>
+
+            <div class="case-card reveal in-view" data-category="servicenow">
+              <div class="case-thumb">
+                <div class="case-thumb__bar">
+                  <div class="case-thumb__dots"><span class="case-thumb__dot case-thumb__dot--r"></span><span class="case-thumb__dot case-thumb__dot--y"></span><span class="case-thumb__dot case-thumb__dot--g"></span></div>
+                  <span class="case-thumb__url">ServiceNow Enterprise</span>
+                </div>
+                <div class="case-thumb__preview"><span class="case-thumb__watermark">&lt;servicenow/&gt;</span></div>
+              </div>
+              <div class="case-card__body">
+                <span class="card__tag">ServiceNow</span>
+                <h4>snowCMS — ServiceNow Automation Tool</h4>
+                <p>Proprietary ServiceNow automation utility built to streamline content management, instance deployments, and workflows.</p>
+                <div class="case-card__meta"><span>Enterprise Client</span><span class="view-link">View →</span></div>
+              </div>
+            </div>
+
+            <div class="case-card reveal in-view" data-category="healthcare">
+              <div class="case-thumb">
+                <div class="case-thumb__bar">
+                  <div class="case-thumb__dots"><span class="case-thumb__dot case-thumb__dot--r"></span><span class="case-thumb__dot case-thumb__dot--y"></span><span class="case-thumb__dot case-thumb__dot--g"></span></div>
+                  <span class="case-thumb__url">Clinic Connect Portal</span>
+                </div>
+                <div class="case-thumb__preview"><span class="case-thumb__watermark">&lt;automation/&gt;</span></div>
+              </div>
+              <div class="case-card__body">
+                <span class="card__tag">Healthcare</span>
+                <h4>Clinic Connect Scheduling Automation</h4>
+                <p>Automated session scheduling, provider assignment, and patient reminder pipeline built for specialized medical clinics.</p>
+                <div class="case-card__meta"><span>Auvia Behavioral Centers</span><span class="view-link">View →</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ============================== PROCESS ============================== -->
+    <div id="page-process" class="page-view">
+      <div class="page-header">
+        <div class="container">
+          <span class="eyebrow eyebrow-cyan">How we work</span>
+          <h1>Our 5-step execution blueprint</h1>
+          <p>We eliminate agency bloat and communication gaps. Here is exactly how we take your project from discovery call to high-performance scale.</p>
+        </div>
+      </div>
+
+      <section class="section">
+        <div class="container">
+          <div class="timeline" id="processTimeline" style="--fill: 0%;">
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <span class="timeline-step">Phase 01 / Discovery &amp; Blueprint</span>
+                <h3>Deep technical &amp; growth alignment</h3>
+                <p>We start by understanding your core business goals, target audience, technical requirements, and current digital bottlenecks. You get a clear execution roadmap before we write a line of code.</p>
+                <div class="timeline-deliverables">
+                  <span class="tag-chip">Architecture diagram</span><span class="tag-chip">Scope &amp; milestones</span><span class="tag-chip">Tech stack selection</span>
+                </div>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <span class="timeline-step">Phase 02 / Rapid Prototype &amp; Design</span>
+                <h3>High-fidelity design &amp; schema specs</h3>
+                <p>We build high-fidelity wireframes, interactive component design systems, database schemas, and API contracts — real working visuals, not abstract descriptions.</p>
+                <div class="timeline-deliverables">
+                  <span class="tag-chip">UI/UX prototypes</span><span class="tag-chip">Database schema</span><span class="tag-chip">API contracts</span>
+                </div>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <span class="timeline-step">Phase 03 / Agile Development</span>
+                <h3>Agile sprints &amp; continuous integration</h3>
+                <p>We build in fast two-week agile sprints. You receive live preview builds at the end of every sprint, allowing continuous testing and immediate feedback.</p>
+                <div class="timeline-deliverables">
+                  <span class="tag-chip">2-week sprints</span><span class="tag-chip">Live staging URL</span><span class="tag-chip">Code audits</span>
+                </div>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <span class="timeline-step">Phase 04 / Launch &amp; SEO Engine</span>
+                <h3>Production deployment &amp; search setup</h3>
+                <p>We deploy with zero downtime using automated CI/CD pipelines, configure technical SEO metadata, optimize Core Web Vitals, and launch initial marketing campaigns.</p>
+                <div class="timeline-deliverables">
+                  <span class="tag-chip">Production launch</span><span class="tag-chip">Technical SEO audit</span><span class="tag-chip">Analytics integration</span>
+                </div>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <span class="timeline-step">Phase 05 / Managed Ongoing Handover</span>
+                <h3>Dedicated assistant onboarding</h3>
+                <p>Post-launch, your dedicated human assistant takes over day-to-day operations. You get direct Slack/email access for minor updates, hotfixes, and continuous optimization.</p>
+                <div class="timeline-deliverables">
+                  <span class="tag-chip">Dedicated Slack channel</span><span class="tag-chip">Sub-24h SLA</span><span class="tag-chip">Proactive maintenance</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ============================== PRICING ============================== -->
+    <div id="page-pricing" class="page-view">
+      <div class="page-header">
+        <div class="container">
+          <span class="eyebrow eyebrow-emerald">Transparent pricing</span>
+          <h1>Predictable pricing, zero hidden fees</h1>
+          <p>Choose a retainer package or use the interactive calculator below to scope custom project deliverables.</p>
+        </div>
+      </div>
+
+      <section class="section">
+        <div class="container">
+          <div class="pricing-grid reveal reveal-stagger">
+            <div class="price-card" style="--i:0">
+              <div>
+                <h3>Starter MVP</h3>
+                <p class="price-desc">Ideal for launching early-stage products and web applications fast.</p>
+                <div class="price-amount">$2,500 <span>/ project</span></div>
+                <ul class="price-features">
+                  <li><span>✓</span> Full custom web platform</li>
+                  <li><span>✓</span> Responsive UI/UX design</li>
+                  <li><span>✓</span> Basic technical SEO setup</li>
+                  <li><span>✓</span> 30 days included support</li>
+                </ul>
+              </div>
+              <button onclick="navigateTo('start-a-project')" class="btn btn-outline btn-mono btn-block">Select Starter →</button>
+            </div>
+
+            <div class="price-card featured" style="--i:1">
+              <span class="price-badge">Most popular</span>
+              <div>
+                <h3>Growth Stack</h3>
+                <p class="price-desc">Complete solution combining software, SEO growth, and dedicated support.</p>
+                <div class="price-amount">$3,800 <span>/ bundle</span></div>
+                <ul class="price-features">
+                  <li><span>✓</span> Everything in Starter MVP</li>
+                  <li><span>✓</span> Native mobile apps (iOS/Android)</li>
+                  <li><span>✓</span> Full growth &amp; technical SEO engine</li>
+                  <li><span>✓</span> Dedicated human assistant retainer</li>
+                  <li><span>✓</span> Guaranteed &lt;24h turnaround SLA</li>
+                </ul>
+              </div>
+              <button onclick="navigateTo('start-a-project')" class="btn btn-primary btn-mono btn-block">Select Growth Stack →</button>
+            </div>
+
+            <div class="price-card" style="--i:2">
+              <div>
+                <h3>Enterprise Engine</h3>
+                <p class="price-desc">Tailored for complex ServiceNow customizations and enterprise platforms.</p>
+                <div class="price-amount">$5,500+ <span>/ custom</span></div>
+                <ul class="price-features">
+                  <li><span>✓</span> Custom ServiceNow &amp; snowCMS setup</li>
+                  <li><span>✓</span> Legacy workflow migration</li>
+                  <li><span>✓</span> Dedicated senior lead developer</li>
+                  <li><span>✓</span> Priority 24/7 hotfix channel</li>
+                </ul>
+              </div>
+              <button onclick="navigateTo('start-a-project')" class="btn btn-outline btn-mono btn-block">Contact Enterprise →</button>
+            </div>
+          </div>
+
+          <div class="estimator-box reveal">
+            <div class="estimator-options">
+              <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Interactive scope estimator</h3>
+              <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 1rem;">Check the services you require to calculate an initial estimated scope:</p>
+
+              <label class="estimator-option selected">
+                <div><strong>Custom Web / Mobile Software</strong><p style="font-size: 0.85rem; color: var(--text-muted);">MVPs, web platforms, and mobile apps built with modern stacks.</p></div>
+                <input type="checkbox" value="2500" checked onchange="calculateEstimate()">
+              </label>
+              <label class="estimator-option">
+                <div><strong>ServiceNow &amp; Enterprise Customization</strong><p style="font-size: 0.85rem; color: var(--text-muted);">Workflows, snowCMS integration, and platform conflict fixes.</p></div>
+                <input type="checkbox" value="2000" onchange="calculateEstimate()">
+              </label>
+              <label class="estimator-option">
+                <div><strong>Growth Marketing &amp; SEO Engine</strong><p style="font-size: 0.85rem; color: var(--text-muted);">Technical SEO, content campaigns, and analytics reporting.</p></div>
+                <input type="checkbox" value="1200" onchange="calculateEstimate()">
+              </label>
+              <label class="estimator-option selected">
+                <div><strong>Dedicated Assistant Retainer</strong><p style="font-size: 0.85rem; color: var(--text-muted);">Direct human point of contact for continuous support &amp; updates.</p></div>
+                <input type="checkbox" value="800" checked onchange="calculateEstimate()">
+              </label>
+            </div>
+
+            <div class="estimator-result">
+              <div>
+                <span class="text-mono" style="color: var(--text-muted); font-size: 0.85rem;">Estimated starting investment</span>
+                <div class="est-price" id="total-price">$3,300</div>
+                <p style="font-size: 0.85rem; color: var(--text-dim);">Includes end-to-end setup, onboarding, and a dedicated project lead.</p>
+              </div>
+              <button onclick="navigateTo('start-a-project')" class="btn btn-primary" style="margin-top: 1.5rem;">Lock in scope →</button>
+            </div>
+          </div>
+
+          <div style="margin-top: 4rem;">
+            <div class="text-center reveal">
+              <span class="eyebrow">Frequently asked questions</span>
+              <h2>Got questions? We have answers.</h2>
+            </div>
+
+            <div class="faq-list reveal">
+              <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">How does the Dedicated Assistant support work?</button>
+                <div class="faq-answer">You are assigned a dedicated technical assistant who serves as your main direct contact via Slack or email. They understand your codebase and brand guidelines so minor updates and new tasks are handled quickly without re-briefing.</div>
+              </div>
+              <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">Can we hire Zemprolabs for just Software or Marketing?</button>
+                <div class="faq-answer">Yes. While our end-to-end service provides the most synergy, clients frequently engage us specifically for custom software engineering, ServiceNow platform fixes, or growth marketing independent of other services.</div>
+              </div>
+              <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">What technology stacks do you specialize in?</button>
+                <div class="faq-answer">For software, we build with React, Next.js, Node.js, TypeScript, Python, and native iOS/Android frameworks. For enterprise, we specialize in ServiceNow custom applications and tools like snowCMS.</div>
+              </div>
+              <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">How quickly can we start a project?</button>
+                <div class="faq-answer">Typically, we conduct an initial discovery call within 24 hours of contact. Depending on scope, kickoff and onboarding can begin within 3–5 business days.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ============================== ABOUT ============================== -->
+    <div id="page-about" class="page-view">
+      <div class="page-header">
+        <div class="container">
+          <span class="eyebrow">About Zemprolabs</span>
+          <h1>One partner. Zero agency friction.</h1>
+          <p>We founded Zemprolabs to cure "three-vendor fatigue" — the frustration of managing separate agencies for software, marketing, and daily maintenance.</p>
+        </div>
+      </div>
+
+      <section class="section">
+        <div class="container">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;" class="reveal">
+            <div>
+              <span class="eyebrow eyebrow-emerald">Our philosophy</span>
+              <h2 style="margin-bottom: 1rem;">Code, growth &amp; support under one continuous engine</h2>
+              <p style="color: var(--text-muted); margin-bottom: 1rem; font-size: 1.05rem;">Traditional development agencies build code and leave. Marketing agencies complain about developer delays. Freelancers disappear when you need urgent updates.</p>
+              <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 1.05rem;">Zemprolabs bridges these gaps by combining software engineering, enterprise ServiceNow tooling, technical SEO, and dedicated human support under a single contract with a single accountable lead.</p>
+            </div>
+
+            <div style="background: var(--bg-card); border: 1px solid var(--border-color); padding: 2rem; border-radius: var(--radius-lg);">
+              <h3 style="margin-bottom: 1rem;">Our core principles</h3>
+              <ul style="display: flex; flex-direction: column; gap: 1rem;">
+                <li style="display: flex; gap: 0.75rem;">
+                  <strong style="color: var(--accent-indigo); font-family: var(--font-mono);">01.</strong>
+                  <div><strong style="color: #fff;">Direct human SLA</strong><p style="font-size: 0.875rem; color: var(--text-muted);">No automated support black holes or ticketing queues.</p></div>
+                </li>
+                <li style="display: flex; gap: 0.75rem;">
+                  <strong style="color: var(--accent-indigo); font-family: var(--font-mono);">02.</strong>
+                  <div><strong style="color: #fff;">Speed over bureaucracy</strong><p style="font-size: 0.875rem; color: var(--text-muted);">Two-week sprint releases with instant feedback loops.</p></div>
+                </li>
+                <li style="display: flex; gap: 0.75rem;">
+                  <strong style="color: var(--accent-indigo); font-family: var(--font-mono);">03.</strong>
+                  <div><strong style="color: #fff;">Enterprise-grade rigor</strong><p style="font-size: 0.875rem; color: var(--text-muted);">From compliant patient portals to ServiceNow conflict detection.</p></div>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Support flow visual -->
+          <div class="reveal" style="margin-top: 3.5rem;">
+            <span class="eyebrow eyebrow-cyan">What working with us looks like</span>
+            <h2 style="margin-bottom: 1.5rem;">You talk to people who already know your project.</h2>
+            <div class="hero-interactive-card" style="max-width: 560px;">
+              <div class="interactive-card__header">
+                <div class="window-dots"><span class="dot dot-red"></span><span class="dot dot-yellow"></span><span class="dot dot-green"></span></div>
+                <span class="text-mono" style="font-size: 0.7rem; color: var(--text-dim);">support-channel</span>
+              </div>
+              <div class="interactive-card__body">
+                <div class="support-widget">
+                  <div class="chat-bubble user"><div class="chat-sender">CLIENT</div>"Can you update the homepage copy before Friday?"</div>
+                  <div class="chat-bubble assistant"><div class="chat-sender">⚡ DEDICATED ASSISTANT</div>"Got it — I know the layout already, pushing the change to staging now."</div>
+                </div>
+                <div class="status-flow">
+                  <span class="status-pill done">Assigned</span> → <span class="status-pill done">Zemprolabs team</span> → <span class="status-pill active">Completed</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ============================== START A PROJECT ============================== -->
+    <div id="page-start-a-project" class="page-view">
+      <div class="page-header text-center">
+        <div class="container">
+          <span class="eyebrow eyebrow-emerald">Project kickoff</span>
+          <h1 class="mx-auto">Let's build &amp; scale together</h1>
+          <p class="mx-auto">Fill out the brief inquiry form below. Our team will review your project requirements and share a tailored execution blueprint within 24 hours.</p>
+        </div>
+      </div>
+
+      <section class="section">
+        <div class="container">
+          <div class="contact-card reveal">
+            <form onsubmit="handleFormSubmit(event)" novalidate>
+              <div class="form-group">
+                <label class="form-label" for="name">Your name</label>
+                <input type="text" id="name" class="form-input" placeholder="Alex Morgan" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="email">Work email</label>
+                <input type="email" id="email" class="form-input" placeholder="alex@company.com" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="service-type">Primary service required</label>
+                <select id="service-type" class="form-select" required>
+                  <option value="bundled">Bundled full stack (Software + Growth + Support)</option>
+                  <option value="software">Custom software &amp; mobile development</option>
+                  <option value="servicenow">ServiceNow &amp; enterprise workflows</option>
+                  <option value="growth">Growth marketing &amp; technical SEO</option>
+                  <option value="assistant">Dedicated digital assistant retainer</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="budget">Estimated budget range</label>
+                <select id="budget" class="form-select">
+                  <option value="2k-5k">$2,000 – $5,000</option>
+                  <option value="5k-10k">$5,000 – $10,000</option>
+                  <option value="10k+">$10,000+</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="message">Project brief / goals</label>
+                <textarea id="message" class="form-textarea" rows="4" placeholder="Tell us about your project goals, timelines, or current digital bottlenecks..." required></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary btn-mono btn-block">Submit project brief →</button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  </main>
+
+  <!-- Toast -->
+  <div id="toast" class="toast-message" role="status" aria-live="polite">
+    <strong style="color: var(--accent-emerald);">Request received!</strong>
+    <p style="font-size: 0.875rem; margin-top: 0.25rem;">Thank you for reaching out to Zemprolabs. Our team will review your project brief and reply within 24 hours.</p>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a href="#home" onclick="navigateTo('home'); return false;" class="logo" style="margin-bottom: 1rem; display: inline-flex;">
+            <span class="logo__bracket">&lt;</span>zemprolabs<span class="logo__bracket">/&gt;</span>
+          </a>
+          <p style="color: var(--text-muted); font-size: 0.9rem; max-width: 300px;">Build. Grow. Never lose your single point of contact.</p>
+        </div>
+        <div>
+          <h5>Navigation</h5>
+          <ul>
+            <li><a onclick="navigateTo('services')">Services</a></li>
+            <li><a onclick="navigateTo('work')">Work</a></li>
+            <li><a onclick="navigateTo('process')">Process</a></li>
+            <li><a onclick="navigateTo('pricing')">Pricing</a></li>
+            <li><a onclick="navigateTo('about')">About</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5>Services</h5>
+          <ul>
+            <li><a onclick="navigateTo('services')">Custom Software</a></li>
+            <li><a onclick="navigateTo('services')">ServiceNow Enterprise</a></li>
+            <li><a onclick="navigateTo('services')">Marketing &amp; Growth</a></li>
+            <li><a onclick="navigateTo('services')">Dedicated Support</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5>Contact</h5>
+          <ul>
+            <li><a onclick="navigateTo('start-a-project')">Start a Project</a></li>
+            <li><a href="mailto:hello@zemprolabs.com">hello@zemprolabs.com</a></li>
+            <li class="footer-status text-mono" style="color: var(--text-dim); font-size: 0.8rem; margin-top: 0.5rem;"><span class="statusbar__dot"></span>Status: Operational</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Zemprolabs. All rights reserved.</span>
+        <span>Single-file, framework-free build.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* ==========================================================================
+       MOTION PREFERENCE
+       ========================================================================== */
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isTouch = window.matchMedia('(hover: none)').matches;
+
+    /* ==========================================================================
+       ROUTING
+       ========================================================================== */
+    const validPages = ['home', 'services', 'work', 'process', 'pricing', 'about', 'start-a-project'];
+
+    function navigateTo(pageId) {
+      if (!validPages.includes(pageId)) pageId = 'home';
+
+      document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active-page'));
+      const targetPage = document.getElementById(`page-${pageId}`);
+      if (targetPage) targetPage.classList.add('active-page');
+
+      document.querySelectorAll('.nav__link').forEach(link => {
+        link.classList.toggle('active', link.getAttribute('data-page') === pageId);
+      });
+
+      window.location.hash = pageId;
+      closeMobileMenu();
+      window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+
+      // Re-run reveal + timeline observers for the newly shown page
+      requestAnimationFrame(() => {
+        observeReveals();
+        if (pageId === 'process') updateTimelineProgress();
+      });
+    }
+
+    /* ==========================================================================
+       MOBILE MENU
+       ========================================================================== */
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      const toggle = document.getElementById('navToggle');
+      const isOpen = menu.classList.toggle('open');
+      toggle.classList.toggle('open', isOpen);
+      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    }
+    function closeMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      const toggle = document.getElementById('navToggle');
+      menu.classList.remove('open');
+      toggle.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+
+    /* ==========================================================================
+       HERO TABS
+       ========================================================================== */
+    function switchTab(evt, tabId) {
+      document.querySelectorAll('.tab-btn').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+      evt.currentTarget.classList.add('active');
+      document.getElementById(tabId).classList.add('active');
+    }
+
+    /* ==========================================================================
+       PORTFOLIO FILTER
+       ========================================================================== */
+    function filterWork(category, evt) {
+      document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+      evt.target.classList.add('active');
+
+      document.querySelectorAll('#portfolio-grid .case-card').forEach(card => {
+        const match = category === 'all' || card.dataset.category === category;
+        card.style.transition = 'opacity 0.25s ease, transform 0.25s ease';
+        if (match) {
+          card.style.display = 'flex';
+          requestAnimationFrame(() => { card.style.opacity = '1'; card.style.transform = 'translateY(0)'; });
+        } else {
+          card.style.opacity = '0';
+          card.style.transform = 'translateY(6px)';
+          setTimeout(() => { card.style.display = 'none'; }, 200);
+        }
+      });
+    }
+
+    /* ==========================================================================
+       ESTIMATOR
+       ========================================================================== */
+    function calculateEstimate() {
+      const checkboxes = document.querySelectorAll('.estimator-options input[type="checkbox"]');
+      let total = 0;
+      checkboxes.forEach(box => {
+        const option = box.closest('.estimator-option');
+        if (box.checked) { total += parseInt(box.value, 10); option.classList.add('selected'); }
+        else { option.classList.remove('selected'); }
+      });
+      const el = document.getElementById('total-price');
+      if (el) {
+        el.innerText = '$' + total.toLocaleString();
+        if (!prefersReducedMotion) {
+          el.classList.add('bump');
+          setTimeout(() => el.classList.remove('bump'), 200);
+        }
+      }
+    }
+
+    /* ==========================================================================
+       FAQ ACCORDION
+       ========================================================================== */
+    function toggleFaq(buttonElement) {
+      const item = buttonElement.parentElement;
+      const isActive = item.classList.contains('active');
+      document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
+      if (!isActive) item.classList.add('active');
+    }
+
+    /* ==========================================================================
+       CONTACT FORM
+       ========================================================================== */
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 5000);
+      e.target.reset();
+    }
+
+    /* ==========================================================================
+       SCROLL PROGRESS
+       ========================================================================== */
+    function updateScrollProgress() {
+      const bar = document.getElementById('scrollProgress');
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      bar.style.width = pct + '%';
+    }
+
+    /* ==========================================================================
+       HEADER SCROLL STATE
+       ========================================================================== */
+    function updateHeaderState() {
+      document.getElementById('siteHeader').classList.toggle('scrolled', window.scrollY > 12);
+    }
+
+    /* ==========================================================================
+       SCROLL REVEAL (IntersectionObserver)
+       ========================================================================== */
+    let revealObserver;
+    function observeReveals() {
+      if (prefersReducedMotion) {
+        document.querySelectorAll('.reveal').forEach(el => el.classList.add('in-view'));
+        return;
+      }
+      if (!revealObserver) {
+        revealObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in-view');
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+      }
+      document.querySelectorAll('.reveal:not(.in-view)').forEach(el => revealObserver.observe(el));
+    }
+
+    /* ==========================================================================
+       ANIMATED STAT COUNTERS
+       ========================================================================== */
+    function animateCounters() {
+      const nums = document.querySelectorAll('.stat__num[data-count]');
+      if (!nums.length) return;
+      const counterObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          const el = entry.target;
+          const target = parseInt(el.dataset.count, 10);
+          const suffix = el.dataset.suffix || '';
+          if (prefersReducedMotion) { el.textContent = target + suffix; }
+          else {
+            const duration = 1100;
+            const start = performance.now();
+            function tick(now) {
+              const progress = Math.min((now - start) / duration, 1);
+              const eased = 1 - Math.pow(1 - progress, 3);
+              el.textContent = Math.round(eased * target) + suffix;
+              if (progress < 1) requestAnimationFrame(tick);
+            }
+            requestAnimationFrame(tick);
+          }
+          counterObserver.unobserve(el);
+        });
+      }, { threshold: 0.5 });
+      nums.forEach(el => counterObserver.observe(el));
+    }
+
+    /* ==========================================================================
+       PROCESS TIMELINE FILL + ACTIVE STEP
+       ========================================================================== */
+    function updateTimelineProgress() {
+      const timeline = document.getElementById('processTimeline');
+      if (!timeline) return;
+      const items = timeline.querySelectorAll('.timeline-item');
+      const rect = timeline.getBoundingClientRect();
+      const viewportCenter = window.innerHeight * 0.6;
+      const totalHeight = rect.height;
+      let lastActiveOffset = 0;
+
+      items.forEach((item) => {
+        const itemRect = item.getBoundingClientRect();
+        const dot = item.querySelector('.timeline-dot');
+        const dotOffset = dot.getBoundingClientRect().top - rect.top + 10;
+        if (itemRect.top < viewportCenter) {
+          item.classList.add('active');
+          lastActiveOffset = dotOffset;
+        } else {
+          item.classList.remove('active');
+        }
+      });
+
+      const fillPct = totalHeight > 0 ? Math.min((lastActiveOffset / totalHeight) * 100, 100) : 0;
+      timeline.style.setProperty('--fill', (items.length && document.getElementById('page-process').classList.contains('active-page') ? fillPct : 0) + '%');
+    }
+
+    /* ==========================================================================
+       CURSOR GLOW (desktop only)
+       ========================================================================== */
+    function initCursorGlow() {
+      if (isTouch || prefersReducedMotion) return;
+      const glow = document.getElementById('cursorGlow');
+      let raf = null;
+      window.addEventListener('mousemove', (e) => {
+        glow.classList.add('active');
+        if (raf) cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(() => {
+          glow.style.left = e.clientX + 'px';
+          glow.style.top = e.clientY + 'px';
+        });
+      });
+      window.addEventListener('mouseleave', () => glow.classList.remove('active'));
+    }
+
+    /* ==========================================================================
+       HERO CARD PARALLAX / TILT (desktop only, subtle)
+       ========================================================================== */
+    function initHeroParallax() {
+      if (isTouch || prefersReducedMotion) return;
+      const visual = document.getElementById('heroVisual');
+      const card = document.getElementById('tiltCard');
+      if (!visual || !card) return;
+      visual.addEventListener('mousemove', (e) => {
+        const rect = visual.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5;
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        const rotateY = x * 6;
+        const rotateX = y * -6;
+        card.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      });
+      visual.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg)';
+      });
+    }
+
+    /* ==========================================================================
+       PILLAR CARD SPOTLIGHT / MICRO-TILT
+       ========================================================================== */
+    function initPillarSpotlight() {
+      if (isTouch || prefersReducedMotion) return;
+      document.querySelectorAll('.pillar-card').forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const mx = ((e.clientX - rect.left) / rect.width) * 100;
+          const my = ((e.clientY - rect.top) / rect.height) * 100;
+          card.style.setProperty('--mx', mx + '%');
+          card.style.setProperty('--my', my + '%');
+        });
+      });
+    }
+
+    /* ==========================================================================
+       INIT
+       ========================================================================== */
+    document.addEventListener('DOMContentLoaded', () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash && validPages.includes(hash)) navigateTo(hash);
+      else navigateTo('home');
+
+      updateScrollProgress();
+      updateHeaderState();
+      observeReveals();
+      animateCounters();
+      initCursorGlow();
+      initHeroParallax();
+      initPillarSpotlight();
+
+      window.addEventListener('scroll', () => {
+        updateScrollProgress();
+        updateHeaderState();
+        if (document.getElementById('page-process').classList.contains('active-page')) {
+          updateTimelineProgress();
+        }
+      }, { passive: true });
+
+      window.addEventListener('hashchange', () => {
+        const h = window.location.hash.replace('#', '');
+        if (h) navigateTo(h);
+      });
+    });
+  </script>
+</body>
+</html>

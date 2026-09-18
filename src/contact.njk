@@ -1,0 +1,70 @@
+---
+layout: base.njk
+title: "Start a Project"
+description: "Tell us about your project — software, marketing, or ongoing digital support."
+---
+<section class="hero" style="padding-bottom: 1rem;">
+  <div class="container">
+    <span class="eyebrow">get in touch</span>
+    <h1 style="max-width: 14ch;">Tell us what you're building<span class="hero__cursor"></span></h1>
+    <p class="hero__sub">A few details helps us come back with a real answer, not a generic sales pitch. We typically respond within one business day.</p>
+  </div>
+</section>
+
+<section class="section-border-top">
+  <div class="container grid grid-2" style="gap: var(--gutter); align-items: start;">
+    <form id="contact-form" novalidate>
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" required>
+        <div class="field-error">Enter your name.</div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+        <div class="field-error">Enter a valid email address.</div>
+      </div>
+      <div class="form-group">
+        <label for="projectType">Project type</label>
+        <select id="projectType" name="projectType" required>
+          <option value="">Select one</option>
+          <option value="software">Custom software</option>
+          <option value="servicenow">ServiceNow / enterprise</option>
+          <option value="marketing">Marketing & SEO</option>
+          <option value="support">Managed digital support</option>
+          <option value="not-sure">Not sure yet</option>
+        </select>
+        <div class="field-error">Let us know what kind of project this is.</div>
+      </div>
+      <div class="form-group">
+        <label for="budget">Budget range (optional)</label>
+        <select id="budget" name="budget">
+          <option value="">Prefer not to say</option>
+          <option value="under-5k">Under $5k</option>
+          <option value="5k-15k">$5k – $15k</option>
+          <option value="15k-50k">$15k – $50k</option>
+          <option value="50k-plus">$50k+</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="message">Project details</label>
+        <textarea id="message" name="message" required placeholder="What are you trying to build, grow, or support?"></textarea>
+        <div class="field-error">Give us a few sentences on the project.</div>
+      </div>
+      <button type="submit" class="btn btn-primary">Send it over →</button>
+    </form>
+
+    <div>
+      <div class="card">
+        <span class="card__index">direct</span>
+        <h4 style="font-size: var(--step1);">Prefer email?</h4>
+        <p>Write to us directly at <a href="mailto:hello@zemprolabs.com" style="color: var(--accent);">hello@zemprolabs.com</a> and we'll route it to the right person.</p>
+      </div>
+      <div class="card" style="margin-top: 1.5rem;">
+        <span class="card__index">what happens next</span>
+        <h4 style="font-size: var(--step1);">What to expect</h4>
+        <p>We'll reply within one business day, usually with a couple of clarifying questions before proposing an approach — no generic template pitch.</p>
+      </div>
+    </div>
+  </div>
+</section>

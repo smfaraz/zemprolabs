@@ -1,0 +1,6 @@
+# Zemprolabs Robots Configuration
+User-agent: *
+Allow: /
+
+# Canonical Sitemap
+Sitemap: https://zemprolabs.com/sitemap.xml

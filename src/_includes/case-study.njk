@@ -1,0 +1,49 @@
+---
+layout: base.njk
+---
+<article class="hero" style="padding-bottom: 2rem;">
+  <div class="container">
+    <div class="breadcrumb"><a href="/work/">Work</a> / {{ title }}</div>
+    <span class="card__tag">{{ tag }}</span>
+    <h1 style="max-width: 22ch; font-size: var(--step4); margin-top: 0.75rem;">{{ title }}</h1>
+    <p class="subtle" style="margin-top: 1rem; font-family: var(--font-mono);">{{ client }}</p>
+  </div>
+</article>
+
+<section class="section-border-top">
+  <div class="container">
+    <div class="grid grid-2" style="gap: var(--gutter);">
+      <div>
+        <div class="divider">the challenge</div>
+        <p>{{ challenge }}</p>
+      </div>
+      <div>
+        <div class="divider">our approach</div>
+        <p>{{ approach }}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-border-top">
+  <div class="container">
+    <div class="divider">what we built</div>
+    <p class="max-w">{{ built }}</p>
+  </div>
+</section>
+
+<section class="section-border-top">
+  <div class="container">
+    <div class="card" style="border-color: var(--accent); background: var(--accent-soft);">
+      <div class="divider" style="color: var(--text);">the outcome</div>
+      <p style="color: var(--text);">{{ outcome }}</p>
+    </div>
+  </div>
+</section>
+
+<section class="section-border-top text-center">
+  <div class="container">
+    <h2 style="max-width: 22ch; margin: 0 auto 1rem;">Have something similar in mind?</h2>
+    <a href="/contact/" class="btn btn-primary">Start a project →</a>
+  </div>
+</section>
