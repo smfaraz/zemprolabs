@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zemprolabs Pricing | Flexible Digital Engagement</title>
+  <meta name="description" content="Simple, flexible engagement models tailored for ambitious startups and scaling enterprises.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  
+  <div class="bg-grid"></div>
+  <div class="scroll-progress" id="scrollProgress"></div>
+  <div class="cursor-glow" id="cursorGlow"></div>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="nav-logo"><span>&lt;</span>zemprolabs<span>/&gt;</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="services.html" class="nav-link">Services</a></li>
+        <li><a href="work.html" class="nav-link">Work</a></li>
+        <li><a href="process.html" class="nav-link">Process</a></li>
+        <li><a href="pricing.html" class="nav-link">Pricing</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+      </ul>
+      <div class="nav-links">
+        <a href="contact.html" class="btn btn-primary">Start a Project &rarr;</a>
+      </div>
+      <div class="hamburger" id="hamburger" role="button" aria-label="Toggle Navigation" tabindex="0"><span></span><span></span><span></span></div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html" class="nav-link mobile-link">Home</a>
+    <a href="services.html" class="nav-link mobile-link">Services</a>
+    <a href="work.html" class="nav-link mobile-link">Work</a>
+    <a href="process.html" class="nav-link mobile-link">Process</a>
+    <a href="pricing.html" class="nav-link mobile-link">Pricing</a>
+    <a href="about.html" class="nav-link mobile-link">About</a>
+    <a href="contact.html" class="btn btn-primary mobile-link" style="margin-top: 2rem;">Start a Project</a>
+  </div>
+
+  <main>
+    <section class="page-hero">
+      <div class="bg-glow top-left"></div>
+      <div class="container">
+        <div class="page-hero-content reveal">
+          <div class="eyebrow">Engagement Models</div>
+          <h1>SIMPLE, FLEXIBLE ENGAGEMENT.</h1>
+          <p>Whether you need a full product build or ongoing growth support, our pricing models are completely transparent.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Scope & Cost Estimator -->
+    <section class="section" style="padding-top: 2rem; padding-bottom: 3rem;">
+      <div class="container">
+        <div class="calculator-panel reveal">
+          <div class="calc-header">
+            <div>
+              <div class="eyebrow" style="margin-bottom: 0.75rem;">Interactive Scope Engine</div>
+              <h2 style="font-size: 2.25rem; margin-bottom: 0.5rem;">Live Project Scope & Cost Estimator</h2>
+              <p style="font-size: 1rem;">Configure your deliverables to calculate an instant estimated timeline and investment range.</p>
+            </div>
+            <div class="calc-badge text-mono">
+              <span class="calc-status-dot"></span> REAL-TIME ESTIMATOR
+            </div>
+          </div>
+
+          <div class="calc-grid">
+            <!-- Controls Column -->
+            <div class="calc-controls">
+              <div class="calc-group">
+                <label class="calc-label">1. Select Core Discipline</label>
+                <div class="calc-options" id="calcDiscipline">
+                  <button type="button" class="calc-chip active" data-type="software" data-base="12000" data-weeks="4 – 6 Weeks">Custom Software & Apps</button>
+                  <button type="button" class="calc-chip" data-type="servicenow" data-base="18000" data-weeks="6 – 8 Weeks">ServiceNow & Enterprise</button>
+                  <button type="button" class="calc-chip" data-type="marketing" data-base="4500" data-weeks="Ongoing (Monthly)" data-recurring="true">Marketing & Growth</button>
+                  <button type="button" class="calc-chip" data-type="support" data-base="3500" data-weeks="Ongoing (Monthly)" data-recurring="true">Managed Support Retainer</button>
+                </div>
+              </div>
+
+              <div class="calc-group">
+                <label class="calc-label">2. Project Scope & Complexity</label>
+                <div class="calc-options" id="calcScale">
+                  <button type="button" class="calc-chip" data-mult="0.75" data-scale="mvp">MVP / Proof of Concept</button>
+                  <button type="button" class="calc-chip active" data-mult="1.0" data-scale="standard">Standard Production Launch</button>
+                  <button type="button" class="calc-chip" data-mult="1.6" data-scale="enterprise">High-Scale Enterprise Tier</button>
+                </div>
+              </div>
+
+              <div class="calc-group">
+                <label class="calc-label">3. Recommended Add-Ons</label>
+                <div class="calc-checkboxes">
+                  <label class="calc-check">
+                    <input type="checkbox" id="addonDesign" data-cost="2500" checked>
+                    <span class="check-box"></span>
+                    <span>UI/UX Figma Architecture & Design System (+$2,500)</span>
+                  </label>
+                  <label class="calc-check">
+                    <input type="checkbox" id="addonSeo" data-cost="1800" checked>
+                    <span class="check-box"></span>
+                    <span>Technical SEO Audit & Analytics Tracking (+$1,800)</span>
+                  </label>
+                  <label class="calc-check">
+                    <input type="checkbox" id="addonSla" data-cost="1500">
+                    <span class="check-box"></span>
+                    <span>Guaranteed &lt;12h Emergency SLA Tier (+$1,500/mo)</span>
+                  </label>
+                  <label class="calc-check">
+                    <input type="checkbox" id="addonCicd" data-cost="1200">
+                    <span class="check-box"></span>
+                    <span>Automated Staging & CI/CD Pipeline (+$1,200)</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Output Summary Column -->
+            <div class="calc-summary">
+              <div class="summary-card">
+                <div class="summary-title text-mono">// ESTIMATED_SCOPE_SUMMARY</div>
+                <div class="summary-price-box">
+                  <span class="summary-price-label">Estimated Investment</span>
+                  <div class="summary-price" id="calcPriceDisplay">$16,300</div>
+                  <span class="summary-billing text-mono" id="calcBillingType">Fixed-scope milestone agreement</span>
+                </div>
+
+                <div class="summary-meta">
+                  <div class="summary-meta-item">
+                    <span class="text-mono">EST. TIMELINE</span>
+                    <strong id="calcTimelineDisplay">4 – 6 Weeks</strong>
+                  </div>
+                  <div class="summary-meta-item">
+                    <span class="text-mono">HUMAN LEAD</span>
+                    <strong>1 Dedicated Point of Contact</strong>
+                  </div>
+                  <div class="summary-meta-item">
+                    <span class="text-mono">IP RIGHTS</span>
+                    <strong>100% Client Owned</strong>
+                  </div>
+                </div>
+
+                <a href="contact.html?service=software&budget=10k_50k" id="calcCtaBtn" class="btn btn-primary" style="width: 100%; text-align: center; margin-top: 1.5rem;">
+                  LOCK IN THIS SCOPE &rarr;
+                </a>
+                <p class="summary-subtext">No commitment required. Scope is verified during technical discovery.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top: 2rem;">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="eyebrow">Structured Plans</div>
+          <h2>Standard Engagement Models</h2>
+        </div>
+
+        <div class="grid-3 reveal">
+          
+          <!-- Pricing Card 1 -->
+          <div class="pricing-card">
+            <h3>Project Build</h3>
+            <p style="font-size: 0.95rem; margin-top: 0.5rem;">For new applications, platforms, and major website overhauls.</p>
+            <div class="pricing-price">Custom Quote</div>
+            <p style="font-size: 0.875rem; color: var(--accent-primary);">Fixed scope & timeline</p>
+            
+            <ul class="pricing-features">
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"></path></svg>
+                <span>Full lifecycle development</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"></path></svg>
+                <span>Dedicated project manager</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"></path></svg>
+                <span>UI/UX Design</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"></path></svg>
+                <span>QA & Testing phase</span>
+              </li>
+            </ul>
+            <a href="contact.html?service=software&plan=project_build" class="btn btn-outline" style="width: 100%;">Let's Scope It &rarr;</a>
+          </div>
+
+          <!-- Pricing Card 2 (Featured) -->
+          <div class="pricing-card featured">
+            <div class="pricing-badge">Most Popular</div>
+            <h3>Growth Retainer</h3>
+            <p style="font-size: 0.95rem; margin-top: 0.5rem;">Continuous improvement, marketing, and ongoing development.</p>
+            <div class="pricing-price">Flexible <span>/mo</span></div>
+            <p style="font-size: 0.875rem; color: var(--accent-primary);">Adjustable monthly hours</p>
+            
+            <ul class="pricing-features">
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"></path></svg>
+                <span>Dedicated point of contact</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"></path></svg>
+                <span>Technical SEO & Marketing</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"></path></svg>
+                <span>Feature enhancements</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"></path></svg>
+                <span>Priority &lt;24h support SLA</span>
+              </li>
+            </ul>
+            <a href="contact.html?service=support&plan=growth_retainer" class="btn btn-primary" style="width: 100%;">Talk to Us &rarr;</a>
+          </div>
+
+          <!-- Pricing Card 3 -->
+          <div class="pricing-card">
+            <h3>Enterprise Support</h3>
+            <p style="font-size: 0.95rem; margin-top: 0.5rem;">For ServiceNow environments and complex infrastructure.</p>
+            <div class="pricing-price">Dedicated</div>
+            <p style="font-size: 0.875rem; color: var(--accent-primary);">Annual contracts</p>
+            
+            <ul class="pricing-features">
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"></path></svg>
+                <span>ServiceNow architecture</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"></path></svg>
+                <span>snowCMS integration</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"></path></svg>
+                <span>Automated workflow maintenance</span>
+              </li>
+              <li>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"></path></svg>
+                <span>Custom SLAs</span>
+              </li>
+            </ul>
+            <a href="contact.html?service=servicenow&plan=enterprise" class="btn btn-outline" style="width: 100%;">Talk to Us &rarr;</a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" style="border-top: 1px solid var(--border-light);">
+      <div class="container">
+        <div class="section-header reveal">
+          <div class="eyebrow">Clear Answers</div>
+          <h2>Frequently Asked Questions</h2>
+        </div>
+        
+        <div class="faq-container reveal">
+          
+          <div class="faq-item">
+            <button type="button" class="faq-btn" aria-expanded="false">
+              How do you handle scope changes during a fixed-price build?
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-content">
+              <p>We work in agile sprints. If new requirements arise, we assess the impact on the timeline and budget. Minor adjustments are typically absorbed, while major feature additions are quoted and scheduled for subsequent sprints to ensure the primary launch date is not compromised.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-btn" aria-expanded="false">
+              Do we own the intellectual property?
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-content">
+              <p>Yes. Once the final invoice is settled, all custom code, assets, and intellectual property we build for your project are fully transferred and owned by your organization.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-btn" aria-expanded="false">
+              What does the &lt;24h support SLA cover?
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-content">
+              <p>Under our Growth Retainer, your dedicated assistant will acknowledge and begin actioning any critical bug fix, content update, or minor UI change request within 24 hours (usually much faster) on business days.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-btn" aria-expanded="false">
+              Can we scale our retainer up or down?
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-content">
+              <p>Absolutely. We understand that business needs fluctuate. You can adjust your monthly hour allocation with 30 days' notice, allowing you to scale up for major campaigns and down during quiet periods.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col" style="grid-column: span 2;">
+          <a href="index.html" class="nav-logo" style="margin-bottom: 1rem;"><span>&lt;</span>zemprolabs<span>/&gt;</span></a>
+          <p style="font-size: 0.95rem; max-width: 300px;">Build. Grow. Never lose your single point of contact.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <div class="footer-links">
+            <a href="services.html">Services</a>
+            <a href="work.html">Work</a>
+            <a href="process.html">Process</a>
+            <a href="pricing.html">Pricing</a>
+            <a href="about.html">About</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <div class="footer-links">
+            <a href="contact.html">Start a Project</a>
+            <a href="mailto:hello@zemprolabs.com">hello@zemprolabs.com</a>
+            <span class="text-mono" style="color: var(--accent-emerald); font-size: 0.75rem; margin-top: 1rem;">&bull; STATUS: OPERATIONAL</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2026 Zemprolabs. All rights reserved.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

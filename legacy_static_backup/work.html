@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zemprolabs Work | Digital Products & Case Studies</title>
+  <meta name="description" content="View selected case studies of our digital products and enterprise systems built for real business problems.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  
+  <div class="bg-grid"></div>
+  <div class="scroll-progress" id="scrollProgress"></div>
+  <div class="cursor-glow" id="cursorGlow"></div>
+
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="nav-logo"><span>&lt;</span>zemprolabs<span>/&gt;</span></a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="services.html" class="nav-link">Services</a></li>
+        <li><a href="work.html" class="nav-link">Work</a></li>
+        <li><a href="process.html" class="nav-link">Process</a></li>
+        <li><a href="pricing.html" class="nav-link">Pricing</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+      </ul>
+      <div class="nav-links">
+        <a href="contact.html" class="btn btn-primary">Start a Project &rarr;</a>
+      </div>
+      <div class="hamburger" id="hamburger" role="button" aria-label="Toggle Navigation" tabindex="0"><span></span><span></span><span></span></div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html" class="nav-link mobile-link">Home</a>
+    <a href="services.html" class="nav-link mobile-link">Services</a>
+    <a href="work.html" class="nav-link mobile-link">Work</a>
+    <a href="process.html" class="nav-link mobile-link">Process</a>
+    <a href="pricing.html" class="nav-link mobile-link">Pricing</a>
+    <a href="about.html" class="nav-link mobile-link">About</a>
+    <a href="contact.html" class="btn btn-primary mobile-link" style="margin-top: 2rem;">Start a Project</a>
+  </div>
+
+  <main>
+    <section class="page-hero work-page-hero">
+      <div class="bg-glow top-left"></div>
+      <div class="container">
+        <div class="page-hero-content reveal">
+          <div class="eyebrow">Selected Work</div>
+          <h1>Digital products and systems built to solve real business problems.</h1>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top: 0;">
+      <div class="container">
+        
+        <!-- Filters -->
+        <div class="filter-group reveal">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="E-Commerce">E-Commerce</button>
+          <button class="filter-btn" data-filter="Software">Software</button>
+          <button class="filter-btn" data-filter="Healthcare">Healthcare</button>
+          <button class="filter-btn" data-filter="ServiceNow">ServiceNow</button>
+        </div>
+
+        <!-- Grid -->
+        <div class="portfolio-grid reveal">
+          <!-- 1: BaeMeds -->
+          <div class="project-card" data-category="E-Commerce" onclick="openProject('baemeds')">
+            <div class="browser-frame">
+              <div class="browser-header">
+                <div class="browser-dots"><div class="browser-dot"></div><div class="browser-dot"></div><div class="browser-dot"></div></div>
+                <div class="browser-url">baemeds.com</div>
+              </div>
+              <div class="browser-content">
+                <div class="mock-preview-wrap" style="background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);">
+                  <svg class="mock-preview-svg" viewBox="0 0 360 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="20" y="20" width="320" height="28" rx="6" fill="#1e293b" />
+                    <circle cx="36" cy="34" r="5" fill="#6366f1" />
+                    <rect x="50" y="30" width="60" height="8" rx="4" fill="#94a3b8" />
+                    <rect x="260" y="27" width="64" height="14" rx="7" fill="#10b981" fill-opacity="0.2" />
+                    <text x="268" y="37" fill="#10b981" font-size="8" font-family="monospace">USD / INR</text>
+                    <rect x="20" y="58" width="150" height="60" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+                    <rect x="32" y="70" width="80" height="8" rx="4" fill="#6366f1"/>
+                    <rect x="32" y="85" width="120" height="6" rx="3" fill="#64748b"/>
+                    <rect x="32" y="97" width="50" height="12" rx="4" fill="#10b981"/>
+                    <rect x="190" y="58" width="150" height="60" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+                    <rect x="202" y="70" width="80" height="8" rx="4" fill="#06b6d4"/>
+                    <rect x="202" y="85" width="120" height="6" rx="3" fill="#64748b"/>
+                    <rect x="202" y="97" width="50" height="12" rx="4" fill="#6366f1"/>
+                    <rect x="20" y="130" width="320" height="50" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+                    <circle cx="45" cy="155" r="10" fill="#10b981"/>
+                    <text x="42" y="159" fill="#fff" font-size="10" font-weight="bold">✓</text>
+                    <rect x="65" y="148" width="110" height="7" rx="3.5" fill="#f8fafc"/>
+                    <rect x="65" y="160" width="70" height="5" rx="2.5" fill="#94a3b8"/>
+                    <rect x="240" y="146" width="84" height="20" rx="6" fill="#6366f1"/>
+                    <text x="254" y="159" fill="#fff" font-size="9" font-family="monospace">PROCESSED</text>
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div class="project-info">
+              <span class="project-category">E-Commerce</span>
+              <h3>BaeMeds</h3>
+              <p class="project-desc">Multi-national e-commerce platform for Durable Medical Equipment.</p>
+              <span class="text-mono text-primary">VIEW CASE STUDY &rarr;</span>
+            </div>
+          </div>
+
+          <!-- 2: Erus -->
+          <div class="project-card" data-category="Software" onclick="openProject('erus-academy')">
+            <div class="browser-frame">
+              <div class="browser-header">
+                <div class="browser-dots"><div class="browser-dot"></div><div class="browser-dot"></div><div class="browser-dot"></div></div>
+                <div class="browser-url">erusacademy.in</div>
+              </div>
+              <div class="browser-content">
+                <div class="mock-preview-wrap" style="background: linear-gradient(135deg, #0b1329 0%, #172554 100%);">
+                  <svg class="mock-preview-svg" viewBox="0 0 360 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="20" y="20" width="320" height="28" rx="6" fill="#1e293b" />
+                    <rect x="36" y="29" width="70" height="10" rx="4" fill="#38bdf8"/>
+                    <rect x="250" y="28" width="75" height="14" rx="7" fill="#38bdf8" fill-opacity="0.2"/>
+                    <text x="258" y="38" fill="#38bdf8" font-size="8" font-family="monospace">MOBILE SYNC</text>
+                    <rect x="20" y="58" width="190" height="122" rx="8" fill="#0f172a" stroke="#1e3a8a" stroke-width="1"/>
+                    <polygon points="105,108 105,130 125,119" fill="#38bdf8"/>
+                    <rect x="32" y="160" width="166" height="4" rx="2" fill="#334155"/>
+                    <rect x="32" y="160" width="130" height="4" rx="2" fill="#38bdf8"/>
+                    <rect x="222" y="58" width="118" height="35" rx="6" fill="#1e293b"/>
+                    <rect x="232" y="68" width="60" height="6" rx="3" fill="#94a3b8"/>
+                    <rect x="232" y="78" width="40" height="5" rx="2" fill="#10b981"/>
+                    <rect x="222" y="101" width="118" height="35" rx="6" fill="#1e293b"/>
+                    <rect x="232" y="111" width="70" height="6" rx="3" fill="#94a3b8"/>
+                    <rect x="232" y="121" width="30" height="5" rx="2" fill="#6366f1"/>
+                    <rect x="222" y="145" width="118" height="35" rx="6" fill="#1e293b"/>
+                    <rect x="232" y="155" width="50" height="6" rx="3" fill="#94a3b8"/>
+                    <rect x="232" y="165" width="40" height="5" rx="2" fill="#64748b"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div class="project-info">
+              <span class="project-category">Software</span>
+              <h3>Erus Academy</h3>
+              <p class="project-desc">Comprehensive LMS platform with web portal and native mobile applications.</p>
+              <span class="text-mono text-primary">VIEW CASE STUDY &rarr;</span>
+            </div>
+          </div>
+
+          <!-- 3: Auvia -->
+          <div class="project-card" data-category="Healthcare" onclick="openProject('auvia')">
+            <div class="browser-frame">
+              <div class="browser-header">
+                <div class="browser-dots"><div class="browser-dot"></div><div class="browser-dot"></div><div class="browser-dot"></div></div>
+                <div class="browser-url">auviatherapy.com</div>
+              </div>
+              <div class="browser-content">
+                <div class="mock-preview-wrap" style="background: linear-gradient(135deg, #042f2e 0%, #0f172a 100%);">
+                  <svg class="mock-preview-svg" viewBox="0 0 360 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="20" y="20" width="320" height="28" rx="6" fill="#115e59" fill-opacity="0.3"/>
+                    <rect x="36" y="29" width="80" height="10" rx="4" fill="#2dd4bf"/>
+                    <text x="250" y="38" fill="#2dd4bf" font-size="8" font-family="monospace">HIPAA SECURE</text>
+                    <rect x="20" y="58" width="200" height="122" rx="8" fill="#134e4a" fill-opacity="0.2" stroke="#14b8a6" stroke-opacity="0.3"/>
+                    <rect x="36" y="74" width="110" height="8" rx="4" fill="#f0fdfa"/>
+                    <rect x="36" y="90" width="160" height="6" rx="3" fill="#99f6e4"/>
+                    <rect x="36" y="108" width="70" height="20" rx="4" fill="#0d9488"/>
+                    <text x="46" y="121" fill="#fff" font-size="9">Intake Portal</text>
+                    <rect x="36" y="140" width="140" height="6" rx="3" fill="#5eead4"/>
+                    <rect x="36" y="154" width="90" height="6" rx="3" fill="#5eead4" fill-opacity="0.6"/>
+                    <rect x="232" y="58" width="108" height="56" rx="6" fill="#134e4a" fill-opacity="0.3"/>
+                    <text x="242" y="75" fill="#2dd4bf" font-size="9" font-family="monospace">TODAY</text>
+                    <rect x="242" y="85" width="80" height="14" rx="4" fill="#14b8a6"/>
+                    <rect x="232" y="124" width="108" height="56" rx="6" fill="#134e4a" fill-opacity="0.3"/>
+                    <text x="242" y="141" fill="#2dd4bf" font-size="9" font-family="monospace">SCHEDULE</text>
+                    <rect x="242" y="151" width="80" height="14" rx="4" fill="#0f766e"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div class="project-info">
+              <span class="project-category">Healthcare</span>
+              <h3>Auvia Behavioral Centers</h3>
+              <p class="project-desc">Modern web platform and patient intake portal for an autism therapy clinic network.</p>
+              <span class="text-mono text-primary">VIEW CASE STUDY &rarr;</span>
+            </div>
+          </div>
+
+          <!-- 4: Talent Hunters -->
+          <div class="project-card" data-category="Software" onclick="openProject('talent-hunters')">
+            <div class="browser-frame">
+              <div class="browser-header">
+                <div class="browser-dots"><div class="browser-dot"></div><div class="browser-dot"></div><div class="browser-dot"></div></div>
+                <div class="browser-url">talenthunters.com</div>
+              </div>
+              <div class="browser-content">
+                <div class="mock-preview-wrap" style="background: linear-gradient(135deg, #18181b 0%, #27272a 100%);">
+                  <svg class="mock-preview-svg" viewBox="0 0 360 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="20" y="20" width="320" height="28" rx="6" fill="#3f3f46"/>
+                    <rect x="36" y="29" width="90" height="10" rx="4" fill="#a1a1aa"/>
+                    <text x="250" y="38" fill="#a1a1aa" font-size="8" font-family="monospace">CANDIDATE ATS</text>
+                    <rect x="20" y="58" width="100" height="122" rx="6" fill="#27272a" stroke="#52525b" stroke-width="1"/>
+                    <text x="30" y="74" fill="#71717a" font-size="8" font-family="monospace">APPLIED (42)</text>
+                    <rect x="28" y="85" width="84" height="30" rx="4" fill="#3f3f46"/>
+                    <rect x="28" y="125" width="84" height="30" rx="4" fill="#3f3f46"/>
+                    <rect x="130" y="58" width="100" height="122" rx="6" fill="#27272a" stroke="#52525b" stroke-width="1"/>
+                    <text x="140" y="74" fill="#60a5fa" font-size="8" font-family="monospace">INTERVIEW (18)</text>
+                    <rect x="138" y="85" width="84" height="30" rx="4" fill="#1e3a8a"/>
+                    <rect x="138" y="125" width="84" height="30" rx="4" fill="#1e3a8a"/>
+                    <rect x="240" y="58" width="100" height="122" rx="6" fill="#27272a" stroke="#52525b" stroke-width="1"/>
+                    <text x="250" y="74" fill="#34d399" font-size="8" font-family="monospace">OFFER (6)</text>
+                    <rect x="248" y="85" width="84" height="30" rx="4" fill="#065f46"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div class="project-info">
+              <span class="project-category">Software</span>
+              <h3>Talent Hunters Consultancy</h3>
+              <p class="project-desc">Corporate platform and candidate application tracking portal.</p>
+              <span class="text-mono text-primary">VIEW CASE STUDY &rarr;</span>
+            </div>
+          </div>
+
+          <!-- 5: snowCMS -->
+          <div class="project-card" data-category="ServiceNow" onclick="openProject('snowcms')">
+            <div class="browser-frame">
+              <div class="browser-header">
+                <div class="browser-dots"><div class="browser-dot"></div><div class="browser-dot"></div><div class="browser-dot"></div></div>
+                <div class="browser-url">servicenow.enterprise</div>
+              </div>
+              <div class="browser-content">
+                <div class="mock-preview-wrap" style="background: linear-gradient(135deg, #022c22 0%, #064e3b 100%);">
+                  <svg class="mock-preview-svg" viewBox="0 0 360 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="20" y="20" width="320" height="28" rx="6" fill="#065f46"/>
+                    <rect x="36" y="29" width="110" height="10" rx="4" fill="#6ee7b7"/>
+                    <text x="238" y="38" fill="#34d399" font-size="8" font-family="monospace">SCOPED INSTANCE</text>
+                    <rect x="20" y="58" width="320" height="122" rx="8" fill="#022c22" stroke="#059669" stroke-width="1"/>
+                    <text x="36" y="80" fill="#34d399" font-size="9" font-family="monospace">&gt; snowCMS_AUDIT: RUNNING</text>
+                    <text x="36" y="98" fill="#a7f3d0" font-size="9" font-family="monospace">&gt; CONFLICT_DETECTION: 0 ERRORS</text>
+                    <text x="36" y="116" fill="#6ee7b7" font-size="9" font-family="monospace">&gt; INSTANCE_SYNC: PROD &lt;--&gt; STAGING [OK]</text>
+                    <rect x="36" y="132" width="288" height="6" rx="3" fill="#064e3b"/>
+                    <rect x="36" y="132" width="240" height="6" rx="3" fill="#10b981"/>
+                    <text x="36" y="156" fill="#10b981" font-size="9" font-family="monospace">&gt; SYNC_PROGRESS: 100% COMPLETE</text>
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div class="project-info">
+              <span class="project-category">ServiceNow</span>
+              <h3>snowCMS Automation</h3>
+              <p class="project-desc">ServiceNow scoped app to streamline content management and instance workflows.</p>
+              <span class="text-mono text-primary">VIEW CASE STUDY &rarr;</span>
+            </div>
+          </div>
+
+          <!-- 6: Clinic Connect -->
+          <div class="project-card" data-category="Healthcare" onclick="openProject('clinic-connect')">
+            <div class="browser-frame">
+              <div class="browser-header">
+                <div class="browser-dots"><div class="browser-dot"></div><div class="browser-dot"></div><div class="browser-dot"></div></div>
+                <div class="browser-url">clinicconnect.portal</div>
+              </div>
+              <div class="browser-content">
+                <div class="mock-preview-wrap" style="background: linear-gradient(135deg, #172554 0%, #1e1b4b 100%);">
+                  <svg class="mock-preview-svg" viewBox="0 0 360 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="20" y="20" width="320" height="28" rx="6" fill="#1e3a8a"/>
+                    <rect x="36" y="29" width="100" height="10" rx="4" fill="#93c5fd"/>
+                    <text x="245" y="38" fill="#60a5fa" font-size="8" font-family="monospace">REMINDER ENGINE</text>
+                    <rect x="20" y="58" width="320" height="35" rx="6" fill="#0f172a" stroke="#1d4ed8" stroke-width="1"/>
+                    <circle cx="38" cy="75" r="5" fill="#10b981"/>
+                    <text x="52" y="78" fill="#f8fafc" font-size="9" font-family="monospace">SMS: Dr. Sarah Confirmed (10:00 AM)</text>
+                    <text x="275" y="78" fill="#10b981" font-size="8" font-family="monospace">DELIVERED</text>
+                    <rect x="20" y="101" width="320" height="35" rx="6" fill="#0f172a" stroke="#1d4ed8" stroke-width="1"/>
+                    <circle cx="38" cy="118" r="5" fill="#60a5fa"/>
+                    <text x="52" y="121" fill="#f8fafc" font-size="9" font-family="monospace">EMAIL: Patient Intake Verified</text>
+                    <text x="275" y="121" fill="#60a5fa" font-size="8" font-family="monospace">SUBMITTED</text>
+                    <rect x="20" y="145" width="320" height="35" rx="6" fill="#0f172a" stroke="#1d4ed8" stroke-width="1"/>
+                    <circle cx="38" cy="162" r="5" fill="#818cf8"/>
+                    <text x="52" y="165" fill="#f8fafc" font-size="9" font-family="monospace">WHATSAPP: Telehealth Room Ready</text>
+                    <text x="275" y="165" fill="#818cf8" font-size="8" font-family="monospace">ACTIVE</text>
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div class="project-info">
+              <span class="project-category">Healthcare</span>
+              <h3>Clinic Connect</h3>
+              <p class="project-desc">Automated session scheduling and patient reminder pipeline.</p>
+              <span class="text-mono text-primary">VIEW CASE STUDY &rarr;</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Project Modal -->
+  <div class="modal-overlay" id="projectModal">
+    <div class="modal-container">
+      <button class="modal-close" id="modalClose" aria-label="Close modal">&times;</button>
+      
+      <div class="modal-hero">
+        <img id="modalImg" src="" alt="Project Image" onerror="this.style.display='none'; this.parentElement.innerHTML+='<div style=\'display:flex; height:100%; width:100%; align-items:center; justify-content:center; color:#fff;\'>Image Preview Not Available</div>';">
+      </div>
+      
+      <div class="modal-body">
+        <div class="modal-header">
+          <span class="modal-category" id="modalCategory">CATEGORY</span>
+          <h2 id="modalTitle">Project Title</h2>
+        </div>
+        
+        <div class="modal-content-grid">
+          <div>
+            <div class="modal-section">
+              <h4>Overview</h4>
+              <p id="modalOverview">Overview description goes here.</p>
+            </div>
+            <div class="modal-section">
+              <h4>The Challenge</h4>
+              <p id="modalChallenge">Challenge description goes here.</p>
+            </div>
+            <div class="modal-section">
+              <h4>The Approach</h4>
+              <p id="modalApproach">Approach description goes here.</p>
+            </div>
+          </div>
+          
+          <div>
+            <div class="modal-sidebar">
+              <div class="modal-section">
+                <h4>What We Built</h4>
+                <p id="modalBuilt" style="font-size: 0.95rem;"></p>
+              </div>
+              <div class="modal-section">
+                <h4>Technology</h4>
+                <div class="modal-tech" id="modalTech">
+                  <!-- Tags injected by JS -->
+                </div>
+              </div>
+              <a href="#" id="modalLink" class="btn btn-outline" target="_blank" style="width: 100%; margin-top: 1rem;">View Live Project &rarr;</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col" style="grid-column: span 2;">
+          <a href="index.html" class="nav-logo" style="margin-bottom: 1rem;"><span>&lt;</span>zemprolabs<span>/&gt;</span></a>
+          <p style="font-size: 0.95rem; max-width: 300px;">Build. Grow. Never lose your single point of contact.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <div class="footer-links">
+            <a href="services.html">Services</a>
+            <a href="work.html">Work</a>
+            <a href="process.html">Process</a>
+            <a href="pricing.html">Pricing</a>
+            <a href="about.html">About</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <div class="footer-links">
+            <a href="contact.html">Start a Project</a>
+            <a href="mailto:hello@zemprolabs.com">hello@zemprolabs.com</a>
+            <span class="text-mono" style="color: var(--accent-emerald); font-size: 0.75rem; margin-top: 1rem;">&bull; STATUS: OPERATIONAL</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div>&copy; 2026 Zemprolabs. All rights reserved.</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

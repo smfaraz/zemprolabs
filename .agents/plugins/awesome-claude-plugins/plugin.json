@@ -1,0 +1,9 @@
+{
+  "name": "awesome-claude-plugins",
+  "version": "1.0.0",
+  "description": "Curated registry of the top 100 Claude Code plugins, agent skills, and harnesses across GitHub.",
+  "author": {
+    "name": "quemsah"
+  },
+  "repository": "https://github.com/quemsah/awesome-claude-plugins"
+}

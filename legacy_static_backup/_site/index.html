@@ -1,0 +1,2274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zemprolabs · Software, Marketing, ServiceNow &amp; Managed Support</title>
+  <meta name="description" content="Zemprolabs provides end-to-end digital solutions: custom software development, ServiceNow enterprise tooling, growth marketing, and dedicated human digital assistants.">
+  <link rel="canonical" href="https://zemprolabs.com/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Zemprolabs">
+  <meta property="og:title" content="Zemprolabs · Software, Marketing, ServiceNow &amp; Managed Support">
+  <meta property="og:description" content="Zemprolabs provides end-to-end digital solutions: custom software development, ServiceNow enterprise tooling, growth marketing, and dedicated human digital assistants.">
+  <meta property="og:url" content="https://zemprolabs.com/">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Zemprolabs",
+    "url": "https://zemprolabs.com",
+    "description": "Zemprolabs is an end-to-end digital partner: software, ServiceNow tooling, marketing, and a dedicated human assistant for everything digital.",
+    "email": "hello@zemprolabs.com"
+  }
+  </script>
+
+  <style>
+    /* ==========================================================================
+       DESIGN SYSTEM & VARIABLES
+       ========================================================================== */
+    :root {
+      --bg-dark: #07090e;
+      --bg-card: #0f141d;
+      --bg-card-hover: #161e2c;
+      --bg-elevated: #1a2333;
+      
+      --accent-indigo: #6366f1;
+      --accent-indigo-glow: rgba(99, 102, 241, 0.25);
+      --accent-emerald: #10b981;
+      --accent-emerald-glow: rgba(16, 185, 129, 0.2);
+      --accent-cyan: #06b6d4;
+      --accent-purple: #8b5cf6;
+      
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --text-dim: #6b7280;
+      
+      --border-color: rgba(255, 255, 255, 0.08);
+      --border-highlight: rgba(99, 102, 241, 0.4);
+      
+      --font-heading: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+
+      --radius-sm: 6px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --radius-full: 9999px;
+
+      --transition-fast: 0.2s ease;
+      --transition-normal: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      --container-max: 1240px;
+    }
+
+    /* ==========================================================================
+       RESET & BASE STYLES
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+    }
+
+    body {
+      font-family: var(--font-body);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: color var(--transition-fast);
+    }
+
+    ul { list-style: none; }
+    img { max-width: 100%; height: auto; display: block; }
+    button, input, select, textarea { font-family: inherit; }
+
+    /* Background Mesh Glow */
+    .bg-glow-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .bg-glow {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      filter: blur(140px);
+      opacity: 0.15;
+    }
+
+    .bg-glow-1 { top: -100px; left: -100px; background: var(--accent-indigo); }
+    .bg-glow-2 { top: 40%; right: -200px; background: var(--accent-cyan); }
+    .bg-glow-3 { bottom: -100px; left: 20%; background: var(--accent-purple); }
+
+    /* Layout Utility */
+    .container {
+      width: 100%;
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .section {
+      padding: 5rem 0;
+      position: relative;
+    }
+
+    /* Typography Utilities */
+    h1, h2, h3, h4, h5 {
+      font-family: var(--font-heading);
+      color: #fff;
+      line-height: 1.15;
+      font-weight: 700;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent-indigo);
+      background: rgba(99, 102, 241, 0.08);
+      padding: 0.35rem 0.85rem;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(99, 102, 241, 0.2);
+      margin-bottom: 1.25rem;
+    }
+
+    .eyebrow-emerald {
+      color: var(--accent-emerald);
+      background: rgba(16, 185, 129, 0.08);
+      border-color: rgba(16, 185, 129, 0.2);
+    }
+
+    .eyebrow-cyan {
+      color: var(--accent-cyan);
+      background: rgba(6, 182, 212, 0.08);
+      border-color: rgba(6, 182, 212, 0.2);
+    }
+
+    .text-mono { font-family: var(--font-mono); }
+    .text-gradient {
+      background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .text-center { text-align: center; }
+    .mx-auto { margin-left: auto; margin-right: auto; }
+    .max-w-md { max-width: 600px; }
+    .max-w-lg { max-width: 800px; }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      padding: 0.85rem 1.6rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border-radius: var(--radius-md);
+      transition: all var(--transition-normal);
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent-indigo) 0%, #4f46e5 100%);
+      color: #fff;
+      box-shadow: 0 4px 20px var(--accent-indigo-glow);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(99, 102, 241, 0.4);
+    }
+
+    .btn-outline {
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .btn-mono { font-family: var(--font-mono); font-size: 0.875rem; }
+
+    /* ==========================================================================
+       HEADER & NAVIGATION
+       ========================================================================== */
+    .statusbar {
+      background: #040609;
+      border-bottom: 1px solid var(--border-color);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      padding: 0.5rem 0;
+      color: var(--text-muted);
+    }
+
+    .statusbar__inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .statusbar__dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      background-color: var(--accent-emerald);
+      border-radius: 50%;
+      margin-right: 8px;
+      box-shadow: 0 0 8px var(--accent-emerald);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.85); }
+    }
+
+    .statusbar__right {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(7, 9, 14, 0.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+    }
+
+    .logo {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      letter-spacing: -0.02em;
+    }
+
+    .logo__bracket { color: var(--accent-indigo); }
+
+    .nav__links {
+      display: flex;
+      align-items: center;
+      gap: 1.75rem;
+    }
+
+    .nav__link {
+      font-size: 0.925rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      padding: 0.5rem 0.25rem;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .nav__link:hover,
+    .nav__link.active {
+      color: #fff;
+    }
+
+    .nav__link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--accent-indigo);
+      border-radius: 2px;
+    }
+
+    .nav__cta {
+      margin-left: 0.5rem;
+    }
+
+    .nav__toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+
+    /* Mobile Drawer */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 72px;
+      left: 0;
+      width: 100%;
+      height: calc(100vh - 72px);
+      background: var(--bg-dark);
+      z-index: 99;
+      padding: 2rem 1.5rem;
+      flex-direction: column;
+      gap: 1.5rem;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .mobile-menu.open {
+      display: flex;
+    }
+
+    .mobile-menu .nav__link {
+      font-size: 1.25rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    /* ==========================================================================
+       PAGE ROUTER & VIEWS
+       ========================================================================== */
+    .page-view {
+      display: none;
+      animation: fadeIn 0.4s ease forwards;
+    }
+
+    .page-view.active-page {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .page-header {
+      padding: 4rem 0 3rem;
+      border-bottom: 1px solid var(--border-color);
+      background: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.08) 0%, transparent 70%);
+    }
+
+    .page-header h1 {
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      margin-top: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .page-header p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 700px;
+    }
+
+    /* ==========================================================================
+       HERO & HOME COMPONENTS
+       ========================================================================== */
+    .hero {
+      padding: 5rem 0 4rem;
+      position: relative;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 3.5rem;
+      align-items: center;
+    }
+
+    .hero__headline {
+      font-size: clamp(2.5rem, 4.5vw, 3.8rem);
+      margin-bottom: 1.25rem;
+      letter-spacing: -0.02em;
+    }
+
+    .hero__cursor {
+      display: inline-block;
+      width: 12px;
+      height: 1em;
+      background: var(--accent-indigo);
+      margin-left: 6px;
+      vertical-align: middle;
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+    .hero__sub {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      margin-bottom: 2.25rem;
+      line-height: 1.65;
+      max-width: 580px;
+    }
+
+    .hero__actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    /* Interactive Hero Visual / Terminal Widget */
+    .hero-interactive-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+
+    .interactive-card__header {
+      background: #0b0e14;
+      padding: 0.75rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .window-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot-red { background: #ef4444; }
+    .dot-yellow { background: #f59e0b; }
+    .dot-green { background: #10b981; }
+
+    .interactive-tabs {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-dim);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      padding: 0.3rem 0.6rem;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .tab-btn.active {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-main);
+    }
+
+    .interactive-card__body {
+      padding: 1.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      min-height: 280px;
+    }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    .code-line {
+      margin-bottom: 0.5rem;
+      display: flex;
+      gap: 1rem;
+    }
+
+    .line-num { color: var(--text-dim); user-select: none; }
+    .code-keyword { color: #f472b6; }
+    .code-func { color: #60a5fa; }
+    .code-string { color: #34d399; }
+    .code-comment { color: #6b7280; font-style: italic; }
+
+    .support-widget {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .chat-bubble {
+      padding: 0.85rem 1rem;
+      border-radius: var(--radius-md);
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      max-width: 85%;
+    }
+
+    .chat-bubble.user {
+      background: rgba(255, 255, 255, 0.06);
+      align-self: flex-start;
+      border-top-left-radius: 2px;
+    }
+
+    .chat-bubble.assistant {
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      align-self: flex-end;
+      border-top-right-radius: 2px;
+    }
+
+    .chat-sender {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--accent-indigo);
+      margin-bottom: 0.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    /* Stats Bar */
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+    }
+
+    .stat {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 1.75rem 1.5rem;
+      border-radius: var(--radius-md);
+      transition: var(--transition-normal);
+    }
+
+    .stat:hover {
+      border-color: var(--border-highlight);
+      transform: translateY(-3px);
+    }
+
+    .stat__num {
+      font-family: var(--font-heading);
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, #ffffff 0%, var(--accent-indigo) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .stat__label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* Services / Pillars Cards */
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .pillar-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 2.25rem;
+      position: relative;
+      transition: var(--transition-normal);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .pillar-card:hover {
+      border-color: var(--border-highlight);
+      background: var(--bg-card-hover);
+      transform: translateY(-4px);
+    }
+
+    .pillar__num {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--accent-indigo);
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .pillar-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .pillar-card p {
+      color: var(--text-muted);
+      font-size: 0.975rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .pillar-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .tag-chip {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-color);
+      padding: 0.2rem 0.6rem;
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+    }
+
+    .pillar__arrow {
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .pillar-card:hover .pillar__arrow span {
+      transform: translateX(5px);
+    }
+
+    .pillar__arrow span {
+      transition: transform var(--transition-fast);
+      color: var(--accent-indigo);
+    }
+
+    /* Callout Banner */
+    .callout {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%);
+      border: 1px solid rgba(99, 102, 241, 0.25);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      display: flex;
+      gap: 1.5rem;
+      align-items: flex-start;
+      margin-top: 3rem;
+    }
+
+    .callout__icon {
+      background: var(--accent-indigo);
+      color: #fff;
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .callout h3 { font-size: 1.35rem; margin-bottom: 0.5rem; }
+    .callout p { color: var(--text-muted); font-size: 1rem; }
+
+    /* Portfolio Section */
+    .filter-bar {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+      margin-bottom: 2.5rem;
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+    }
+
+    .filter-btn {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 0.5rem 1.25rem;
+      border-radius: var(--radius-full);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: var(--transition-fast);
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: var(--accent-indigo);
+      color: #fff;
+      border-color: var(--accent-indigo);
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.75rem;
+    }
+
+    .case-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: var(--transition-normal);
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .case-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    }
+
+    .case-thumb {
+      background: #0b0e14;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .case-thumb__bar {
+      padding: 0.6rem 0.85rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    .case-thumb__dots { display: flex; gap: 4px; }
+    .case-thumb__dot { width: 8px; height: 8px; border-radius: 50%; }
+    .case-thumb__dot--r { background: #ef4444; }
+    .case-thumb__dot--y { background: #f59e0b; }
+    .case-thumb__dot--g { background: #10b981; }
+
+    .case-thumb__url {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-dim);
+    }
+
+    .case-thumb__preview {
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      background: radial-gradient(circle at center, rgba(99, 102, 241, 0.08) 0%, transparent 70%);
+    }
+
+    .case-thumb__watermark {
+      font-family: var(--font-mono);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.15);
+      letter-spacing: -0.02em;
+    }
+
+    .case-card__body {
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .card__tag {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      color: var(--accent-emerald);
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.05em;
+    }
+
+    .case-card h4 {
+      font-size: 1.15rem;
+      margin-bottom: 0.5rem;
+      line-height: 1.35;
+    }
+
+    .case-card p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+      flex-grow: 1;
+    }
+
+    .case-card__meta {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      border-top: 1px solid var(--border-color);
+      padding-top: 0.75rem;
+    }
+
+    /* Process Timeline */
+    .timeline {
+      position: relative;
+      margin-top: 3rem;
+      padding-left: 2rem;
+      border-left: 2px solid var(--border-color);
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 3rem;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: -2.6rem;
+      top: 0;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--bg-dark);
+      border: 3px solid var(--accent-indigo);
+      box-shadow: 0 0 10px var(--accent-indigo-glow);
+    }
+
+    .timeline-content {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+    }
+
+    .timeline-step {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--accent-emerald);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .timeline-content h3 {
+      font-size: 1.35rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .timeline-content p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
+
+    .timeline-deliverables {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    /* Pricing Section */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .price-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 2.25rem 1.75rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      transition: var(--transition-normal);
+    }
+
+    .price-card.featured {
+      border-color: var(--accent-indigo);
+      background: linear-gradient(180deg, rgba(99, 102, 241, 0.08) 0%, var(--bg-card) 100%);
+      box-shadow: 0 10px 30px rgba(99, 102, 241, 0.15);
+    }
+
+    .price-badge {
+      position: absolute;
+      top: -12px;
+      right: 20px;
+      background: var(--accent-indigo);
+      color: #fff;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      padding: 0.2rem 0.75rem;
+      border-radius: var(--radius-full);
+      text-transform: uppercase;
+    }
+
+    .price-card h3 { font-size: 1.35rem; margin-bottom: 0.5rem; }
+    .price-card .price-desc { color: var(--text-muted); font-size: 0.875rem; margin-bottom: 1.5rem; }
+
+    .price-amount {
+      font-family: var(--font-heading);
+      font-size: 2.75rem;
+      color: #fff;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+    }
+
+    .price-amount span { font-size: 1rem; color: var(--text-dim); font-weight: 400; }
+
+    .price-features {
+      list-style: none;
+      margin-bottom: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .price-features li {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .price-features li span { color: var(--accent-emerald); font-weight: bold; }
+
+    /* Estimator Box */
+    .estimator-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 2.5rem;
+      margin-top: 3rem;
+    }
+
+    .estimator-options {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .estimator-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border-color);
+      padding: 1rem 1.25rem;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .estimator-option:hover,
+    .estimator-option.selected {
+      border-color: var(--accent-indigo);
+      background: rgba(99, 102, 241, 0.06);
+    }
+
+    .estimator-option input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent-indigo);
+    }
+
+    .estimator-result {
+      background: #090d14;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-align: center;
+    }
+
+    .est-price {
+      font-family: var(--font-heading);
+      font-size: 3rem;
+      color: var(--accent-emerald);
+      margin: 1rem 0;
+    }
+
+    /* FAQ List */
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 2.5rem;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .faq-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition: var(--transition-fast);
+    }
+
+    .faq-question {
+      padding: 1.25rem 1.5rem;
+      width: 100%;
+      text-align: left;
+      background: none;
+      border: none;
+      color: #fff;
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .faq-question::after {
+      content: '+';
+      font-family: var(--font-mono);
+      font-size: 1.25rem;
+      color: var(--accent-indigo);
+      transition: transform var(--transition-fast);
+    }
+
+    .faq-item.active .faq-question::after {
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s cubic-bezier(0, 1, 0, 1);
+      padding: 0 1.5rem;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .faq-item.active .faq-answer {
+      max-height: 300px;
+      padding-bottom: 1.25rem;
+      transition: max-height 0.3s ease-in-out;
+    }
+
+    /* Contact & Interactive Form */
+    .contact-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 3rem;
+      max-width: 720px;
+      margin: 2.5rem auto 0;
+    }
+
+    .form-group {
+      margin-bottom: 1.25rem;
+      text-align: left;
+    }
+
+    .form-label {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      width: 100%;
+      background: #090d14;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 0.85rem 1rem;
+      color: #fff;
+      font-size: 0.95rem;
+      transition: var(--transition-fast);
+    }
+
+    .form-input:focus,
+    .form-select:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: var(--accent-indigo);
+      box-shadow: 0 0 0 3px var(--accent-indigo-glow);
+    }
+
+    /* Modal / Toast Notification */
+    .toast-message {
+      display: none;
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--accent-emerald);
+      color: #fff;
+      padding: 1rem 1.5rem;
+      border-radius: var(--radius-md);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      font-family: var(--font-body);
+      max-width: 380px;
+    }
+
+    .toast-message.show {
+      display: block;
+      animation: slideIn 0.3s forwards;
+    }
+
+    @keyframes slideIn {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Footer */
+    .site-footer {
+      background: #040609;
+      border-top: 1px solid var(--border-color);
+      padding: 4rem 0 2rem;
+      margin-top: 4rem;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr repeat(3, 1fr);
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer-grid h5 {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: #fff;
+      margin-bottom: 1.25rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .footer-grid ul { display: flex; flex-direction: column; gap: 0.75rem; }
+    .footer-grid a { font-size: 0.9rem; color: var(--text-muted); cursor: pointer; }
+    .footer-grid a:hover { color: #fff; }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border-color);
+      padding-top: 2rem;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--text-dim);
+    }
+
+    /* ==========================================================================
+       RESPONSIVE MEDIA QUERIES
+       ========================================================================== */
+    @media (max-width: 992px) {
+      .hero-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .pillars-grid { grid-template-columns: 1fr; }
+      .grid-4 { grid-template-columns: repeat(2, 1fr); }
+      .grid-3 { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .estimator-box { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    }
+
+    @media (max-width: 768px) {
+      .nav__links, .nav__cta { display: none; }
+      .nav__toggle { display: block; }
+      .grid-4 { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; gap: 1rem; text-align: center; }
+      .statusbar__right span:nth-child(1) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Dynamic Background Glow -->
+  <div class="bg-glow-container" aria-hidden="true">
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+    <div class="bg-glow bg-glow-3"></div>
+  </div>
+
+  <!-- Status Bar -->
+  <div class="statusbar">
+    <div class="container statusbar__inner">
+      <span><span class="statusbar__dot"></span>zemprolabs — status: online</span>
+      <div class="statusbar__right">
+        <span>build: software × marketing × support</span>
+        <a href="mailto:hello@zemprolabs.com" style="color: inherit;">hello@zemprolabs.com</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN NAVIGATION HEADER -->
+  <header class="site-header">
+    <div class="container">
+      <nav class="nav">
+        <a href="#home" class="logo" onclick="navigateTo('home'); return false;" aria-label="Zemprolabs home">
+          <span class="logo__bracket">&lt;</span>zemprolabs<span class="logo__bracket">/&gt;</span>
+        </a>
+        <ul class="nav__links">
+          <li><span class="nav__link" data-page="services" onclick="navigateTo('services')">Services</span></li>
+          <li><span class="nav__link" data-page="work" onclick="navigateTo('work')">Work</span></li>
+          <li><span class="nav__link" data-page="process" onclick="navigateTo('process')">Process</span></li>
+          <li><span class="nav__link" data-page="pricing" onclick="navigateTo('pricing')">Pricing</span></li>
+          <li><span class="nav__link" data-page="about" onclick="navigateTo('about')">About</span></li>
+        </ul>
+        <div class="nav__cta">
+          <button onclick="navigateTo('start-a-project')" class="btn btn-primary btn-mono">Start a project →</button>
+        </div>
+        <button class="nav__toggle" aria-label="Toggle menu" onclick="toggleMobileMenu()">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- MOBILE MENU DRAWER -->
+  <div class="mobile-menu" id="mobileMenu">
+    <span class="nav__link" data-page="services" onclick="navigateTo('services')">Services</span>
+    <span class="nav__link" data-page="work" onclick="navigateTo('work')">Work</span>
+    <span class="nav__link" data-page="process" onclick="navigateTo('process')">Process</span>
+    <span class="nav__link" data-page="pricing" onclick="navigateTo('pricing')">Pricing</span>
+    <span class="nav__link" data-page="about" onclick="navigateTo('about')">About</span>
+    <button onclick="navigateTo('start-a-project')" class="btn btn-primary btn-mono" style="margin-top: 1rem; width: 100%;">Start a project →</button>
+  </div>
+
+  <main id="app-content">
+
+    <!-- ==========================================================================
+         PAGE 1: HOME PAGE
+         ========================================================================== -->
+    <div id="page-home" class="page-view active-page">
+      <section class="hero">
+        <div class="container">
+          <div class="hero-grid">
+            <div>
+              <span class="eyebrow">end-to-end digital partner</span>
+              <h1 class="hero__headline">We build it, grow it, and stay on call for it<span class="hero__cursor"></span></h1>
+              <p class="hero__sub">Zemprolabs is the single vendor you need for digital work: custom software, ServiceNow tooling, marketing and SEO — backed by a dedicated human assistant.</p>
+              <div class="hero__actions">
+                <button onclick="navigateTo('start-a-project')" class="btn btn-primary">Start a project →</button>
+                <button onclick="navigateTo('work')" class="btn btn-outline btn-mono">See selected work</button>
+              </div>
+            </div>
+
+            <!-- Hero Interactive Widget -->
+            <div class="hero-interactive-card">
+              <div class="interactive-card__header">
+                <div class="window-dots">
+                  <span class="dot dot-red"></span>
+                  <span class="dot dot-yellow"></span>
+                  <span class="dot dot-green"></span>
+                </div>
+                <div class="interactive-tabs">
+                  <button class="tab-btn active" onclick="switchTab(event, 'tab-code')">App.tsx</button>
+                  <button class="tab-btn" onclick="switchTab(event, 'tab-support')">Dedicated Assistant</button>
+                  <button class="tab-btn" onclick="switchTab(event, 'tab-growth')">Growth.log</button>
+                </div>
+              </div>
+
+              <div class="interactive-card__body">
+                <div id="tab-code" class="tab-content active">
+                  <div class="code-line"><span class="line-num">1</span> <span class="code-keyword">import</span> { ZemprolabsTeam } <span class="code-keyword">from</span> <span class="code-string">'@zemprolabs/core'</span>;</div>
+                  <div class="code-line"><span class="line-num">2</span> </div>
+                  <div class="code-line"><span class="line-num">3</span> <span class="code-keyword">export default</span> <span class="code-keyword">function</span> <span class="code-func">DigitalStack</span>() {</div>
+                  <div class="code-line"><span class="line-num">4</span> &nbsp;&nbsp;<span class="code-keyword">return</span> (</div>
+                  <div class="code-line"><span class="line-num">5</span> &nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="code-func">ZemprolabsTeam</span></div>
+                  <div class="code-line"><span class="line-num">6</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;software={<span class="code-string">"Custom Web & Apps"</span>}</div>
+                  <div class="code-line"><span class="line-num">7</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;serviceNow={<span class="code-string">"Enterprise Workflows"</span>}</div>
+                  <div class="code-line"><span class="line-num">8</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;support={<span class="code-string">"Dedicated Human Lead"</span>}</div>
+                  <div class="code-line"><span class="line-num">9</span> &nbsp;&nbsp;&nbsp;&nbsp;/&gt;</div>
+                  <div class="code-line"><span class="line-num">10</span> &nbsp;&nbsp;);</div>
+                  <div class="code-line"><span class="line-num">11</span> }</div>
+                </div>
+
+                <div id="tab-support" class="tab-content">
+                  <div class="support-widget">
+                    <div class="chat-bubble user">
+                      <div class="chat-sender">CLIENT</div>
+                      "Hey! We need to push an emergency update to the booking system & boost SEO for next week."
+                    </div>
+                    <div class="chat-bubble assistant">
+                      <div class="chat-sender">⚡ DEDICATED ASSISTANT (ZEMPROLABS)</div>
+                      "On it! Deploying hotfix now and our marketing team is reviewing keyword targeting. ETA 20 mins."
+                    </div>
+                  </div>
+                </div>
+
+                <div id="tab-growth" class="tab-content">
+                  <div class="code-line"><span class="code-comment">// Monthly Growth Report</span></div>
+                  <div class="code-line"><span class="code-keyword">STATUS</span>: 200 OK</div>
+                  <div class="code-line">Organic Search Traffic: <span class="code-string">+312% YoY</span></div>
+                  <div class="code-line">Conversion Rate: <span class="code-string">4.8% (+1.2%)</span></div>
+                  <div class="code-line">Page Speed Index: <span class="code-string">99/100</span></div>
+                  <div class="code-line">Active Retainers: <span class="code-func">Managed Support Active</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Stats Bar -->
+      <section class="section">
+        <div class="container">
+          <div class="grid-4">
+            <div class="stat">
+              <div class="stat__num">4</div>
+              <div class="stat__label">Disciplines in one team</div>
+            </div>
+            <div class="stat">
+              <div class="stat__num">1</div>
+              <div class="stat__label">Dedicated human point of contact</div>
+            </div>
+            <div class="stat">
+              <div class="stat__num">0</div>
+              <div class="stat__label">Third-party vendors to manage</div>
+            </div>
+            <div class="stat">
+              <div class="stat__num">&lt;24h</div>
+              <div class="stat__label">Guaranteed response SLA</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Services Overview Teaser -->
+      <section class="section">
+        <div class="container">
+          <span class="eyebrow">CORE CAPABILITIES</span>
+          <h2>Everything under one unified roof.</h2>
+          <p class="max-w-md" style="color: var(--text-muted); margin-top: 0.5rem;">Click any service below to explore full tech stacks and deliverables.</p>
+
+          <div class="pillars-grid">
+            <div class="pillar-card" onclick="navigateTo('services')">
+              <div>
+                <span class="pillar__num">01 / SOFTWARE ENGINEERING</span>
+                <h3>Custom Software &amp; Platforms</h3>
+                <p>Scalable web applications, mobile platforms, and robust enterprise architecture designed for long-term reliability.</p>
+                <div class="pillar-tags">
+                  <span class="tag-chip">React / Next.js</span>
+                  <span class="tag-chip">Node.js</span>
+                  <span class="tag-chip">iOS / Android</span>
+                </div>
+              </div>
+              <div class="pillar__arrow">Explore Software Services <span>→</span></div>
+            </div>
+
+            <div class="pillar-card" onclick="navigateTo('services')">
+              <div>
+                <span class="pillar__num">02 / ENTERPRISE AUTOMATION</span>
+                <h3>ServiceNow &amp; Tooling</h3>
+                <p>Custom ServiceNow workflows, snowCMS integration, portal UI development, and platform conflict audits.</p>
+                <div class="pillar-tags">
+                  <span class="tag-chip">snowCMS</span>
+                  <span class="tag-chip">ITSM / CSM</span>
+                  <span class="tag-chip">Custom Portals</span>
+                </div>
+              </div>
+              <div class="pillar__arrow">Explore ServiceNow Services <span>→</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ==========================================================================
+         PAGE 2: SERVICES SEPARATE PAGE
+         ========================================================================== -->
+    <div id="page-services" class="page-view">
+      <div class="page-header">
+        <div class="container">
+          <span class="eyebrow">OUR SERVICES</span>
+          <h1>Comprehensive Digital Capabilities</h1>
+          <p>Four specialized pillars engineered to handle every stage of your product lifecycle—from initial line of code to growth and daily maintenance.</p>
+        </div>
+      </div>
+
+      <section class="section">
+        <div class="container">
+          <div class="pillars-grid">
+            <!-- Pillar 1 -->
+            <div class="pillar-card">
+              <div>
+                <span class="pillar__num">01 / SOFTWARE DEVELOPMENT</span>
+                <h3>Custom Software &amp; Web Applications</h3>
+                <p>We craft high-performance web platforms, SaaS applications, and native mobile apps. We prioritize clean architecture, maintainable codebases, and lightning-fast load times.</p>
+                <div style="margin-bottom: 1.5rem;">
+                  <h5 style="color: #fff; font-size: 0.9rem; margin-bottom: 0.5rem;">Key Deliverables:</h5>
+                  <ul style="color: var(--text-muted); font-size: 0.875rem; list-style: disc; padding-left: 1.25rem;">
+                    <li>Full-stack web applications (React, Next.js, Node.js)</li>
+                    <li>iOS &amp; Android Mobile Apps (React Native, Flutter)</li>
+                    <li>REST &amp; GraphQL API Architecture &amp; Integrations</li>
+                    <li>Cloud Infrastructure, Serverless &amp; DevOps setup</li>
+                  </ul>
+                </div>
+                <div class="pillar-tags">
+                  <span class="tag-chip">Next.js</span>
+                  <span class="tag-chip">TypeScript</span>
+                  <span class="tag-chip">PostgreSQL</span>
+                  <span class="tag-chip">AWS</span>
+                </div>
+              </div>
+              <button onclick="navigateTo('start-a-project')" class="btn btn-outline btn-mono" style="margin-top: 1rem;">Scope Software Project →</button>
+            </div>
+
+            <!-- Pillar 2 -->
+            <div class="pillar-card">
+              <div>
+                <span class="pillar__num">02 / ENTERPRISE WORKFLOWS</span>
+                <h3>ServiceNow Platform &amp; Custom Tooling</h3>
+                <p>Deep expertise in ServiceNow instance customization, ITSM/CSM portals, automated conflict detection, and our proprietary snowCMS content manager.</p>
+                <div style="margin-bottom: 1.5rem;">
+                  <h5 style="color: #fff; font-size: 0.9rem; margin-bottom: 0.5rem;">Key Deliverables:</h5>
+                  <ul style="color: var(--text-muted); font-size: 0.875rem; list-style: disc; padding-left: 1.25rem;">
+                    <li>snowCMS Integration &amp; Automated Publishing</li>
+                    <li>Service Portal UI/UX Customization</li>
+                    <li>Workflow &amp; Integration Hub Automation</li>
+                    <li>Instance Health, Upgrade &amp; Conflict Audits</li>
+                  </ul>
+                </div>
+                <div class="pillar-tags">
+                  <span class="tag-chip">ServiceNow</span>
+                  <span class="tag-chip">snowCMS</span>
+                  <span class="tag-chip">ITSM</span>
+                  <span class="tag-chip">JavaScript</span>
+                </div>
+              </div>
+              <button onclick="navigateTo('start-a-project')" class="btn btn-outline btn-mono" style="margin-top: 1rem;">Inquire ServiceNow →</button>
+            </div>
+
+            <!-- Pillar 3 -->
+            <div class="pillar-card">
+              <div>
+                <span class="pillar__num">03 / DIGITAL GROWTH</span>
+                <h3>Growth Marketing &amp; Technical SEO</h3>
+                <p>Software is only effective if people use it. We implement technical search engine optimization, performance campaigns, conversion rate optimization, and data-driven content engines.</p>
+                <div style="margin-bottom: 1.5rem;">
+                  <h5 style="color: #fff; font-size: 0.9rem; margin-bottom: 0.5rem;">Key Deliverables:</h5>
+                  <ul style="color: var(--text-muted); font-size: 0.875rem; list-style: disc; padding-left: 1.25rem;">
+                    <li>Technical SEO Audits &amp; Core Web Vitals Optimization</li>
+                    <li>Content Strategy &amp; Programmatic SEO Pipelines</li>
+                    <li>PPC Campaign Management &amp; Analytics Dashboards</li>
+                    <li>Funnel &amp; Conversion Rate Optimization (CRO)</li>
+                  </ul>
+                </div>
+                <div class="pillar-tags">
+                  <span class="tag-chip">Technical SEO</span>
+                  <span class="tag-chip">Google Analytics 4</span>
+                  <span class="tag-chip">CRO</span>
+                  <span class="tag-chip">PPC</span>
+                </div>
+              </div>
+              <button onclick="navigateTo('start-a-project')" class="btn btn-outline btn-mono" style="margin-top: 1rem;">Boost Growth →</button>
+            </div>
+
+            <!-- Pillar 4 -->
+            <div class="pillar-card">
+              <div>
+                <span class="pillar__num">04 / MANAGED DIGITAL ASSISTANT</span>
+                <h3>Dedicated Human Support Lead</h3>
+                <p>Never worry about disappearing contractors or slow ticketing systems again. Get a dedicated human lead assigned to your account who knows your brand and code inside-out.</p>
+                <div style="margin-bottom: 1.5rem;">
+                  <h5 style="color: #fff; font-size: 0.9rem; margin-bottom: 0.5rem;">Key Deliverables:</h5>
+                  <ul style="color: var(--text-muted); font-size: 0.875rem; list-style: disc; padding-left: 1.25rem;">
+                    <li>Direct Slack / Teams / Email Channel with human lead</li>
+                    <li>Guaranteed sub-24-hour turnaround SLA</li>
+                    <li>Ongoing site maintenance, minor enhancements &amp; bug fixes</li>
+                    <li>Proactive uptime &amp; security monitoring</li>
+                  </ul>
+                </div>
+                <div class="pillar-tags">
+                  <span class="tag-chip">Direct Channel</span>
+                  <span class="tag-chip">No Tickets</span>
+                  <span class="tag-chip">&lt;24h SLA</span>
+                  <span class="tag-chip">Maintenance</span>
+                </div>
+              </div>
+              <button onclick="navigateTo('start-a-project')" class="btn btn-outline btn-mono" style="margin-top: 1rem;">Get Dedicated Assistant →</button>
+            </div>
+          </div>
+
+          <!-- Callout -->
+          <div class="callout">
+            <div class="callout__icon">💡</div>
+            <div>
+              <h3>Need a custom bundled stack?</h3>
+              <p>Most clients combine Software Development with Growth Marketing and a Dedicated Assistant retainer. Explore our transparent pricing calculator to estimate your bundle.</p>
+              <button onclick="navigateTo('pricing')" class="btn btn-primary btn-mono" style="margin-top: 1rem;">View Pricing Calculator →</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ==========================================================================
+         PAGE 3: WORK SEPARATE PAGE
+         ========================================================================== -->
+    <div id="page-work" class="page-view">
+      <div class="page-header">
+        <div class="container">
+          <span class="eyebrow eyebrow-emerald">SELECTED WORK</span>
+          <h1>Case Studies &amp; Proven Impact</h1>
+          <p>Explore how we've helped enterprises, healthcare providers, e-commerce brands, and edtech platforms build world-class digital experiences.</p>
+        </div>
+      </div>
+
+      <section class="section">
+        <div class="container">
+          <!-- Portfolio Filter Bar -->
+          <div class="filter-bar">
+            <button class="filter-btn active" onclick="filterWork('all', event)">All Projects</button>
+            <button class="filter-btn" onclick="filterWork('ecommerce', event)">E-Commerce</button>
+            <button class="filter-btn" onclick="filterWork('software', event)">Software &amp; Apps</button>
+            <button class="filter-btn" onclick="filterWork('healthcare', event)">Healthcare</button>
+            <button class="filter-btn" onclick="filterWork('servicenow', event)">ServiceNow</button>
+          </div>
+
+          <div class="grid-3" id="portfolio-grid">
+            <!-- BaeMeds -->
+            <div class="case-card" data-category="ecommerce">
+              <div class="case-thumb">
+                <div class="case-thumb__bar">
+                  <div class="case-thumb__dots">
+                    <span class="case-thumb__dot case-thumb__dot--r"></span>
+                    <span class="case-thumb__dot case-thumb__dot--y"></span>
+                    <span class="case-thumb__dot case-thumb__dot--g"></span>
+                  </div>
+                  <span class="case-thumb__url">baemeds.com / baemeds.in</span>
+                </div>
+                <div class="case-thumb__preview">
+                  <span class="case-thumb__watermark">&lt;e-commerce/&gt;</span>
+                </div>
+              </div>
+              <div class="case-card__body">
+                <span class="card__tag">E-Commerce</span>
+                <h4>BaeMeds — Multi-National DME Platform</h4>
+                <p>Multi-national e-commerce platform for Durable Medical Equipment operating across USA &amp; India with automated compliance and currency routing.</p>
+                <div class="case-card__meta">BaeMeds · USA &amp; India</div>
+              </div>
+            </div>
+
+            <!-- Erus Academy -->
+            <div class="case-card" data-category="software">
+              <div class="case-thumb">
+                <div class="case-thumb__bar">
+                  <div class="case-thumb__dots">
+                    <span class="case-thumb__dot case-thumb__dot--r"></span>
+                    <span class="case-thumb__dot case-thumb__dot--y"></span>
+                    <span class="case-thumb__dot case-thumb__dot--g"></span>
+                  </div>
+                  <span class="case-thumb__url">erusacademy.in</span>
+                </div>
+                <div class="case-thumb__preview">
+                  <span class="case-thumb__watermark">&lt;software/&gt;</span>
+                </div>
+              </div>
+              <div class="case-card__body">
+                <span class="card__tag">Software</span>
+                <h4>Erus Academy — Full LMS Platform</h4>
+                <p>Comprehensive edtech platform featuring administrative Web Portals alongside native iOS and Android learning applications.</p>
+                <div class="case-card__meta">Erus Academy</div>
+              </div>
+            </div>
+
+            <!-- Auvia Behavioral Centers -->
+            <div class="case-card" data-category="healthcare">
+              <div class="case-thumb">
+                <div class="case-thumb__bar">
+                  <div class="case-thumb__dots">
+                    <span class="case-thumb__dot case-thumb__dot--r"></span>
+                    <span class="case-thumb__dot case-thumb__dot--y"></span>
+                    <span class="case-thumb__dot case-thumb__dot--g"></span>
+                  </div>
+                  <span class="case-thumb__url">auviatherapy.com</span>
+                </div>
+                <div class="case-thumb__preview">
+                  <span class="case-thumb__watermark">&lt;healthcare/&gt;</span>
+                </div>
+              </div>
+              <div class="case-card__body">
+                <span class="card__tag">Healthcare</span>
+                <h4>Auvia Behavioral Centers Website</h4>
+                <p>Modern web platform and patient intake portal for an autism therapy clinic network based in Austin, Texas.</p>
+                <div class="case-card__meta">Auvia Behavioral Centers · Austin, TX</div>
+              </div>
+            </div>
+
+            <!-- Talent Hunters -->
+            <div class="case-card" data-category="software">
+              <div class="case-thumb">
+                <div class="case-thumb__bar">
+                  <div class="case-thumb__dots">
+                    <span class="case-thumb__dot case-thumb__dot--r"></span>
+                    <span class="case-thumb__dot case-thumb__dot--y"></span>
+                    <span class="case-thumb__dot case-thumb__dot--g"></span>
+                  </div>
+                  <span class="case-thumb__url">talenthunters.com</span>
+                </div>
+                <div class="case-thumb__preview">
+                  <span class="case-thumb__watermark">&lt;recruitment/&gt;</span>
+                </div>
+              </div>
+              <div class="case-card__body">
+                <span class="card__tag">Software &amp; Portal</span>
+                <h4>Talent Hunters Corporate Portal</h4>
+                <p>Corporate platform and candidate application tracking portal for an international talent acquisition firm.</p>
+                <div class="case-card__meta">Talent Hunters Consultancy</div>
+              </div>
+            </div>
+
+            <!-- snowCMS -->
+            <div class="case-card" data-category="servicenow">
+              <div class="case-thumb">
+                <div class="case-thumb__bar">
+                  <div class="case-thumb__dots">
+                    <span class="case-thumb__dot case-thumb__dot--r"></span>
+                    <span class="case-thumb__dot case-thumb__dot--y"></span>
+                    <span class="case-thumb__dot case-thumb__dot--g"></span>
+                  </div>
+                  <span class="case-thumb__url">ServiceNow Enterprise</span>
+                </div>
+                <div class="case-thumb__preview">
+                  <span class="case-thumb__watermark">&lt;servicenow/&gt;</span>
+                </div>
+              </div>
+              <div class="case-card__body">
+                <span class="card__tag">ServiceNow</span>
+                <h4>snowCMS — ServiceNow Automation Tool</h4>
+                <p>Proprietary ServiceNow automation utility built to streamline content management, instance deployments, and workflows.</p>
+                <div class="case-card__meta">Enterprise Client</div>
+              </div>
+            </div>
+
+            <!-- Clinic Connect -->
+            <div class="case-card" data-category="healthcare">
+              <div class="case-thumb">
+                <div class="case-thumb__bar">
+                  <div class="case-thumb__dots">
+                    <span class="case-thumb__dot case-thumb__dot--r"></span>
+                    <span class="case-thumb__dot case-thumb__dot--y"></span>
+                    <span class="case-thumb__dot case-thumb__dot--g"></span>
+                  </div>
+                  <span class="case-thumb__url">Clinic Connect Portal</span>
+                </div>
+                <div class="case-thumb__preview">
+                  <span class="case-thumb__watermark">&lt;automation/&gt;</span>
+                </div>
+              </div>
+              <div class="case-card__body">
+                <span class="card__tag">Healthcare</span>
+                <h4>Clinic Connect Scheduling Automation</h4>
+                <p>Automated session scheduling, provider assignment, and patient reminder pipeline built for specialized medical clinics.</p>
+                <div class="case-card__meta">Auvia Behavioral Centers</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ==========================================================================
+         PAGE 4: PROCESS SEPARATE PAGE
+         ========================================================================== -->
+    <div id="page-process" class="page-view">
+      <div class="page-header">
+        <div class="container">
+          <span class="eyebrow eyebrow-cyan">HOW WE WORK</span>
+          <h1>Our 5-Step Execution Blueprint</h1>
+          <p>We eliminate agency bloat and communication gaps. Here is exactly how we take your project from discovery call to high-performance scale.</p>
+        </div>
+      </div>
+
+      <section class="section">
+        <div class="container">
+          <div class="timeline">
+            <!-- Step 1 -->
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <span class="timeline-step">Phase 01 / Discovery &amp; Blueprint</span>
+                <h3>Deep Technical &amp; Growth Alignment</h3>
+                <p>We start by understanding your core business goals, target audience, technical requirements, and current digital bottlenecks. We deliver a crystal-clear execution roadmap before writing a line of code.</p>
+                <div class="timeline-deliverables">
+                  <span class="tag-chip">Architecture Diagram</span>
+                  <span class="tag-chip">Scope &amp; Milestones</span>
+                  <span class="tag-chip">Tech Stack Selection</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <span class="timeline-step">Phase 02 / Rapid Prototype &amp; Design</span>
+                <h3>High-Fidelity Design &amp; Schema Specs</h3>
+                <p>Our team builds high-fidelity wireframes, interactive component design systems, database schemas, and API contracts. You review real working visuals rather than abstract descriptions.</p>
+                <div class="timeline-deliverables">
+                  <span class="tag-chip">UI/UX Prototypes</span>
+                  <span class="tag-chip">Database Schema</span>
+                  <span class="tag-chip">API Contracts</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <span class="timeline-step">Phase 03 / Agile Development</span>
+                <h3>Agile Sprints &amp; Continuous Integration</h3>
+                <p>We build in fast 2-week agile sprints. You receive live preview builds at the end of every sprint, allowing continuous testing and immediate feedback.</p>
+                <div class="timeline-deliverables">
+                  <span class="tag-chip">2-Week Sprints</span>
+                  <span class="tag-chip">Live Staging URL</span>
+                  <span class="tag-chip">Code Audits</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <span class="timeline-step">Phase 04 / Launch &amp; SEO Engine</span>
+                <h3>Production Deployment &amp; Search Setup</h3>
+                <p>We deploy your platform with zero downtime using automated CI/CD pipelines, configure technical SEO metadata, optimize Core Web Vitals, and launch initial marketing campaigns.</p>
+                <div class="timeline-deliverables">
+                  <span class="tag-chip">Production Launch</span>
+                  <span class="tag-chip">Technical SEO Audit</span>
+                  <span class="tag-chip">Analytics Integration</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Step 5 -->
+            <div class="timeline-item">
+              <div class="timeline-dot"></div>
+              <div class="timeline-content">
+                <span class="timeline-step">Phase 05 / Managed Ongoing Handover</span>
+                <h3>Dedicated Assistant Onboarding</h3>
+                <p>Post-launch, your dedicated human assistant takes over day-to-day operations. You get direct Slack/Email access for minor updates, hotfixes, and continuous optimization.</p>
+                <div class="timeline-deliverables">
+                  <span class="tag-chip">Dedicated Slack Channel</span>
+                  <span class="tag-chip">Sub-24h SLA</span>
+                  <span class="tag-chip">Proactive Maintenance</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ==========================================================================
+         PAGE 5: PRICING SEPARATE PAGE
+         ========================================================================== -->
+    <div id="page-pricing" class="page-view">
+      <div class="page-header">
+        <div class="container">
+          <span class="eyebrow eyebrow-emerald">TRANSPARENT PRICING</span>
+          <h1>Predictable Pricing, Zero Hidden Fees</h1>
+          <p>Choose a retainer package or use our interactive calculator below to scope custom project deliverables.</p>
+        </div>
+      </div>
+
+      <section class="section">
+        <div class="container">
+          <!-- Pricing Cards -->
+          <div class="pricing-grid">
+            <!-- Plan 1 -->
+            <div class="price-card">
+              <div>
+                <h3>Starter MVP</h3>
+                <p class="price-desc">Ideal for launching early-stage products and web applications fast.</p>
+                <div class="price-amount">$2,500 <span>/ project</span></div>
+                <ul class="price-features">
+                  <li><span>✓</span> Full Custom Web Platform</li>
+                  <li><span>✓</span> Responsive UI/UX Design</li>
+                  <li><span>✓</span> Basic Technical SEO Setup</li>
+                  <li><span>✓</span> 30 Days Included Support</li>
+                </ul>
+              </div>
+              <button onclick="navigateTo('start-a-project')" class="btn btn-outline btn-mono" style="width: 100%;">Select Starter →</button>
+            </div>
+
+            <!-- Plan 2 -->
+            <div class="price-card featured">
+              <span class="price-badge">Most Popular</span>
+              <div>
+                <h3>Growth Stack</h3>
+                <p class="price-desc">Complete solution combining software, SEO growth, and dedicated support.</p>
+                <div class="price-amount">$3,800 <span>/ bundle</span></div>
+                <ul class="price-features">
+                  <li><span>✓</span> Everything in Starter MVP</li>
+                  <li><span>✓</span> Native Mobile Apps (iOS/Android)</li>
+                  <li><span>✓</span> Full Growth &amp; Technical SEO Engine</li>
+                  <li><span>✓</span> Dedicated Human Assistant Retainer</li>
+                  <li><span>✓</span> Guaranteed &lt;24h Turnaround SLA</li>
+                </ul>
+              </div>
+              <button onclick="navigateTo('start-a-project')" class="btn btn-primary btn-mono" style="width: 100%;">Select Growth Stack →</button>
+            </div>
+
+            <!-- Plan 3 -->
+            <div class="price-card">
+              <div>
+                <h3>Enterprise Engine</h3>
+                <p class="price-desc">Tailored for complex ServiceNow customizations and enterprise platforms.</p>
+                <div class="price-amount">$5,500+ <span>/ custom</span></div>
+                <ul class="price-features">
+                  <li><span>✓</span> Custom ServiceNow &amp; snowCMS Setup</li>
+                  <li><span>✓</span> Legacy Workflow Migration</li>
+                  <li><span>✓</span> Dedicated Senior Lead Developer</li>
+                  <li><span>✓</span> Priority 24/7 Hotfix Channel</li>
+                </ul>
+              </div>
+              <button onclick="navigateTo('start-a-project')" class="btn btn-outline btn-mono" style="width: 100%;">Contact Enterprise →</button>
+            </div>
+          </div>
+
+          <!-- Interactive Scope Estimator -->
+          <div class="estimator-box">
+            <div class="estimator-options">
+              <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Interactive Scope Estimator</h3>
+              <p style="font-size: 0.875rem; color: var(--text-muted); margin-bottom: 1rem;">Check the services you require to calculate an initial estimated scope:</p>
+
+              <label class="estimator-option selected">
+                <div>
+                  <strong>Custom Web / Mobile Software</strong>
+                  <p style="font-size: 0.85rem; color: var(--text-muted);">MVPs, web platforms, and mobile apps built with modern stacks.</p>
+                </div>
+                <input type="checkbox" value="2500" checked onchange="calculateEstimate()">
+              </label>
+
+              <label class="estimator-option">
+                <div>
+                  <strong>ServiceNow &amp; Enterprise Customization</strong>
+                  <p style="font-size: 0.85rem; color: var(--text-muted);">Workflows, snowCMS integration, and platform conflict fixes.</p>
+                </div>
+                <input type="checkbox" value="2000" onchange="calculateEstimate()">
+              </label>
+
+              <label class="estimator-option">
+                <div>
+                  <strong>Growth Marketing &amp; SEO Engine</strong>
+                  <p style="font-size: 0.85rem; color: var(--text-muted);">Technical SEO, content campaigns, and analytics reporting.</p>
+                </div>
+                <input type="checkbox" value="1200" onchange="calculateEstimate()">
+              </label>
+
+              <label class="estimator-option selected">
+                <div>
+                  <strong>Dedicated Assistant Retainer</strong>
+                  <p style="font-size: 0.85rem; color: var(--text-muted);">Direct human point of contact for continuous support &amp; updates.</p>
+                </div>
+                <input type="checkbox" value="800" checked onchange="calculateEstimate()">
+              </label>
+            </div>
+
+            <div class="estimator-result">
+              <div>
+                <span class="text-mono" style="color: var(--text-muted); font-size: 0.85rem;">ESTIMATED STARTING INVESTMENT</span>
+                <div class="est-price" id="total-price">$3,300</div>
+                <p style="font-size: 0.85rem; color: var(--text-dim);">Includes end-to-end setup, onboarding, and dedicated project manager.</p>
+              </div>
+              <button onclick="navigateTo('start-a-project')" class="btn btn-primary" style="margin-top: 1.5rem;">Lock In Scope →</button>
+            </div>
+          </div>
+
+          <!-- FAQ Accordion -->
+          <div style="margin-top: 4rem;">
+            <div class="text-center">
+              <span class="eyebrow">FREQUENTLY ASKED QUESTIONS</span>
+              <h2>Got Questions? We Have Answers.</h2>
+            </div>
+
+            <div class="faq-list">
+              <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">How does the Dedicated Assistant support work?</button>
+                <div class="faq-answer">
+                  You are assigned a dedicated technical assistant who serves as your main direct contact via Slack or Email. They understand your codebase and brand guidelines so minor updates, maintenance, or new tasks are executed swiftly without re-briefing.
+                </div>
+              </div>
+
+              <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">Can we hire Zemprolabs for just Software or Marketing?</button>
+                <div class="faq-answer">
+                  Yes! While our end-to-end service provides maximum synergy, clients frequently engage us specifically for custom software engineering, ServiceNow platform fixes, or growth marketing independent of other services.
+                </div>
+              </div>
+
+              <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">What technology stacks do you specialize in?</button>
+                <div class="faq-answer">
+                  For software, we build with React, Next.js, Node.js, TypeScript, Python, and native iOS/Android frameworks. For enterprise, we specialize deeply in ServiceNow custom applications and automated tools like snowCMS.
+                </div>
+              </div>
+
+              <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">How quickly can we start a project?</button>
+                <div class="faq-answer">
+                  Typically, we conduct an initial discovery call within 24 hours of contact. Depending on scope, kickoff and onboarding can begin within 3–5 business days.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ==========================================================================
+         PAGE 6: ABOUT SEPARATE PAGE
+         ========================================================================== -->
+    <div id="page-about" class="page-view">
+      <div class="page-header">
+        <div class="container">
+          <span class="eyebrow">ABOUT ZEMPROLABS</span>
+          <h1>One Partner. Zero Agency Friction.</h1>
+          <p>We founded Zemprolabs to cure "three-vendor fatigue"—the frustration of managing separate agencies for software, marketing, and daily maintenance.</p>
+        </div>
+      </div>
+
+      <section class="section">
+        <div class="container">
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;">
+            <div>
+              <span class="eyebrow eyebrow-emerald">OUR PHILOSOPHY</span>
+              <h2 style="margin-bottom: 1rem;">Code, Growth &amp; Support Under One Continuous Engine</h2>
+              <p style="color: var(--text-muted); margin-bottom: 1rem; font-size: 1.05rem;">
+                Traditional development agencies build code and leave. Marketing agencies complain about developer delays. Freelancers disappear when you need urgent updates.
+              </p>
+              <p style="color: var(--text-muted); margin-bottom: 1.5rem; font-size: 1.05rem;">
+                Zemprolabs bridges these gaps by combining top-tier software engineering, enterprise ServiceNow tooling, technical SEO, and dedicated human support under a single contract with a single accountable lead.
+              </p>
+            </div>
+
+            <div style="background: var(--bg-card); border: 1px solid var(--border-color); padding: 2rem; border-radius: var(--radius-lg);">
+              <h3 style="margin-bottom: 1rem;">Our Core Principles</h3>
+              <ul style="display: flex; flex-direction: column; gap: 1rem;">
+                <li style="display: flex; gap: 0.75rem;">
+                  <strong style="color: var(--accent-indigo); font-family: var(--font-mono);">01.</strong>
+                  <div>
+                    <strong style="color: #fff;">Direct Human SLA</strong>
+                    <p style="font-size: 0.875rem; color: var(--text-muted);">No automated support bot black holes or ticketing queues.</p>
+                  </div>
+                </li>
+                <li style="display: flex; gap: 0.75rem;">
+                  <strong style="color: var(--accent-indigo); font-family: var(--font-mono);">02.</strong>
+                  <div>
+                    <strong style="color: #fff;">Speed Over Bureaucracy</strong>
+                    <p style="font-size: 0.875rem; color: var(--text-muted);">2-week sprint releases with instant feedback loops.</p>
+                  </div>
+                </li>
+                <li style="display: flex; gap: 0.75rem;">
+                  <strong style="color: var(--accent-indigo); font-family: var(--font-mono);">03.</strong>
+                  <div>
+                    <strong style="color: #fff;">Enterprise-Grade Rigor</strong>
+                    <p style="font-size: 0.875rem; color: var(--text-muted);">From HIPAA-compliant portals to ServiceNow conflict detection.</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ==========================================================================
+         PAGE 7: START A PROJECT SEPARATE PAGE
+         ========================================================================== -->
+    <div id="page-start-a-project" class="page-view">
+      <div class="page-header text-center">
+        <div class="container">
+          <span class="eyebrow eyebrow-emerald">PROJECT KICKOFF</span>
+          <h1>Let's Build &amp; Scale Together</h1>
+          <p class="mx-auto">Fill out the brief inquiry form below. Our team will review your project requirements and share a tailored execution blueprint within 24 hours.</p>
+        </div>
+      </div>
+
+      <section class="section">
+        <div class="container">
+          <div class="contact-card">
+            <form onsubmit="handleFormSubmit(event)">
+              <div class="form-group">
+                <label class="form-label" for="name">YOUR NAME</label>
+                <input type="text" id="name" class="form-input" placeholder="Alex Morgan" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="email">WORK EMAIL</label>
+                <input type="email" id="email" class="form-input" placeholder="alex@company.com" required>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="service-type">PRIMARY SERVICE REQUIRED</label>
+                <select id="service-type" class="form-select" required>
+                  <option value="bundled">Bundled Full Stack (Software + Growth + Support)</option>
+                  <option value="software">Custom Software &amp; Mobile Development</option>
+                  <option value="servicenow">ServiceNow &amp; Enterprise Workflows</option>
+                  <option value="growth">Growth Marketing &amp; Technical SEO</option>
+                  <option value="assistant">Dedicated Digital Assistant Retainer</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="budget">ESTIMATED BUDGET RANGE</label>
+                <select id="budget" class="form-select">
+                  <option value="2k-5k">$2,000 - $5,000</option>
+                  <option value="5k-10k">$5,000 - $10,000</option>
+                  <option value="10k+">$10,000+</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="message">PROJECT BRIEF / GOALS</label>
+                <textarea id="message" class="form-textarea" rows="4" placeholder="Tell us about your project goals, timelines, or current digital bottlenecks..." required></textarea>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-mono" style="width: 100%;">Submit Project Brief →</button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  </main>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="toast-message">
+    <strong style="color: var(--accent-emerald);">Request Received!</strong>
+    <p style="font-size: 0.875rem; margin-top: 0.25rem;">Thank you for reaching out to Zemprolabs. Our team will review your project brief and reply within 24 hours.</p>
+  </div>
+
+  <!-- SITE FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a href="#home" onclick="navigateTo('home')" class="logo" style="margin-bottom: 1rem;">
+            <span class="logo__bracket">&lt;</span>zemprolabs<span class="logo__bracket">/&gt;</span>
+          </a>
+          <p style="color: var(--text-muted); font-size: 0.9rem; max-width: 300px;">Build. Grow. Never lose your single point of contact.</p>
+        </div>
+
+        <div>
+          <h5>Navigation</h5>
+          <ul>
+            <li><a onclick="navigateTo('services')">Services</a></li>
+            <li><a onclick="navigateTo('work')">Work</a></li>
+            <li><a onclick="navigateTo('process')">Process</a></li>
+            <li><a onclick="navigateTo('pricing')">Pricing</a></li>
+            <li><a onclick="navigateTo('about')">About</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h5>Services</h5>
+          <ul>
+            <li><a onclick="navigateTo('services')">Custom Software</a></li>
+            <li><a onclick="navigateTo('services')">ServiceNow Enterprise</a></li>
+            <li><a onclick="navigateTo('services')">Marketing &amp; Growth</a></li>
+            <li><a onclick="navigateTo('services')">Dedicated Support</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h5>Contact</h5>
+          <ul>
+            <li><a onclick="navigateTo('start-a-project')">Start a Project</a></li>
+            <li><a href="mailto:hello@zemprolabs.com">hello@zemprolabs.com</a></li>
+            <li style="color: var(--text-dim); font-family: var(--font-mono); font-size: 0.8rem; margin-top: 0.5rem;">Status: Operational</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 Zemprolabs. All rights reserved.</span>
+        <span>Single-Page Multi-View Application Architecture</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPT -->
+  <script>
+    // Routing Logic for Separate Page Views
+    const validPages = ['home', 'services', 'work', 'process', 'pricing', 'about', 'start-a-project'];
+
+    function navigateTo(pageId) {
+      if (!validPages.includes(pageId)) {
+        pageId = 'home';
+      }
+
+      // Hide all pages
+      document.querySelectorAll('.page-view').forEach(p => {
+        p.classList.remove('active-page');
+      });
+
+      // Show selected page
+      const targetPage = document.getElementById(`page-${pageId}`);
+      if (targetPage) {
+        targetPage.classList.add('active-page');
+      }
+
+      // Update Nav active indicator
+      document.querySelectorAll('.nav__link').forEach(link => {
+        if (link.getAttribute('data-page') === pageId) {
+          link.classList.add('active');
+        } else {
+          link.classList.remove('active');
+        }
+      });
+
+      // Update location hash without full page refresh
+      window.location.hash = pageId;
+
+      // Close mobile menu if open
+      document.getElementById('mobileMenu').classList.remove('open');
+
+      // Scroll smoothly to top of view
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Toggle Mobile Drawer
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      menu.classList.toggle('open');
+    }
+
+    // Tab switching for Hero Interactive Widget
+    function switchTab(evt, tabId) {
+      const tabs = document.querySelectorAll('.tab-btn');
+      const contents = document.querySelectorAll('.tab-content');
+
+      tabs.forEach(tab => tab.classList.remove('active'));
+      contents.forEach(content => content.classList.remove('active'));
+
+      evt.currentTarget.classList.add('active');
+      document.getElementById(tabId).classList.add('active');
+    }
+
+    // Work Category Filtering
+    function filterWork(category, evt) {
+      const buttons = document.querySelectorAll('.filter-btn');
+      buttons.forEach(btn => btn.classList.remove('active'));
+      evt.target.classList.add('active');
+
+      const cards = document.querySelectorAll('#portfolio-grid .case-card');
+      cards.forEach(card => {
+        if (category === 'all' || card.dataset.category === category) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // Estimator Calculation Logic
+    function calculateEstimate() {
+      const checkboxes = document.querySelectorAll('.estimator-options input[type="checkbox"]');
+      let total = 0;
+
+      checkboxes.forEach(box => {
+        const option = box.closest('.estimator-option');
+        if (box.checked) {
+          total += parseInt(box.value);
+          option.classList.add('selected');
+        } else {
+          option.classList.remove('selected');
+        }
+      });
+
+      const totalPriceEl = document.getElementById('total-price');
+      if (totalPriceEl) {
+        totalPriceEl.innerText = '$' + total.toLocaleString();
+      }
+    }
+
+    // FAQ Accordion Toggle
+    function toggleFaq(buttonElement) {
+      const item = buttonElement.parentElement;
+      const isActive = item.classList.contains('active');
+
+      document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
+
+      if (!isActive) {
+        item.classList.add('active');
+      }
+    }
+
+    // Form Submit Handler with Custom Toast Notification
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 5000);
+
+      e.target.reset();
+    }
+
+    // Listen to hash changes for browser back/forward buttons
+    window.addEventListener('hashchange', () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash) {
+        navigateTo(hash);
+      }
+    });
+
+    // Initialize Page on Load based on URL hash
+    document.addEventListener('DOMContentLoaded', () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash && validPages.includes(hash)) {
+        navigateTo(hash);
+      } else {
+        navigateTo('home');
+      }
+    });
+  </script>
+</body>
+</html>

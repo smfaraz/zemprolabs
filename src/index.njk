@@ -1,0 +1,188 @@
+---
+layout: base.njk
+title: "Software, Marketing & Managed Digital Support"
+description: "Zemprolabs builds your software, runs your marketing and SEO, and gives you a dedicated human assistant for everything digital — one team, start to finish."
+---
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow">end-to-end digital partner</span>
+        <h1 class="hero__headline">We build it, grow it, and stay on call for it<span class="hero__cursor"></span></h1>
+        <p class="hero__sub">Zemprolabs is the only vendor you need for digital work: custom software, ServiceNow tooling, marketing and SEO — backed by a dedicated human assistant, not a support ticket.</p>
+        <div class="hero__actions">
+          <a href="/contact/" class="btn btn-primary">Start a project →</a>
+          <a href="/work/" class="btn btn-outline btn-mono">See the work</a>
+        </div>
+      </div>
+      <div class="hero__media" aria-hidden="true">
+        <!-- simple decorative SVG to reduce heavy text feel -->
+        <svg width="640" height="420" viewBox="0 0 640 420" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" role="img" focusable="false">
+          <rect x="0" y="0" width="640" height="420" rx="12" fill="rgba(255,255,255,0.02)" />
+          <g transform="translate(32,28)">
+            <rect x="0" y="0" width="360" height="220" rx="8" fill="#0f1720" stroke="rgba(255,255,255,0.03)" />
+            <circle cx="280" cy="60" r="48" fill="#2b3b5c" opacity="0.85" />
+            <rect x="16" y="140" width="320" height="56" rx="6" fill="#16202a" />
+            <g transform="translate(10,10)">
+              <rect x="384" y="0" width="200" height="96" rx="8" fill="#11161a" opacity="0.9" />
+              <rect x="404" y="14" width="160" height="8" rx="4" fill="#2b3b5c" />
+              <rect x="404" y="34" width="120" height="8" rx="4" fill="#233142" />
+            </g>
+          </g>
+        </svg>
+
+        <div class="hero__thumbs" aria-hidden="true">
+          <div class="thumb"></div>
+          <div class="thumb"></div>
+          <div class="thumb"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-border-top section-tight">
+  <div class="container">
+    <div class="grid grid-4 reveal">
+      <div class="stat">
+        <div class="stat__num">4</div>
+        <div class="stat__label">disciplines, one team</div>
+      </div>
+      <div class="stat">
+        <div class="stat__num">1</div>
+        <div class="stat__label">dedicated point of contact</div>
+      </div>
+      <div class="stat">
+        <div class="stat__num">0</div>
+        <div class="stat__label">vendors you have to manage yourself</div>
+      </div>
+      <div class="stat">
+        <div class="stat__num">24h</div>
+        <div class="stat__label">typical response window</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-border-top">
+  <div class="container">
+    <div class="divider">what we do</div>
+    <div class="grid grid-4 reveal">
+      <a href="/services/software/" class="pillar">
+        <span class="eyebrow">01</span>
+        <h3>Custom Software</h3>
+        <p>Web apps, platforms, and MVPs built to actually ship — architected properly from day one.</p>
+        <div class="pillar__arrow">Explore <span>→</span></div>
+      </a>
+      <a href="/services/servicenow/" class="pillar">
+        <span class="eyebrow">02</span>
+        <h3>ServiceNow & Enterprise</h3>
+        <p>Deep platform customization, conflict detection, and enterprise tooling most agencies can't touch.</p>
+        <div class="pillar__arrow">Explore <span>→</span></div>
+      </a>
+      <a href="/services/marketing/" class="pillar">
+        <span class="eyebrow">03</span>
+        <h3>Marketing & Growth</h3>
+        <p>SEO, campaigns, and positioning that turns the thing we built into the thing that sells.</p>
+        <div class="pillar__arrow">Explore <span>→</span></div>
+      </a>
+      <a href="/services/managed-support/" class="pillar">
+        <span class="eyebrow">04</span>
+        <h3>Managed Digital Support</h3>
+        <p>A dedicated assistant for ongoing updates, fixes, and small asks — always a real person.</p>
+        <div class="pillar__arrow">Explore <span>→</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="section-border-top">
+  <div class="container">
+    <div class="callout reveal">
+      <div class="callout__icon">→</div>
+      <div>
+        <h3>Every client gets a dedicated person, not a support ticket.</h3>
+        <p>Most agencies hand you a deliverable and disappear. We stay — one assigned person who knows your project, handles the small stuff, and escalates the big stuff, so you're never stuck finding someone for digital work again.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-border-top">
+  <div class="container">
+    <div class="divider">selected work</div>
+    <div class="grid grid-3 reveal">
+      {% for case in collections.caseStudies %}
+      {% if loop.index0 < 6 %}
+      <a href="{{ case.url }}" class="case-card">
+        <div class="case-thumb">
+          <div class="case-thumb__bar">
+            <div class="case-thumb__dots">
+              <span class="case-thumb__dot case-thumb__dot--r"></span>
+              <span class="case-thumb__dot case-thumb__dot--y"></span>
+              <span class="case-thumb__dot case-thumb__dot--g"></span>
+            </div>
+            <span class="case-thumb__url">{{ case.data.domain or "zemprolabs.com" }}</span>
+          </div>
+          <div class="case-thumb__preview">
+            {% if case.data.image %}
+            <img src="{{ case.data.image }}" alt="{{ case.data.title }}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+            <span class="case-thumb__watermark" style="display:none;">&lt;{{ case.data.tag | lower }}/&gt;</span>
+            {% else %}
+            <span class="case-thumb__watermark">&lt;{{ case.data.tag | lower }}/&gt;</span>
+            {% endif %}
+          </div>
+        </div>
+        <div class="case-card__body">
+          <span class="card__tag">{{ case.data.tag }}</span>
+          <h4>{{ case.data.title }}</h4>
+          <p>{{ case.data.summary }}</p>
+          <div class="case-card__meta">{{ case.data.client }}</div>
+        </div>
+      </a>
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section-border-top">
+  <div class="container">
+    <div class="divider">how it works</div>
+    <div class="grid grid-2 reveal" style="align-items: center;">
+      <div>
+        <h2 style="max-width: 12ch;">Build, grow, and support — never three separate vendors.</h2>
+        <p class="max-w">We design the product, ship it, market it, and stay on as your ongoing digital support — one team that already knows the context, instead of three you have to re-brief every time something changes.</p>
+        <a href="/process/" class="btn btn-outline btn-mono" style="margin-top: 1.5rem;">See our process →</a>
+      </div>
+      <div class="grid" style="gap: 1rem;">
+        <div class="card">
+          <span class="card__index">step 01</span>
+          <h4 style="font-size: var(--step1);">We build it</h4>
+          <p>Software, platforms, or a website — engineered properly, not just shipped fast.</p>
+        </div>
+        <div class="card">
+          <span class="card__index">step 02</span>
+          <h4 style="font-size: var(--step1);">We grow it</h4>
+          <p>SEO and marketing that turns what we built into a working funnel.</p>
+        </div>
+        <div class="card">
+          <span class="card__index">step 03</span>
+          <h4 style="font-size: var(--step1);">We stay on it</h4>
+          <p>A dedicated assistant handles updates and requests as things change.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-border-top">
+  <div class="container text-center">
+    <h2 class="mx-auto" style="max-width: 20ch;">Ready to stop managing three different vendors?</h2>
+    <p class="mx-auto max-w" style="margin-top: 1rem;">Tell us what you're building. We'll tell you exactly how we'd approach it — build, growth, and support included.</p>
+    <div class="hero__actions" style="justify-content: center; margin-top: 2rem;">
+      <a href="/contact/" class="btn btn-primary">Start a project →</a>
+    </div>
+  </div>
+</section>

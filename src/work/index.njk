@@ -1,0 +1,62 @@
+---
+layout: base.njk
+title: "Work"
+description: "Case studies across custom software, ServiceNow tooling, and marketing engagements."
+---
+<section class="hero" style="padding-bottom: 1rem;">
+  <div class="container">
+    <span class="eyebrow">selected work</span>
+    <h1 style="max-width: 16ch;">Real problems, real builds<span class="hero__cursor"></span></h1>
+    <p class="hero__sub">A sample of what we've shipped across software, enterprise tooling, and marketing. Client names are withheld where NDAs apply — happy to go deeper on specifics in a call.</p>
+  </div>
+</section>
+
+<section class="section-border-top">
+  <div class="container">
+    <div class="filters" data-filters>
+      <button class="filter-btn active" data-filter="all">All work</button>
+      <button class="filter-btn" data-filter="software">Software</button>
+      <button class="filter-btn" data-filter="servicenow">ServiceNow</button>
+      <button class="filter-btn" data-filter="ecommerce">E-Commerce</button>
+      <button class="filter-btn" data-filter="healthcare">Healthcare</button>
+      <button class="filter-btn" data-filter="marketing">Marketing</button>
+    </div>
+    <div class="grid grid-3">
+      {% for case in collections.caseStudies | reverse %}
+      <a href="{{ case.url }}" class="case-card" data-case-card data-tags="{{ case.data.tags }}">
+        <div class="case-thumb">
+          <div class="case-thumb__bar">
+            <div class="case-thumb__dots">
+              <span class="case-thumb__dot case-thumb__dot--r"></span>
+              <span class="case-thumb__dot case-thumb__dot--y"></span>
+              <span class="case-thumb__dot case-thumb__dot--g"></span>
+            </div>
+            <span class="case-thumb__url">{{ case.data.domain or "zemprolabs.com" }}</span>
+          </div>
+          <div class="case-thumb__preview">
+            {% if case.data.image %}
+            <img src="{{ case.data.image }}" alt="{{ case.data.title }}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+            <span class="case-thumb__watermark" style="display:none;">&lt;{{ case.data.tag | lower }}/&gt;</span>
+            {% else %}
+            <span class="case-thumb__watermark">&lt;{{ case.data.tag | lower }}/&gt;</span>
+            {% endif %}
+          </div>
+        </div>
+        <div class="case-card__body">
+          <span class="card__tag">{{ case.data.tag }}</span>
+          <h4>{{ case.data.title }}</h4>
+          <p>{{ case.data.summary }}</p>
+          <div class="case-card__meta">{{ case.data.client }}</div>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="section-border-top text-center">
+  <div class="container">
+    <h2 style="max-width: 22ch; margin: 0 auto 1rem;">Want to see how we'd approach yours?</h2>
+    <a href="/contact/" class="btn btn-primary">Start a project →</a>
+  </div>
+</section>

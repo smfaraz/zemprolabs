@@ -1,0 +1,68 @@
+---
+layout: base.njk
+---
+<section class="hero" style="padding-bottom: 1rem;">
+  <div class="container">
+    <div class="breadcrumb"><a href="/services/">Services</a> / {{ title }}</div>
+    <span class="eyebrow">{{ eyebrow }}</span>
+    <h1 style="max-width: 16ch;">{{ headline }}<span class="hero__cursor"></span></h1>
+    <p class="hero__sub">{{ intro }}</p>
+    <div class="hero__actions">
+      <a href="/contact/" class="btn btn-primary">Start a project →</a>
+    </div>
+  </div>
+</section>
+
+<section class="section-border-top">
+  <div class="container grid grid-2" style="gap: var(--gutter);">
+    <div>
+      <div class="divider">the problem</div>
+      <p>{{ problem }}</p>
+    </div>
+    <div>
+      <div class="divider">our approach</div>
+      <p>{{ approachText }}</p>
+    </div>
+  </div>
+</section>
+
+<section class="section-border-top">
+  <div class="container">
+    <div class="divider">what's included</div>
+    <div class="grid grid-3 reveal">
+      {% for item in included %}
+      <div class="card">
+        <span class="card__index">{{ "0" if loop.index < 10 }}{{ loop.index }}</span>
+        <h4 style="font-size: var(--step1);">{{ item.title }}</h4>
+        <p>{{ item.text }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% if relatedCaseSlug %}
+<section class="section-border-top">
+  <div class="container">
+    <div class="divider">related work</div>
+    {% for case in collections.caseStudies %}
+    {% if case.fileSlug == relatedCaseSlug %}
+    <a href="{{ case.url }}" class="case-card" style="max-width: 480px;">
+      <div class="case-card__body">
+        <span class="card__tag">{{ case.data.tag }}</span>
+        <h4>{{ case.data.title }}</h4>
+        <p>{{ case.data.summary }}</p>
+      </div>
+    </a>
+    {% endif %}
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<section class="section-border-top text-center">
+  <div class="container">
+    <h2 style="max-width: 22ch; margin: 0 auto 1rem;">{{ ctaHeadline or "Let's scope your project" }}</h2>
+    <a href="/contact/" class="btn btn-primary">Start a project →</a>
+  </div>
+</section>
