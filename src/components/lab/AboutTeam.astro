@@ -32,6 +32,7 @@ const crafts = [
 
 <style>
   .at { position: relative; height: 230vh; }
+  @media (max-width: 899px) { .at { height: 160vh; } }
   .at-pin { position: sticky; top: 0; height: 100vh; overflow: hidden; display: grid; grid-template-columns: minmax(18rem, 1fr) 1.4fr; align-items: center; gap: 4vw; padding: 6rem 6vw 3rem; }
   :global(html:not(.motion)) .at { height: auto; }
   :global(html:not(.motion)) .at-pin { position: relative; height: auto; min-height: 100vh; }

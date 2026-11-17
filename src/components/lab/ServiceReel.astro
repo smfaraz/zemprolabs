@@ -162,6 +162,7 @@ const scenes: Scene[] = [
 
 <style>
   .reel { position: relative; height: calc(var(--n) * 55vh + 100vh); background: #150e16; }
+  @media (max-width: 899px) { .reel { height: calc(var(--n) * 28vh + 100vh); } }
   .reel-pin { position: sticky; top: 0; height: 100vh; overflow: hidden; }
   :global(html:not(.motion)) .reel { height: auto; }
   :global(html:not(.motion)) .reel-pin { position: relative; height: auto; }

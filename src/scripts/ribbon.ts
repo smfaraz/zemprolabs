@@ -22,8 +22,8 @@ export function createRibbon(canvas: HTMLCanvasElement, opts: Opts = {}): Ribbon
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const mobile = matchMedia('(max-width: 767px)').matches;
 
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, mobile ? 1.5 : 1.75));
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias: !mobile, alpha: true, powerPreference: 'high-performance' });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, mobile ? 1.2 : 1.75));
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.08;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -37,19 +37,22 @@ export function createRibbon(canvas: HTMLCanvasElement, opts: Opts = {}): Ribbon
   const camera = new THREE.PerspectiveCamera(26, 1, 0.1, 100);
 
   // ---- slabs (bigger than before) ----
-  const N = mobile ? 110 : 180;
+  const N = mobile ? 72 : 180;
   const LENGTH = 13;
   const geo = new THREE.BoxGeometry(0.075, 1.9, 1.35);
-  const mat = new THREE.MeshPhysicalMaterial({
-    roughness: 0.24,
-    metalness: 0.06,
-    clearcoat: 1,
-    clearcoatRoughness: 0.15,
-    iridescence: 0.4,
-    iridescenceIOR: 1.35,
-    sheen: 0.35,
-    sheenColor: new THREE.Color('#ffffff'),
-  });
+  // phones get a much cheaper glossy material (no clearcoat / iridescence / sheen passes)
+  const mat = mobile
+    ? new THREE.MeshStandardMaterial({ roughness: 0.28, metalness: 0.08 })
+    : new THREE.MeshPhysicalMaterial({
+        roughness: 0.24,
+        metalness: 0.06,
+        clearcoat: 1,
+        clearcoatRoughness: 0.15,
+        iridescence: 0.4,
+        iridescenceIOR: 1.35,
+        sheen: 0.35,
+        sheenColor: new THREE.Color('#ffffff'),
+      });
   const mesh = new THREE.InstancedMesh(geo, mat, N);
   mesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
 

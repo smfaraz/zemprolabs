@@ -109,6 +109,7 @@ const stops = [
 
 <style>
   .amap { position: relative; height: calc(var(--n) * 70vh + 100vh); }
+  @media (max-width: 899px) { .amap { height: calc(var(--n) * 38vh + 100vh); } }
   .amap-pin { position: sticky; top: 0; height: 100vh; overflow: hidden; display: grid; grid-template-columns: minmax(16rem, 1fr) 3fr; grid-template-rows: auto 1fr; gap: 1.5rem 3vw; padding: 7rem 4vw 3rem; }
   :global(html:not(.motion)) .amap { height: auto; }
   :global(html:not(.motion)) .amap-pin { position: relative; height: auto; }

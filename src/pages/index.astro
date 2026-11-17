@@ -427,6 +427,7 @@ const faqLd = {
 
   /* Motion on: pin the stage and layer everything */
   :global(.motion) .lab-stage { height: 280vh; }
+  @media (max-width: 899px) { :global(.motion) .lab-stage { height: 190vh; } .lab-cta-slabs > span { animation: none; } }
   :global(.motion) .lab-stage-inner { position: sticky; top: 0; height: 100vh; overflow: hidden; }
   :global(.motion) .lab-hero-copy, :global(.motion) .lab-board-wrap { position: absolute; }
   :global(.motion) .lab-board-wrap { opacity: 0; pointer-events: none; }
@@ -537,6 +538,9 @@ const faqLd = {
       const copy = stage.querySelectorAll<HTMLElement>('[data-lab-hero-copy]');
       const area = stage.querySelector<HTMLElement>('[data-z-area]')!;
       const devArea = stage.querySelector<HTMLElement>('[data-dev-area]');
+      const wideMq = matchMedia('(min-width: 768px)');
+      let wide = wideMq.matches;
+      wideMq.addEventListener('change', () => (wide = wideMq.matches));
       const boardWrap = stage.querySelector<HTMLElement>('[data-lab-board]')!;
       const panel = stage.querySelector<HTMLElement>('[data-lab-board-panel]')!;
       const rows = stage.querySelectorAll<HTMLElement>('[data-lab-row]');
@@ -569,7 +573,7 @@ const faqLd = {
           const b = clamp((p - 0.38) / 0.28);
           boardWrap.style.opacity = String(b);
           boardWrap.classList.toggle('is-active', b > 0.6);
-          if (matchMedia('(min-width: 768px)').matches) {
+          if (wide) {
             const rx = 58 - b * 20 - clamp((p - 0.66) / 0.34) * 8;
             const rz = -30 + b * 10;
             panel.style.transform = `rotateX(${rx}deg) rotateZ(${rz}deg) rotateY(6deg) translateY(${(1 - b) * 120}px)`;

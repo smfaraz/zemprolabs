@@ -37,6 +37,7 @@ const promises = [
 
 <style>
   .ap { position: relative; height: calc(var(--n) * 65vh + 100vh); }
+  @media (max-width: 899px) { .ap { height: calc(var(--n) * 34vh + 100vh); } }
   .ap-pin { position: sticky; top: 0; height: 100vh; overflow: hidden; display: grid; grid-template-columns: minmax(16rem, 1fr) 1.3fr; align-items: center; gap: 4vw; padding: 6rem 6vw 3rem; }
   :global(html:not(.motion)) .ap { height: auto; }
   :global(html:not(.motion)) .ap-pin { position: relative; height: auto; display: block; }
