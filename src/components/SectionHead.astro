@@ -1,0 +1,15 @@
+---
+interface Props { label: string; title: string; lead?: string; dark?: boolean; class?: string }
+const { label, title, lead, dark = false, class: cls = '' } = Astro.props;
+---
+
+<div class={`grid gap-8 md:grid-cols-12 md:items-end ${cls}`}>
+  <div class="md:col-span-7">
+    <p class:list={['label', dark ? '!text-ember-soft' : 'label-ember']} data-reveal>{label}</p>
+    <h2 class="display mt-6 text-[clamp(1.87rem,4.08vw,3.74rem)]" data-split set:html={title} />
+  </div>
+  {lead && (
+    <p class:list={['text-lg md:col-span-4 md:col-start-9', dark ? 'text-mist' : 'text-ink-soft']} data-reveal>{lead}</p>
+  )}
+  <slot />
+</div>

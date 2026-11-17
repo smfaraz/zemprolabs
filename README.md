@@ -1,62 +1,39 @@
-# Zemprolabs — Modern Digital Engineering Studio Website
+# Zemprolabs website
 
-> **Live Digital Studio Platform for Zemprolabs**  
-> Technology, Commerce & Beyond • Hyderabad, India  
-> **Master Specification:** See [`ZEMPROLABS_WEBSITE_MASTER_SPECIFICATION.md`](./ZEMPROLABS_WEBSITE_MASTER_SPECIFICATION.md) for exhaustive technical, design, and architecture details.
+Static marketing site for Zemprolabs, built with [Astro](https://astro.build) and Tailwind CSS v4. Every page is pre-rendered HTML for fast loads and good SEO.
 
----
+## Commands
 
-## Quick Start
-
-### 1. Prerequisites
-- **Node.js** (v18.0.0 or higher recommended)
-- **npm** (v9.0.0 or higher)
-
-### 2. Installation
 ```bash
 npm install
+npm run dev       # http://localhost:3000
+npm run build     # outputs to dist/
+npm run preview   # serve the built site
 ```
 
-### 3. Start Development Server
-```bash
-npm run dev
-```
-Open [http://localhost:3000](http://localhost:3000) (or the port output in your terminal, e.g. 3001) in your browser.
+## Where things live
 
-### 4. Type Verification
-```bash
-npx tsc --noEmit
-```
+| Path | What |
+|---|---|
+| `src/data/site.ts` | Company name, email, phones, address, nav |
+| `src/data/services.ts` | Service pillars and every service page's copy, FAQs and SEO meta |
+| `src/data/work.ts` | Case studies (copy, media, links, related services) |
+| `src/pages/` | Routes: home, services, work, about, careers, contact, thank-you, 404 |
+| `src/components/` | Header, footer, work cards, FAQ, form shell |
+| `src/styles/global.css` | Design tokens (colours, fonts) and shared styles |
+| `src/assets/images/` | Images (auto-optimised to WebP at build) |
+| `public/videos/work/` | Case-study videos |
 
-### 5. Production Build
-```bash
-npm run build
-```
+To add a case study, add an entry to `src/data/work.ts`; the page, card, sitemap entry and structured data are generated automatically. Same for services in `src/data/services.ts`.
 
----
+## Forms
 
-## Route Overview
+Contact and careers forms submit to [Web3Forms](https://web3forms.com), which emails each submission to the inbox you registered.
 
-| Route | Page | Description |
-|---|---|---|
-| `/` | **Home** | Hero light beam system, capability anchors, platform cockpit, FAQ, and contact |
-| `/services` | **Services** | 6 core capabilities, interactive River Transit architecture blueprint, Harbor Docks |
-| `/work` | **Work & Case Studies** | Filterable project showcase, live links, and isometric workstation illustration |
-| `/work/:id` | **Project Detail** | In-depth case study exploration with video player and human story breakdown |
-| `/process` | **Process** | 5-phase transparent workflow, interactive pipeline console, and comparison matrix |
-| `/project-estimation` | **Project Estimation** | Interactive 4-step scope builder & direct enquiry (zero pricing revealed) |
-| `/about` | **About** | Hyderabad studio narrative, 4 core engineering principles, stack, and lab contact |
-| `/contact` | **Contact** | Direct project brief form, primary & secondary phone/WhatsApp numbers |
+1. Create a free account at web3forms.com with the inbox that should receive enquiries.
+2. Copy the access key into `.env` as `PUBLIC_WEB3FORMS_KEY=...` (see `.env.example`).
+3. Add the same variable in Vercel → Project → Settings → Environment Variables, then redeploy.
 
----
+## Deploy
 
-## Studio Contact Directory
-
-- **Headquarters:** 6th Floor, Ehtesham Heights, Golden Heights Colony, Upperpally, Hyderabad, India
-- **Primary Phone & WhatsApp:** `+91 744 755 7577`
-- **Secondary Phone / Backup:** `+91 744 755 7599`
-- **Email:** `info@zemprolabs.com`
-
----
-
-*For complete architectural specifications, component indices, design tokens, and copywriting rules, refer to [`ZEMPROLABS_WEBSITE_MASTER_SPECIFICATION.md`](./ZEMPROLABS_WEBSITE_MASTER_SPECIFICATION.md).*
+Hosted on Vercel (framework preset: Astro). `vercel.json` sets clean URLs, security headers, caching and redirects from the old site's routes.

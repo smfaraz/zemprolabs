@@ -1,0 +1,201 @@
+---
+/**
+ * Work page hero: a 3D ring of type spinning in front of a sunset bar,
+ * over a wheel of project cards that turns as you scroll.
+ */
+import { Image } from 'astro:assets';
+import { work } from '@/data/work';
+
+const ring = 'PROJECTS✦PROJECTS✦'.split('');
+const n = work.length;
+const step = 360 / n;
+---
+
+<section class="ww" data-ww style={`--n:${n}`}>
+  <div class="ww-pin">
+    <div class="ww-frame" aria-hidden="true">
+      {['tl', 'tm1', 'tm2', 'tr', 'bl', 'bm1', 'bm2', 'br'].map((p) => <span class={`ww-plus ${p}`}>+</span>)}
+      <span class="ww-tri l">▶</span><span class="ww-tri r">◀</span>
+    </div>
+
+    <h1 class="ww-kicker lab-h">Selected<br />work by<span class="sr-only"> Zemprolabs: websites, apps, stores and ServiceNow projects</span></h1>
+
+    <div class="ww-type" aria-hidden="true">
+      <div class="ww-bar"></div>
+      <div class="ww-ring" data-ring>
+        {ring.map((c, i) => <span class="ww-ch" style={`--i:${i}`}>{c}</span>)}
+      </div>
+    </div>
+
+    <p class="ww-meta l lab-mono">Zemprolabs · Hyderabad</p>
+    <p class="ww-meta r lab-mono">{n} projects · 4 regions</p>
+
+    <div class="ww-wheel" data-wheel>
+      {work.map((w, i) => (
+        <a href={`/work/${w.slug}`} class="ww-card" style={`--a:${i * step}deg`} data-card={i} aria-label={`${w.client} case study`}>
+          <Image src={w.mobile ?? w.image!} alt="" width={520} class:list={['size-full object-cover', w.mobile ? 'object-top' : 'object-center']} loading="eager" />
+          <span class="ww-card-tag lab-mono">{String(i + 1).padStart(2, '0')}</span>
+        </a>
+      ))}
+    </div>
+
+    <div class="ww-disc" aria-hidden="true">
+      <svg viewBox="0 0 400 400" class="ww-disc-text" data-disc>
+        <defs><path id="ww-circle" d="M200,200 m-170,0 a170,170 0 1,1 340,0 a170,170 0 1,1 -340,0" /></defs>
+        <text><textPath href="#ww-circle">SELECTED WORK ✦ ZEMPROLABS ✦ SELECTED WORK ✦ ZEMPROLABS ✦ SELECTED WORK ✦ ZEMPROLABS ✦</textPath></text>
+      </svg>
+    </div>
+    <div class="ww-now" aria-live="polite">
+      <span class="ww-now-tri" aria-hidden="true">▲</span>
+      <span class="lab-h ww-now-name" data-now-name>{work[0].client}</span>
+      <span class="lab-mono ww-now-sub" data-now-sub>{work[0].sector} · {work[0].location}</span>
+    </div>
+  </div>
+</section>
+
+<script define:vars={{ meta: work.map((w) => [w.client, `${w.sector} · ${w.location}`]) }}>
+  window.__wwMeta = meta;
+</script>
+
+<style>
+  .ww { position: relative; height: calc(var(--n) * 22vh + 100vh); background: #ececea; color: #1a1218; }
+  :global(.theme-lab) .ww { background: #f3ebe0; }
+  .ww-pin { position: sticky; top: 0; height: 100vh; overflow: hidden; }
+  :global(html:not(.motion)) .ww { height: auto; }
+  :global(html:not(.motion)) .ww-pin { position: relative; }
+
+  /* frame marks */
+  .ww-frame { position: absolute; inset: 0; pointer-events: none; color: rgba(26, 18, 24, 0.45); }
+  .ww-plus { position: absolute; font: 300 1.1rem/1 'Inter', sans-serif; }
+  .tl { left: 4%; top: 13%; } .tm1 { left: 36%; top: 13%; } .tm2 { left: 64%; top: 13%; } .tr { right: 4%; top: 13%; }
+  .bl { left: 4%; top: 46%; } .bm1 { left: 36%; top: 46%; } .bm2 { left: 64%; top: 46%; } .br { right: 4%; top: 46%; }
+  .ww-tri { position: absolute; top: 29.5%; font-size: 0.8rem; color: #1a1218; }
+  .ww-tri.l { left: 4%; } .ww-tri.r { right: 4%; }
+
+  .ww-kicker { position: absolute; left: 12%; top: 15%; z-index: 4; margin: 0; font-size: clamp(0.85rem, 1.25vw, 1.15rem); line-height: 1.05; letter-spacing: 0.01em; }
+  .ww-meta { position: absolute; top: 43%; z-index: 4; margin: 0; color: #1a1218; }
+  .ww-meta.l { left: 12%; } .ww-meta.r { right: 9%; }
+
+  /* 3D ring type */
+  .ww-type { position: absolute; left: 0; right: 0; top: 13%; height: 33%; display: grid; place-items: center; perspective: 1400px; }
+  .ww-bar { position: absolute; left: 50%; top: 0; bottom: 0; width: clamp(5rem, 11vw, 11rem); transform: translateX(-50%); background: linear-gradient(180deg, #ffb33f, #ff7a2f 35%, #f2464b 65%, #b8326e); border-radius: 4px; }
+  .ww-ring {
+    --fs: clamp(2.6rem, 7.4vw, 7.6rem);
+    --r: calc(var(--fs) * 2.15);
+    position: relative; width: 0; height: 0;
+    font-family: 'Unbounded', sans-serif; font-weight: 800; font-size: var(--fs); line-height: 1;
+    transform-style: preserve-3d;
+    transform: rotateX(-12deg) rotateZ(-5deg) rotateY(0deg);
+  }
+  .ww-ch {
+    position: absolute; left: 0; top: 0; width: 0.84em; margin-left: -0.42em; margin-top: -0.5em; text-align: center;
+    transform: rotateY(calc(var(--i) * 20deg)) translateZ(var(--r));
+    color: #1a1218;
+    backface-visibility: visible;
+    transition: color 0.12s;
+  }
+  .ww-ch.is-back { color: transparent; -webkit-text-stroke: 1.5px #1a1218; }
+
+  /* card wheel */
+  .ww-wheel { --R: min(46vh, 48vw); --h: min(24vh, 30vw); position: absolute; left: 50%; top: 109vh; width: 0; height: 0; }
+  .ww-card {
+    position: absolute; left: 0; top: 0;
+    width: calc(var(--h) * 0.72); height: var(--h);
+    margin-left: calc(var(--h) * -0.36); margin-top: calc(var(--h) * -0.5);
+    border-radius: 14px; overflow: hidden; background: #fff;
+    box-shadow: 0 30px 50px -24px rgba(26, 18, 24, 0.55), 0 0 0 1px rgba(26, 18, 24, 0.06);
+    transform: rotate(var(--a)) translateY(calc(var(--R) * -1));
+    transition: box-shadow 0.4s, filter 0.4s;
+  }
+  .ww-card img { transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); }
+  .ww-card:hover img { transform: scale(1.06); }
+  .ww-card.is-now { box-shadow: 0 0 0 3px #ff7a2f, 0 40px 60px -24px rgba(242, 70, 75, 0.55); }
+  .ww-card-tag { position: absolute; left: 10px; top: 10px; border-radius: 999px; background: rgba(26, 18, 24, 0.85); color: #fff; padding: 0.15rem 0.5rem; font-size: 0.65rem; }
+
+  .ww-disc { --D: min(62vh, 64vw); position: absolute; z-index: 3; background: radial-gradient(circle, #f3ebe0 60%, rgba(243, 235, 224, 0.92)); left: 50%; top: 109vh; width: var(--D); height: var(--D); margin: calc(var(--D) / -2) 0 0 calc(var(--D) / -2); border-radius: 50%; border: 1px dashed rgba(26, 18, 24, 0.25); pointer-events: none; }
+  .ww-disc-text { width: 100%; height: 100%; font: 500 13px 'JetBrains Mono', monospace; letter-spacing: 0.32em; fill: rgba(26, 18, 24, 0.45); }
+  .ww-now { position: absolute; left: 50%; top: calc(109vh - min(62vh, 64vw) / 2 + 3.4rem); transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 0.35rem; text-align: center; width: min(80vw, 30rem); z-index: 4; }
+  .ww-now-tri { font-size: 0.8rem; }
+  .ww-now-name { font-size: clamp(1rem, 1.6vw, 1.5rem); }
+  .ww-now-sub { color: #7b6a66; }
+
+  @media (max-width: 767px) {
+    .ww-kicker { left: 6%; top: 12%; }
+    .ww-meta { top: 41%; font-size: 0.6rem; } .ww-meta.l { left: 6%; } .ww-meta.r { right: 6%; }
+    .tm1, .tm2, .bm1, .bm2 { display: none; }
+    .ww-type { top: 16%; height: 22%; }
+    .ww-ring { --fs: 11vw; }
+    .ww-wheel { --R: 40vh; --h: 20vh; top: 104vh; }
+    .ww-disc { --D: 54vh; top: 104vh; }
+    .ww-now { top: calc(104vh - 27vh + 2.6rem); }
+  }
+  @media (prefers-reduced-motion: reduce) { .ww-ch { transition: none; } }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
+
+  const root = document.querySelector<HTMLElement>('[data-ww]');
+  if (root) {
+    const ring = root.querySelector<HTMLElement>('[data-ring]')!;
+    const chars = [...ring.querySelectorAll<HTMLElement>('.ww-ch')];
+    const wheel = root.querySelector<HTMLElement>('[data-wheel]')!;
+    const cards = [...root.querySelectorAll<HTMLElement>('[data-card]')];
+    const disc = root.querySelector<SVGElement>('[data-disc]')!;
+    const nameEl = root.querySelector<HTMLElement>('[data-now-name]')!;
+    const subEl = root.querySelector<HTMLElement>('[data-now-sub]')!;
+    const meta: [string, string][] = (window as any).__wwMeta;
+    const n = cards.length;
+    const step = 360 / n;
+    const per = 360 / chars.length;
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let progress = 0;
+    let wheelAngle = 0; // smoothed
+    let ringAngle = 0;
+    let current = -1;
+
+    const setNow = (i: number) => {
+      if (i === current) return;
+      current = i;
+      cards.forEach((c, k) => c.classList.toggle('is-now', k === i));
+      nameEl.textContent = meta[i][0];
+      subEl.textContent = meta[i][1];
+      gsap.fromTo([nameEl, subEl], { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: 'expo.out', stagger: 0.05 });
+    };
+    setNow(0);
+
+    if (document.documentElement.classList.contains('motion')) {
+      ScrollTrigger.create({
+        trigger: root,
+        start: 'top top',
+        end: 'bottom bottom',
+        onUpdate: (self) => (progress = self.progress),
+      });
+    }
+
+    let last = performance.now();
+    const tick = (now: number) => {
+      const dt = Math.min(0.05, (now - last) / 1000);
+      last = now;
+      const target = -progress * (n - 1) * step;
+      wheelAngle += (target - wheelAngle) * Math.min(1, dt * 7);
+      ringAngle += (reduce ? 0 : 18) * dt;
+      const ra = ringAngle + progress * 240;
+
+      wheel.style.transform = `rotate(${wheelAngle}deg)`;
+      disc.style.transform = `rotate(${wheelAngle * 0.5 - ringAngle * 0.3}deg)`;
+      ring.style.transform = `rotateX(-12deg) rotateZ(-5deg) rotateY(${-ra}deg)`;
+      chars.forEach((c, i) => {
+        const a = ((i * per - ra) % 360 + 360) % 360;
+        c.classList.toggle('is-back', a > 90 && a < 270);
+        c.style.opacity = String(Math.min(1, Math.abs(Math.cos((a * Math.PI) / 180)) * 3.2));
+      });
+      setNow(Math.max(0, Math.min(n - 1, Math.round(-wheelAngle / step))));
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+</script>

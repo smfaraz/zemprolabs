@@ -1,0 +1,109 @@
+---
+/** About 04 — the four promises as a deck of cards; each scroll step flicks the top card away. */
+const promises = [
+  { t: 'You talk to the people doing the work.', d: 'No account manager passing messages along. When you have a question about your site, store or campaign, you ask the person who built or runs it.', bg: '#fbf4ea', fg: '#1a1218', icon: 'chat' },
+  { t: 'You own everything.', d: 'Code goes into your own repository from day one. Domains, hosting, ad accounts and analytics are registered to you. If you ever leave, you take it all with you.', bg: '#ffb33f', fg: '#1a1218', icon: 'key' },
+  { t: 'We stay after launch.', d: 'A website is never finished. Most of our clients keep working with us long after launch, on updates, growth and the day-to-day running of the business.', bg: '#f2464b', fg: '#fff', icon: 'loop' },
+  { t: 'Proven tools over trends.', d: 'Next.js, React, Node.js, Shopify and ServiceNow: well-supported tools, so what we build is easy to maintain and easy to hire for.', bg: '#5b2a86', fg: '#fff', icon: 'stack' },
+];
+---
+
+<section class="ap lab-dark" data-ap style={`--n:${promises.length}`}>
+  <div class="ap-pin">
+    <div class="ap-head">
+      <p class="lab-mono ap-kicker">What we believe</p>
+      <h2 class="lab-h ap-title">Four promises<br /><span class="lab-serif ap-em">we actually keep.</span></h2>
+      <p class="lab-mono ap-count"><span data-ap-count>01</span> / 0{promises.length}</p>
+    </div>
+    <ol class="ap-deck">
+      {promises.map((p, i) => (
+        <li class="ap-card" data-ap-card={i} style={`--bg:${p.bg};--fg:${p.fg};--i:${i};z-index:${promises.length - i}`}>
+          <div class="ap-card-top">
+            <span class="lab-mono">Promise 0{i + 1}</span>
+            <svg class={`ap-ico ap-ico-${p.icon}`} viewBox="0 0 48 48" aria-hidden="true">
+              {p.icon === 'chat' && (<><rect x="6" y="9" width="28" height="19" rx="9" /><rect class="ap-ico-b" x="16" y="22" width="26" height="17" rx="8.5" /></>)}
+              {p.icon === 'key' && (<><circle cx="16" cy="24" r="8" /><path d="M24 24h18M36 24v6M41 24v4" /></>)}
+              {p.icon === 'loop' && (<path d="M24 8a16 16 0 1 1-15.2 11M8 9v10h10" />)}
+              {p.icon === 'stack' && (<><path d="M24 6 42 15 24 24 6 15z" /><path class="ap-ico-b" d="M6 24l18 9 18-9M6 33l18 9 18-9" /></>)}
+            </svg>
+          </div>
+          <h3 class="ap-card-t">{p.t}</h3>
+          <p class="ap-card-d">{p.d}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .ap { position: relative; height: calc(var(--n) * 65vh + 100vh); }
+  .ap-pin { position: sticky; top: 0; height: 100vh; overflow: hidden; display: grid; grid-template-columns: minmax(16rem, 1fr) 1.3fr; align-items: center; gap: 4vw; padding: 6rem 6vw 3rem; }
+  :global(html:not(.motion)) .ap { height: auto; }
+  :global(html:not(.motion)) .ap-pin { position: relative; height: auto; display: block; }
+  .ap-head { position: relative; z-index: 10; }
+  .ap-kicker { margin: 0 0 0.8rem; color: rgba(251, 244, 234, 0.55); font-size: 0.75rem; }
+  .ap-title { margin: 0; font-size: clamp(1.8rem, 3.6vw, 3.4rem); line-height: 1; color: #fbf4ea; }
+  .ap-em { text-transform: none; font-size: 1.15em; background: var(--lab-grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .ap-count { margin: 2rem 0 0; color: #ff7a2f; }
+
+  .ap-deck { position: relative; list-style: none; margin: 0; padding: 0; height: min(64vh, 30rem); }
+  .ap-card {
+    position: absolute; inset: 0; margin: auto; width: min(100%, 34rem); height: 100%;
+    display: flex; flex-direction: column; padding: clamp(1.4rem, 3vw, 2.6rem); border-radius: 26px;
+    background: var(--bg); color: var(--fg);
+    box-shadow: 0 40px 70px -30px rgba(0, 0, 0, 0.7);
+    transform: translate(calc(var(--i) * 18px), calc(var(--i) * -14px)) rotate(calc(var(--i) * 3deg));
+    will-change: transform;
+  }
+  .ap-card-top { display: flex; justify-content: space-between; align-items: center; font-size: 0.72rem; opacity: 0.85; }
+  .ap-card-t { margin: auto 0 0; font: 700 clamp(1.6rem, 3vw, 2.7rem)/1.02 'Inter Tight', sans-serif; letter-spacing: -0.035em; max-width: 14ch; }
+  .ap-card-d { margin: 1.1rem 0 0; font-size: 1rem; line-height: 1.55; opacity: 0.85; max-width: 34ch; }
+  .ap-ico { width: 3.2rem; height: 3.2rem; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+  .ap-ico-chat rect { animation: ap-bob 2.4s ease-in-out infinite; } .ap-ico-chat .ap-ico-b { animation-delay: -1.2s; }
+  .ap-ico-key { animation: ap-turn 3s ease-in-out infinite; transform-origin: 33% 50%; }
+  .ap-ico-loop { animation: ap-spin 4s linear infinite; }
+  .ap-ico-stack .ap-ico-b { animation: ap-bob 2.4s ease-in-out infinite; }
+  @keyframes ap-bob { 50% { transform: translateY(-3px); } }
+  @keyframes ap-turn { 0%, 30% { transform: rotate(0); } 50%, 80% { transform: rotate(-35deg); } }
+  @keyframes ap-spin { to { transform: rotate(360deg); } }
+  .ap-ico-loop { transform-origin: center; }
+  :global(html:not(.motion)) .ap-deck { height: auto; display: grid; gap: 1rem; margin-top: 2rem; }
+  :global(html:not(.motion)) .ap-card { position: relative; transform: none; height: auto; min-height: 18rem; }
+
+  @media (max-width: 900px) {
+    .ap-pin { grid-template-columns: 1fr; align-content: center; gap: 1.6rem; padding: 6rem 1.25rem 2rem; }
+    .ap-count { margin-top: 1rem; }
+    .ap-deck { height: 46vh; margin-top: 2.5rem; }
+    .ap-card { width: calc(100% - 3.5rem); margin-left: 0; }
+    .ap-card-d { font-size: 0.9rem; }
+  }
+  @media (prefers-reduced-motion: reduce) { .ap-ico, .ap-ico * { animation: none !important; } }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
+  const root = document.querySelector<HTMLElement>('[data-ap]');
+  if (root && document.documentElement.classList.contains('motion')) {
+    const cards = [...root.querySelectorAll<HTMLElement>('[data-ap-card]')];
+    const count = root.querySelector<HTMLElement>('[data-ap-count]')!;
+    const n = cards.length;
+    ScrollTrigger.create({
+      trigger: root,
+      start: 'top top',
+      end: 'bottom bottom',
+      onUpdate: (self) => {
+        const head = self.progress * (n - 1) * 1.08;
+        cards.forEach((c, i) => {
+          const gone = Math.max(0, Math.min(1, head - i)); // 0 = in deck, 1 = flicked away
+          const slot = Math.max(0, i - head); // cards behind slide forward as the top one leaves
+          const ex = gone * 30; // vw, fly up and away to the right
+          c.style.transform =
+            `translate(calc(${slot} * 18px + ${ex}vw), calc(${slot} * -14px + ${gone * -125}vh)) rotate(${slot * 3 + gone * 18}deg)`;
+        });
+        count.textContent = String(Math.min(n, Math.floor(head + 0.5) + 1)).padStart(2, '0');
+      },
+    });
+  }
+</script>

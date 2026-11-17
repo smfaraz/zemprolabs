@@ -1,65 +1,38 @@
 {
-  "rewrites": [
-    {
-      "source": "/((?!assets/|videos/|brand/|.*\\..*).*)",
-      "destination": "/index.html"
-    }
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/managed-services", "destination": "/services/maintenance", "permanent": true },
+    { "source": "/process", "destination": "/about", "permanent": true },
+    { "source": "/pricing", "destination": "/contact", "permanent": true },
+    { "source": "/estimation", "destination": "/contact", "permanent": true },
+    { "source": "/project-estimation", "destination": "/contact", "permanent": true },
+    { "source": "/project/:id", "destination": "/work/:id", "permanent": true },
+    { "source": "/work/baemeds-com", "destination": "/work/baemeds-usa", "permanent": true },
+    { "source": "/work/baemeds-in", "destination": "/work/baemeds-india", "permanent": true },
+    { "source": "/work/servicenow-enterprise-irm", "destination": "/work/enterprise-servicenow", "permanent": true },
+    { "source": "/work/talhunt", "destination": "/work/talent-hunters-consulting", "permanent": true },
+    { "source": "/work/medpulse-ai", "destination": "/work/medpulse-gcc", "permanent": true },
+    { "source": "/work/qalb", "destination": "/work/the-qalb", "permanent": true }
   ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "X-Frame-Options",
-          "value": "SAMEORIGIN"
-        },
-        {
-          "key": "X-XSS-Protection",
-          "value": "1; mode=block"
-        },
-        {
-          "key": "Referrer-Policy",
-          "value": "strict-origin-when-cross-origin"
-        },
-        {
-          "key": "Permissions-Policy",
-          "value": "camera=(), microphone=(), geolocation=()"
-        },
-        {
-          "key": "Strict-Transport-Security",
-          "value": "max-age=63072000; includeSubDomains; preload"
-        }
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" },
+        { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains; preload" }
       ]
+    },
+    {
+      "source": "/_astro/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
     },
     {
       "source": "/videos/(.*)",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "video/mp4"
-        },
-        {
-          "key": "Accept-Ranges",
-          "value": "bytes"
-        },
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }
-      ]
-    },
-    {
-      "source": "/assets/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }
-      ]
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
     }
   ]
 }

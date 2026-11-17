@@ -1,0 +1,17 @@
+---
+interface Props { class?: string }
+const { class: cls = 'size-7' } = Astro.props;
+---
+
+<svg class={cls} viewBox="0 0 100 100" aria-hidden="true">
+  <defs>
+    <linearGradient id="lab-mark-g" x1="90" y1="10" x2="10" y2="90" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFB33F" />
+      <stop offset="0.5" stop-color="#F2464B" />
+      <stop offset="1" stop-color="#5B2A86" />
+    </linearGradient>
+  </defs>
+  <path d="M14 10 H90 V26 H10 V14 Q10 10 14 10 Z" fill="#1A1218" />
+  <path d="M64 26 H90 L36 74 H10 Z" fill="url(#lab-mark-g)" />
+  <path d="M10 74 H90 V86 Q90 90 86 90 H10 Z" fill="#1A1218" />
+</svg>

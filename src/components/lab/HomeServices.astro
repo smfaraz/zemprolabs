@@ -1,0 +1,285 @@
+---
+/**
+ * Services deck (home "What we do" and the Services page): the services as a deck of cards, like the About promises.
+ * Each scroll step flicks the top card away; the top card plays its motion scene.
+ */
+import { services } from '@/data/services';
+
+interface Props { kicker?: string; line1?: string; line2?: string; lead?: string; id?: string }
+const {
+  kicker = '03 — What we do',
+  line1 = 'One team for',
+  line2 = 'the whole journey.',
+  lead = 'Most businesses juggle a developer, an ads agency and someone who “does the website.” We do all of it, so nothing falls between the gaps.',
+  id = 'services',
+} = Astro.props;
+
+// same four solid colours as the About page promise cards: [background, text, accent inside the animation, tone]
+const deck = [
+  ['#FBF4EA', '#1A1218', '#F2464B', 'light'],
+  ['#FFB33F', '#1A1218', '#5B2A86', 'amber'],
+  ['#F2464B', '#FFFFFF', '#1A1218', 'red'],
+  ['#5B2A86', '#FFFFFF', '#FFB33F', 'plum'],
+] as const;
+const palettes = services.map((_, i) => deck[i % 4]);
+const colors = palettes.map((p) => p[2]);
+const scene: Record<string, string> = {
+  'web-development': 'web',
+  ecommerce: 'shop',
+  'mobile-apps': 'phone',
+  seo: 'search',
+  'paid-ads-social': 'ads',
+  maintenance: 'care',
+  servicenow: 'flow',
+  'business-development': 'growth',
+  'talent-sourcing': 'talent',
+};
+---
+
+<section id={id} class="hs lab-dark" data-hs style={`--n:${services.length}`}>
+  <div class="hs-pin">
+    <div class="hs-head">
+      <p class="lab-mono hs-kicker">{kicker}</p>
+      <h2 class="lab-h hs-title">{line1}<br /><span class="lab-serif hs-em">{line2}</span></h2>
+      <p class="hs-lead">{lead}</p>
+      <p class="lab-mono hs-count"><span data-hs-count>01</span> / {String(services.length).padStart(2, '0')}</p>
+    </div>
+    <ol class="hs-deck">
+      {services.map((s, i) => (
+        <li class={`hs-card is-${palettes[i][3]}`} data-hs-card={i} style={`--bg:${palettes[i][0]};--fg:${palettes[i][1]};--c:${palettes[i][2]};--i:${i};z-index:${services.length - i}`}>
+          <a href={`/services/${s.slug}`} class="hs-card-in" tabindex={i === 0 ? undefined : -1}>
+            <div class={`hs-scene sc-${scene[s.slug]}`} aria-hidden="true">
+              {scene[s.slug] === 'web' && (
+                <div class="m-browser">
+                  <div class="m-bar"><i></i><i></i><i></i></div>
+                  <div class="m-hero"></div>
+                  <div class="m-cols"><b></b><b></b><b></b></div>
+                  <div class="m-lines"><b></b><b></b></div>
+                  <div class="m-cursor"></div>
+                </div>
+              )}
+              {scene[s.slug] === 'shop' && (
+                <div class="m-shop">
+                  {[0, 1, 2, 3].map((k) => <div class="m-prod" style={`--k:${k}`}><b></b><span>+</span></div>)}
+                  <div class="m-cart">Cart<em>3</em></div>
+                </div>
+              )}
+              {scene[s.slug] === 'phone' && (
+                <div class="m-phone"><div class="m-screens"><b></b><b></b><b></b></div><i></i></div>
+              )}
+              {scene[s.slug] === 'search' && (
+                <div class="m-search">
+                  <div class="m-q"><span>⌕</span><em>near me</em></div>
+                  <b class="r r1"></b><b class="r r2"></b><b class="r r3 you">#1 · your-business.com</b>
+                </div>
+              )}
+              {scene[s.slug] === 'ads' && (
+                <div class="m-ads">
+                  {[0, 1, 2, 3, 4, 5].map((k) => <b style={`--k:${k}`}></b>)}
+                  <span class="m-heart">♥</span><span class="m-heart h2">♥</span>
+                  <em>ROAS 4.2×</em>
+                </div>
+              )}
+              {scene[s.slug] === 'care' && (
+                <div class="m-care">
+                  <svg viewBox="0 0 300 120"><path d="M0 70 H90 L105 70 L118 25 L134 105 L148 50 L158 70 H300" /></svg>
+                  <em>99.9% uptime</em>
+                  <span class="m-ok">✓ Backups · Updates · Fixes</span>
+                </div>
+              )}
+              {scene[s.slug] === 'flow' && (
+                <div class="m-flow">
+                  {['Incident', 'Triage', 'Risk check', 'Released'].map((t, k) => <span style={`--k:${k}`}>{t}</span>)}
+                </div>
+              )}
+              {scene[s.slug] === 'growth' && (
+                <div class="m-growth">
+                  <svg viewBox="0 0 300 160"><path class="g-line" d="M10 140 C 60 130, 80 110, 120 100 S 190 60, 220 50 S 270 22, 290 14" /></svg>
+                  <span class="m-pin p1">Market</span><span class="m-pin p2">Leads</span><span class="m-pin p3">Deals</span>
+                </div>
+              )}
+              {scene[s.slug] === 'talent' && (
+                <div class="m-talent">
+                  {[0, 1, 2].map((k) => <div class="m-cv" style={`--k:${k}`}><i></i><b></b><b></b></div>)}
+                  <span class="m-hired">Hired ✓</span>
+                </div>
+              )}
+            </div>
+            <div class="hs-body">
+              <span class="lab-mono hs-num">Service {String(i + 1).padStart(2, '0')}</span>
+              <h3 class="hs-name">{s.name}</h3>
+              <p class="hs-short">{s.short}</p>
+              <span class="hs-go">Explore <span aria-hidden="true">→</span></span>
+            </div>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .hs { position: relative; height: calc(var(--n) * 55vh + 100vh); }
+  .hs-pin { position: sticky; top: 0; height: 100vh; overflow: hidden; display: grid; grid-template-columns: minmax(16rem, 1fr) 1.25fr; align-items: center; gap: 4vw; padding: 6rem 6vw 3rem; }
+  :global(html:not(.motion)) .hs { height: auto; }
+  :global(html:not(.motion)) .hs-pin { position: relative; height: auto; display: block; }
+  .hs-head { position: relative; z-index: 20; }
+  .hs-kicker { margin: 0 0 0.8rem; color: rgba(251, 244, 234, 0.55); font-size: 0.75rem; }
+  .hs-title { margin: 0; font-size: clamp(1.8rem, 3.6vw, 3.4rem); line-height: 1; color: #fbf4ea; }
+  .hs-em { text-transform: none; font-size: 1.15em; background: var(--lab-grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .hs-lead { margin: 1.4rem 0 0; max-width: 28rem; color: rgba(251, 244, 234, 0.6); font-size: 0.98rem; line-height: 1.6; }
+  .hs-count { margin: 2rem 0 0; color: #ff7a2f; }
+
+  .hs-deck { position: relative; list-style: none; margin: 0; padding: 0; height: min(72vh, 36rem); }
+  .hs-card { position: absolute; inset: 0; margin: auto; width: min(100%, 34rem); height: 100%; transform: translate(calc(var(--i) * 18px), calc(var(--i) * -14px)) rotate(calc(var(--i) * 3deg)); will-change: transform; }
+  .hs-card:nth-child(n + 5) { visibility: hidden; }
+  .hs-card-in { display: flex; flex-direction: column; height: 100%; border-radius: 26px; overflow: hidden; background: var(--bg); box-shadow: 0 40px 70px -30px rgba(0, 0, 0, 0.7); color: var(--fg); }
+  .hs-scene { position: relative; flex: 1; display: grid; place-items: center; min-height: 0; }
+  .hs-scene *, .hs-scene *::before { animation-play-state: paused; }
+  .hs-card.is-top .hs-scene *, .hs-card.is-top .hs-scene *::before { animation-play-state: running; }
+  .hs-body { padding: 1.3rem 1.6rem 1.5rem; border-top: 1px solid color-mix(in srgb, var(--fg) 14%, transparent); display: grid; gap: 0.45rem; }
+  .hs-num { font-size: 0.7rem; color: color-mix(in srgb, var(--fg) 65%, transparent); }
+  .hs-name { margin: 0; font: 700 clamp(1.4rem, 2.2vw, 2rem)/1.05 'Inter Tight', sans-serif; letter-spacing: -0.03em; }
+  .hs-short { margin: 0; font-size: 0.92rem; line-height: 1.5; color: color-mix(in srgb, var(--fg) 78%, transparent); }
+  .hs-go { justify-self: start; margin-top: 0.4rem; padding: 0.45rem 0.9rem; border-radius: 999px; background: var(--fg); color: var(--bg); font: 600 0.82rem 'Inter Tight', sans-serif; transition: transform 0.3s; }
+  .hs-card-in:hover .hs-go { transform: translateX(4px); }
+  :global(html:not(.motion)) .hs-deck { height: auto; display: grid; gap: 1rem; margin-top: 2rem; }
+  :global(html:not(.motion)) .hs-card { position: relative; transform: none; height: 28rem; visibility: visible; }
+
+  /* scenes on the light cards: lift the ivory pieces off the ivory card */
+  .is-light .m-browser, .is-light .m-cv, .is-light .m-ads em, .is-light .m-q { background: #fff; box-shadow: 0 18px 36px -18px rgba(26, 18, 24, 0.35), 0 0 0 1px rgba(26, 18, 24, 0.06); }
+  .is-light .r { background: rgba(26, 18, 24, 0.07); }
+  .is-amber .m-care em, .is-light .m-care em { color: #1a1218; }
+  .is-amber .m-ok, .is-light .m-ok { color: rgba(26, 18, 24, 0.7); }
+  .is-light .m-flow span, .is-amber .m-flow span { color: #1a1218; background: rgba(26, 18, 24, 0.06); border-color: rgba(26, 18, 24, 0.1); }
+  .is-red .m-flow span:last-child { color: #fff; }
+  .is-amber .m-prod, .is-amber .m-cv { box-shadow: 0 18px 36px -20px rgba(26, 18, 24, 0.4); }
+
+  @media (max-width: 900px) {
+    .hs-pin { grid-template-columns: 1fr; align-content: start; gap: 1rem; padding: 5.5rem 1.25rem 1.5rem; }
+    .hs-lead { display: none; }
+    .hs-count { margin-top: 0.8rem; }
+    .hs-deck { height: 54vh; margin-top: 2.6rem; }
+    .hs-card { width: calc(100% - 3rem); margin-left: 0; }
+    .hs-body { padding: 1rem 1.2rem 1.2rem; }
+    .hs-short { font-size: 0.85rem; }
+  }
+
+  /* --- web: a page assembling itself --- */
+  .m-browser { width: 70%; aspect-ratio: 4 / 3; border-radius: 14px; background: #fbf4ea; padding: 10px; display: grid; grid-template-rows: auto 1fr auto auto; gap: 8px; position: relative; }
+  .m-bar { display: flex; gap: 5px; } .m-bar i { width: 7px; height: 7px; border-radius: 50%; background: #d8c9bb; }
+  .m-hero { border-radius: 8px; background: linear-gradient(120deg, var(--c), #5b2a86); animation: m-build 3.2s infinite both; }
+  .m-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; } .m-cols b { height: 34px; border-radius: 6px; background: #eadccd; animation: m-build 3.2s infinite both; } .m-cols b:nth-child(2) { animation-delay: 0.15s; } .m-cols b:nth-child(3) { animation-delay: 0.3s; }
+  .m-lines { display: grid; gap: 5px; } .m-lines b { height: 6px; border-radius: 3px; background: #e2d2c2; width: 80%; animation: m-build 3.2s 0.45s infinite both; } .m-lines b + b { width: 55%; }
+  .m-cursor { position: absolute; width: 14px; height: 14px; border-radius: 50%; background: #1a1218; border: 2px solid #fff; animation: m-cursor 3.2s infinite; }
+  @keyframes m-build { 0%, 8% { opacity: 0; transform: translateY(10px) scale(0.96); } 22%, 88% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+  @keyframes m-cursor { 0% { left: 80%; top: 85%; } 40% { left: 45%; top: 35%; } 55% { left: 45%; top: 35%; transform: scale(0.8); } 70% { left: 30%; top: 70%; transform: none; } 100% { left: 80%; top: 85%; } }
+
+  /* --- shop: products added to cart --- */
+  .m-shop { width: 52%; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; position: relative; }
+  .m-prod { aspect-ratio: 1; border-radius: 12px; background: #fbf4ea; position: relative; padding: 10px; animation: m-pop 4s infinite; animation-delay: calc(var(--k) * 0.5s); }
+  .m-prod b { display: block; height: 60%; border-radius: 8px; background: linear-gradient(140deg, var(--c), #f2464b); }
+  .m-prod span { position: absolute; right: 8px; bottom: 8px; width: 22px; height: 22px; border-radius: 50%; background: #1a1218; color: #fff; display: grid; place-items: center; font-size: 0.8rem; }
+  .m-cart { position: absolute; right: -14px; top: -18px; padding: 0.4rem 0.7rem; border-radius: 999px; background: #fff; font-size: 0.9rem; animation: m-shake 4s infinite; }
+  .m-cart em { font-style: normal; margin-left: 4px; padding: 0 6px; border-radius: 999px; background: #f2464b; color: #fff; font-size: 0.75rem; }
+  @keyframes m-pop { 0%, 70%, 100% { transform: none; } 10% { transform: translateY(-8px); } 20% { transform: none; } }
+  @keyframes m-shake { 0%, 60%, 100% { transform: none; } 65% { transform: rotate(-10deg); } 75% { transform: rotate(8deg); } }
+
+  /* --- phone: screens swiping --- */
+  .m-phone { width: 24%; aspect-ratio: 9 / 18.5; border-radius: 26px; border: 6px solid #fbf4ea; overflow: hidden; position: relative; background: #fbf4ea; }
+  .m-screens { display: flex; width: 300%; height: 100%; animation: m-swipe 6s infinite; }
+  .m-screens b { flex: 1; } .m-screens b:nth-child(1) { background: linear-gradient(170deg, var(--c), #5b2a86); } .m-screens b:nth-child(2) { background: linear-gradient(170deg, #ffb33f, #f2464b); } .m-screens b:nth-child(3) { background: linear-gradient(170deg, #b8326e, #2a1b30); }
+  .m-phone i { position: absolute; left: 50%; top: 8px; width: 34%; height: 8px; margin-left: -17%; border-radius: 999px; background: #1a1218; }
+  @keyframes m-swipe { 0%, 25% { transform: translateX(0); } 33%, 58% { transform: translateX(-33.33%); } 66%, 92% { transform: translateX(-66.66%); } 100% { transform: translateX(0); } }
+
+  /* --- search: climbing to #1 --- */
+  .m-search { width: 74%; display: flex; flex-direction: column; gap: 9px; }
+  .m-q { display: flex; align-items: center; gap: 8px; padding: 0.7rem 1rem; border-radius: 999px; background: #fbf4ea; color: #1a1218; font-size: 0.9rem; }
+  .m-q span { color: #f2464b; } .m-q em { font-style: normal; overflow: hidden; white-space: nowrap; border-right: 2px solid #1a1218; width: 7ch; animation: m-type 4s steps(7) infinite; }
+  @keyframes m-type { 0% { width: 0; } 30%, 100% { width: 7ch; } }
+  .r { height: 2.4rem; border-radius: 12px; background: rgba(251, 244, 234, 0.12); }
+  .r.you { display: flex; align-items: center; padding: 0 0.9rem; background: linear-gradient(100deg, #ffb33f, #f2464b); color: #fff; font: 600 0.8rem 'Inter Tight', sans-serif; animation: m-climb 4s infinite; }
+  @keyframes m-climb { 0%, 35% { transform: translateY(0); } 55%, 100% { transform: translateY(calc(-200% - 18px)); } }
+  .m-search .r1, .m-search .r2 { animation: m-drop 4s infinite; }
+  @keyframes m-drop { 0%, 35% { transform: none; } 55%, 100% { transform: translateY(calc(100% + 9px)); } }
+
+  /* --- ads: bars + hearts --- */
+  .m-ads { width: 70%; height: 52%; display: flex; align-items: flex-end; gap: 8px; position: relative; }
+  .m-ads b { flex: 1; border-radius: 8px 8px 3px 3px; background: linear-gradient(180deg, #ffb33f, var(--c)); height: calc(20% + var(--k) * 14%); transform-origin: bottom; animation: m-grow 3.6s infinite; animation-delay: calc(var(--k) * 0.08s); }
+  @keyframes m-grow { 0% { transform: scaleY(0.1); } 40%, 100% { transform: scaleY(1); } }
+  .m-heart { position: absolute; left: 20%; bottom: 30%; color: #f2464b; font-size: 1.6rem; animation: m-float 3.6s infinite; } .m-heart.h2 { left: 62%; animation-delay: 1.2s; font-size: 1.2rem; }
+  @keyframes m-float { 0% { transform: translateY(0); opacity: 0; } 20% { opacity: 1; } 100% { transform: translateY(-120px); opacity: 0; } }
+  .m-ads em { position: absolute; right: 0; top: -2.6rem; font-style: normal; padding: 0.35rem 0.7rem; border-radius: 999px; background: #fbf4ea; color: #1a1218; font: 600 0.8rem 'Inter Tight', sans-serif; }
+
+  /* --- care: heartbeat --- */
+  .m-care { width: 78%; display: grid; gap: 14px; justify-items: center; }
+  .m-care svg { width: 100%; } .m-care path { fill: none; stroke: var(--c); stroke-width: 4; stroke-linejoin: round; stroke-linecap: round; stroke-dasharray: 420; animation: m-beat 2.4s linear infinite; }
+  @keyframes m-beat { from { stroke-dashoffset: 420; } to { stroke-dashoffset: -420; } }
+  .m-care em { font: 700 2rem 'Inter Tight', sans-serif; font-style: normal; color: #fbf4ea; letter-spacing: -0.03em; }
+  .m-ok { font-size: 0.8rem; color: rgba(251, 244, 234, 0.7); }
+
+  /* --- flow: ServiceNow steps --- */
+  .m-flow { display: grid; gap: 10px; width: 62%; }
+  .m-flow span { padding: 0.75rem 1rem; border-radius: 12px; background: rgba(251, 244, 234, 0.08); color: #fbf4ea; font: 600 0.9rem 'Inter Tight', sans-serif; border: 1px solid rgba(251, 244, 234, 0.1); animation: m-step 4s infinite; animation-delay: calc(var(--k) * 0.8s); }
+  .m-flow span:last-child { color: #ffb33f; }
+  @keyframes m-step { 0%, 100% { background: rgba(251, 244, 234, 0.08); transform: none; } 8%, 20% { background: var(--c); transform: translateX(10px); } 30% { background: rgba(251, 244, 234, 0.08); transform: none; } }
+
+  /* --- growth: a rising line with milestones --- */
+  .m-growth { width: 80%; position: relative; }
+  .m-growth svg { width: 100%; overflow: visible; } .g-line { fill: none; stroke: var(--c); stroke-width: 5; stroke-linecap: round; stroke-dasharray: 360; animation: m-draw 4s infinite; }
+  @keyframes m-draw { 0% { stroke-dashoffset: 360; } 60%, 100% { stroke-dashoffset: 0; } }
+  .m-pin { position: absolute; padding: 0.3rem 0.65rem; border-radius: 999px; background: #fbf4ea; color: #1a1218; font: 600 0.75rem 'Inter Tight', sans-serif; opacity: 0; animation: m-pinin 4s infinite; }
+  .p1 { left: 30%; top: 50%; animation-delay: 0.6s; } .p2 { left: 60%; top: 18%; animation-delay: 1.4s; } .p3 { left: 84%; top: -14%; animation-delay: 2.2s; }
+  @keyframes m-pinin { 0% { opacity: 0; transform: translateY(8px); } 15%, 80% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+
+  /* --- talent: profiles stacking --- */
+  .m-talent { width: 60%; aspect-ratio: 1; position: relative; }
+  .m-cv { position: absolute; inset: 12% 8%; border-radius: 16px; background: #fbf4ea; padding: 14px; display: grid; grid-template-columns: 42px 1fr; grid-template-rows: auto auto; gap: 8px 12px; align-content: start; animation: m-deal 4.5s infinite; animation-delay: calc(var(--k) * 0.5s); transform-origin: bottom center; }
+  .m-cv i { grid-row: span 2; width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(140deg, var(--c), #ffb33f); }
+  .m-cv b { height: 8px; border-radius: 4px; background: #e2d2c2; } .m-cv b + b { width: 60%; }
+  @keyframes m-deal { 0% { transform: translateY(40px) rotate(-6deg); opacity: 0; } 20% { transform: translateY(calc(var(--k) * -14px)) rotate(calc((var(--k) - 1) * 5deg)); opacity: 1; } 85% { opacity: 1; } 100% { opacity: 0; } }
+  .m-hired { position: absolute; right: -8%; bottom: 4%; padding: 0.4rem 0.8rem; border-radius: 999px; background: #1a1218; color: #ffb33f; font: 600 0.8rem 'Inter Tight', sans-serif; border: 1px solid rgba(251, 244, 234, 0.15); animation: m-pinin 4.5s 1.6s infinite; opacity: 0; }
+
+  @media (prefers-reduced-motion: reduce) { .hs-scene *, .hs-scene *::before { animation: none !important; opacity: 1; } }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
+
+  const root = document.querySelector<HTMLElement>('[data-hs]');
+  if (root) {
+    const cards = [...root.querySelectorAll<HTMLElement>('[data-hs-card]')];
+    const count = root.querySelector<HTMLElement>('[data-hs-count]')!;
+    const n = cards.length;
+    let top = -1;
+    const setTop = (i: number) => {
+      if (i === top) return;
+      top = i;
+      cards.forEach((c, k) => {
+        c.classList.toggle('is-top', k === i);
+        c.querySelector('a')!.tabIndex = k === i ? 0 : -1;
+      });
+      count.textContent = String(i + 1).padStart(2, '0');
+    };
+    setTop(0);
+    if (document.documentElement.classList.contains('motion')) {
+      ScrollTrigger.create({
+        trigger: root,
+        start: 'top top',
+        end: 'bottom bottom',
+        onUpdate: (self) => {
+          const head = self.progress * (n - 1) * 1.06;
+          cards.forEach((c, i) => {
+            const gone = Math.max(0, Math.min(1, head - i));
+            const slot = Math.max(0, i - head);
+            c.style.visibility = slot > 3.2 ? 'hidden' : 'visible';
+            c.style.transform = `translate(calc(${slot} * 18px + ${gone * 30}vw), calc(${slot} * -14px + ${gone * -125}vh)) rotate(${slot * 3 + gone * 18}deg)`;
+          });
+          setTop(Math.min(n - 1, Math.floor(head + 0.5)));
+        },
+      });
+    }
+  }
+</script>

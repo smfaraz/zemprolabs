@@ -1,0 +1,107 @@
+---
+import Logo from './Logo.astro';
+import { nav } from '@/data/site';
+
+interface Props { tone?: 'light' | 'dark' }
+const { tone = 'light' } = Astro.props;
+const path = Astro.url.pathname;
+const active = (href: string) => path === href || path.startsWith(href + '/');
+---
+
+<header
+  class="group/h fixed inset-x-0 top-0 z-50 transition-[background-color,color,transform,border-color] duration-500 ease-[var(--ease-out-soft)] data-[hide]:-translate-y-full"
+  data-header
+  data-tone={tone}
+>
+  <div class="wrap flex h-[4.5rem] items-center justify-between md:h-20">
+    <Logo inverted={tone === 'dark'} />
+
+    <nav class="hidden items-center gap-1 rounded-full border border-current/10 bg-current/[0.03] p-1 backdrop-blur-md md:flex" aria-label="Main">
+      {nav.map((l) => (
+        <a
+          href={l.href}
+          class:list={[
+            'rounded-full px-4 py-2 text-[0.9375rem] transition-colors',
+            active(l.href) ? 'bg-forest text-paper' : 'hover:bg-current/[0.06]',
+          ]}
+          aria-current={active(l.href) ? 'page' : undefined}
+        >
+          {l.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <span data-magnetic="0.25" class="hidden sm:inline-block">
+        <a href="/contact" class="btn btn-ember !py-3.5">Start a project <span class="arrow" aria-hidden="true">→</span></a>
+      </span>
+      <button
+        type="button"
+        class="grid size-12 place-items-center rounded-full bg-forest text-paper md:hidden"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        data-menu-btn
+      >
+        <span class="relative block h-2.5 w-5">
+          <span class="absolute inset-x-0 top-0 h-[1.5px] bg-current transition-transform duration-300" data-l1></span>
+          <span class="absolute inset-x-0 bottom-0 h-[1.5px] bg-current transition-transform duration-300" data-l2></span>
+        </span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div id="mobile-menu" class="fixed inset-0 z-40 hidden flex-col bg-deep pt-24 text-paper md:hidden" data-menu data-lenis-prevent>
+  <nav class="wrap flex flex-1 flex-col" aria-label="Mobile">
+    {nav.map((l, i) => (
+      <a href={l.href} class="display flex items-baseline justify-between border-b border-deep-line py-4 text-4xl">
+        {l.label}<span class="label !text-mist">0{i + 1}</span>
+      </a>
+    ))}
+    <a href="/contact" class="btn btn-ember mt-10 self-start">Start a project <span aria-hidden="true">→</span></a>
+  </nav>
+  <p class="wrap pb-8 label !text-mist">Hyderabad · US · India · UK · GCC</p>
+</div>
+
+<style>
+  [data-header][data-tone='light'] { color: var(--color-ink); }
+  [data-header][data-tone='dark'] { color: var(--color-paper); }
+  [data-header][data-solid]:not([data-menu-open]) { background: color-mix(in srgb, var(--color-paper) 88%, transparent); color: var(--color-ink); backdrop-filter: blur(12px); border-bottom: 1px solid color-mix(in srgb, var(--color-line) 60%, transparent); }
+  [data-header][data-solid]:not([data-menu-open]) :global(.logo-word) { color: var(--color-ink) !important; }
+</style>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-header]')!;
+  const btn = document.querySelector<HTMLButtonElement>('[data-menu-btn]')!;
+  const menu = document.querySelector<HTMLElement>('[data-menu]')!;
+  const l1 = btn.querySelector<HTMLElement>('[data-l1]')!;
+  const l2 = btn.querySelector<HTMLElement>('[data-l2]')!;
+
+  let last = 0;
+  const onScroll = () => {
+    const y = scrollY;
+    header.toggleAttribute('data-solid', y > 40);
+    header.toggleAttribute('data-hide', y > 400 && y > last && !menu.classList.contains('flex'));
+    last = y;
+  };
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  const tone = header.dataset.tone!;
+  const set = (open: boolean) => {
+    header.dataset.tone = open ? 'dark' : tone;
+    header.toggleAttribute('data-menu-open', open);
+    menu.classList.toggle('hidden', !open);
+    menu.classList.toggle('flex', open);
+    btn.setAttribute('aria-expanded', String(open));
+    btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    l1.style.transform = open ? 'translateY(4.5px) rotate(45deg)' : '';
+    l2.style.transform = open ? 'translateY(-4.5px) rotate(-45deg)' : '';
+    const lenis = (window as any).__lenis;
+    open ? lenis?.stop() : lenis?.start();
+    document.body.style.overflow = open ? 'hidden' : '';
+  };
+  btn.addEventListener('click', () => set(btn.getAttribute('aria-expanded') !== 'true'));
+  addEventListener('keydown', (e) => e.key === 'Escape' && set(false));
+</script>

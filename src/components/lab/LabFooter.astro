@@ -1,0 +1,51 @@
+---
+import LabMark from './LabMark.astro';
+import { site, nav } from '@/data/site';
+import { services } from '@/data/services';
+const year = new Date().getFullYear();
+---
+
+<footer class="lab-dark text-white">
+  <div class="mx-auto max-w-[90rem] px-5 py-16 md:px-10 md:py-20">
+    <div class="grid gap-12 md:grid-cols-12">
+      <div class="md:col-span-5">
+        <a href="/" class="flex items-center gap-3" aria-label="Zemprolabs home">
+          <span class="grid size-10 place-items-center rounded-xl bg-white"><LabMark class="size-6" /></span>
+          <span class="lab-h text-lg tracking-[0.02em]">Zemprolabs</span>
+        </a>
+        <p class="mt-6 max-w-sm text-sm leading-relaxed text-white/60">
+          A digital studio in Hyderabad. We build, grow and run digital businesses in the US, India, the UK and the GCC.
+        </p>
+        <a href={`mailto:${site.email}`} class="lab-h mt-8 inline-block text-[clamp(1rem,1.5vw,1.3rem)] lab-grad-text">{site.email}</a>
+      </div>
+      <div class="md:col-span-3">
+        <p class="lab-mono text-white/40">Services</p>
+        <ul class="mt-5 space-y-2 text-sm">
+          {services.map((s) => <li><a href={`/services/${s.slug}`} class="text-white/80 transition-colors hover:text-white">{s.name}</a></li>)}
+        </ul>
+      </div>
+      <div class="md:col-span-2">
+        <p class="lab-mono text-white/40">Studio</p>
+        <ul class="mt-5 space-y-2 text-sm">
+          {nav.map((l) => <li><a href={l.href} class="text-white/80 transition-colors hover:text-white">{l.label}</a></li>)}
+          <li><a href="/contact" class="text-white/80 transition-colors hover:text-white">Contact</a></li>
+        </ul>
+      </div>
+      <div class="md:col-span-2">
+        <p class="lab-mono text-white/40">Talk</p>
+        <ul class="mt-5 space-y-2 text-sm">
+          {site.phones.map((p) => <li><a href={`tel:${p.tel}`} class="text-white/80 hover:text-white">{p.display}</a></li>)}
+          <li><a href={site.phones[0].whatsapp} class="text-white/80 hover:text-white" rel="noopener">WhatsApp</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="mt-16 flex flex-col gap-3 border-t border-white/10 pt-6 text-xs text-white/40 sm:flex-row sm:justify-between">
+      <p>© {year} Zemprolabs · {site.address.city}, {site.address.country}</p>
+      <div class="flex gap-6">
+        <a href="/privacy" class="hover:text-white">Privacy</a>
+        <a href="/terms" class="hover:text-white">Terms</a>
+        <a href="#main" class="hover:text-white">Back to top ↑</a>
+      </div>
+    </div>
+  </div>
+</footer>

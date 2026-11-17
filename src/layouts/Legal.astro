@@ -1,0 +1,41 @@
+---
+import Base from './Base.astro';
+
+interface Props { title: string; description: string; image: string; updated: string; sections: { id: string; title: string }[] }
+const { title, description, image, updated, sections } = Astro.props;
+---
+
+<Base title={title} description={description} image={image}>
+  <section class="wrap pt-36 pb-12 md:pt-48 md:pb-16">
+    <p class="label label-ember" data-reveal>Legal</p>
+    <h1 class="display mt-8 text-[clamp(2.21rem,5.44vw,4.76rem)]" data-split="load">{title}</h1>
+    <p class="label mt-8" data-reveal>Last updated {updated}</p>
+  </section>
+
+  <div class="wrap grid gap-12 border-t border-line pt-14 pb-24 md:grid-cols-12 md:pb-36">
+    <nav class="md:col-span-3" aria-label="On this page">
+      <div class="md:sticky md:top-28">
+        <p class="label">On this page</p>
+        <ol class="mt-4 space-y-2 text-[0.9375rem]">
+          {sections.map((s, i) => (
+            <li><a href={`#${s.id}`} class="link-u text-ink-soft hover:text-ink">{String(i + 1).padStart(2, '0')} · {s.title}</a></li>
+          ))}
+        </ol>
+      </div>
+    </nav>
+    <article class="legal md:col-span-8 md:col-start-5">
+      <slot />
+    </article>
+  </div>
+</Base>
+
+<style is:global>
+  .legal h2 { font-family: var(--font-display); font-weight: 300; font-size: clamp(1.75rem, 3vw, 2.5rem); line-height: 1.1; letter-spacing: -0.02em; margin: 3.5rem 0 1rem; scroll-margin-top: 7rem; }
+  .legal h2:first-child { margin-top: 0; }
+  .legal p, .legal li { color: var(--color-ink-soft); font-size: 1.0625rem; }
+  .legal p + p { margin-top: 1rem; }
+  .legal ul { margin-top: 0.75rem; padding-left: 1.25rem; list-style: disc; }
+  .legal li + li { margin-top: 0.4rem; }
+  .legal a { color: var(--color-ink); text-decoration: underline; text-underline-offset: 3px; }
+  .legal strong { color: var(--color-ink); font-weight: 600; }
+</style>

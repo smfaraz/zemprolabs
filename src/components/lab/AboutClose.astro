@@ -1,0 +1,108 @@
+---
+/** About 05 — "We stick around": one line draws itself through what happens after launch, ending on the CTA. */
+const beats = [
+  { k: 'Launch', d: 'Your site, app or store goes live, in your own accounts.', x: 8, y: 22 },
+  { k: 'Updates', d: 'New pages, products and fixes, from the people who built it.', x: 36, y: 62 },
+  { k: 'Growth', d: 'SEO, ads and better conversion, month after month.', x: 64, y: 30 },
+  { k: 'Years later', d: 'Clients like BaeMeds and Auvia now hand us their whole digital operation.', x: 90, y: 70 },
+];
+const d = 'M 80 88 C 200 88, 240 248, 360 248 S 520 120, 640 120 S 800 280, 900 280';
+---
+
+<section class="ac" data-ac>
+  <div class="ac-head">
+    <p class="lab-mono ac-kicker">After launch</p>
+    <h2 class="lab-h ac-title">We stick<br /><span class="lab-serif ac-em">around.</span></h2>
+  </div>
+
+  <div class="ac-stage">
+    <svg class="ac-svg" viewBox="0 0 1000 400" preserveAspectRatio="none" aria-hidden="true">
+      <defs>
+        <linearGradient id="ac-g" x1="0" x2="1"><stop offset="0" stop-color="#ffb33f" /><stop offset="0.5" stop-color="#f2464b" /><stop offset="1" stop-color="#5b2a86" /></linearGradient>
+      </defs>
+      <path class="ac-track" d={d} vector-effect="non-scaling-stroke" />
+      <path class="ac-line" d={d} pathLength="1" data-ac-line />
+    </svg>
+    <ol class="ac-beats">
+      {beats.map((b, i) => (
+        <li class="ac-beat" data-ac-beat={i} style={`left:${b.x}%;top:${b.y}%`}>
+          <span class="ac-dot" aria-hidden="true"></span>
+          <span class="ac-txt"><span class="lab-mono">0{i + 1}</span><b>{b.k}</b><span>{b.d}</span></span>
+        </li>
+      ))}
+    </ol>
+  </div>
+
+  <div class="ac-cta">
+    <p class="ac-cta-t">Want a team that’s still here <span class="lab-serif">next year?</span></p>
+    <div class="ac-cta-row">
+      <a href="/contact" class="lab-btn" data-magnetic="0.3">Start a project <span aria-hidden="true">→</span></a>
+      <a href="/careers" class="lab-bracket">Or come work with us</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ac { position: relative; padding: 8rem 6vw 7rem; }
+  .ac-kicker { margin: 0 0 0.8rem; color: var(--lab-soft); font-size: 0.75rem; }
+  .ac-title { margin: 0; font-size: clamp(1.8rem, 3.6vw, 3.4rem); line-height: 1; }
+  .ac-em { text-transform: none; font-size: 1.15em; background: var(--lab-grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+  .ac-stage { position: relative; height: clamp(26rem, 60vh, 38rem); margin-top: 3rem; }
+  .ac-svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .ac-track { fill: none; stroke: var(--lab-line); stroke-width: 2; stroke-dasharray: 4 8; }
+  .ac-line { fill: none; stroke: url(#ac-g); stroke-width: 5; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: var(--d, 1); }
+  .ac-beats { list-style: none; margin: 0; padding: 0; }
+  .ac-beat { position: absolute; width: 0; height: 0; }
+  .ac-dot { position: absolute; left: -9px; top: -9px; width: 18px; height: 18px; border-radius: 50%; background: var(--lab-bg); border: 3px solid var(--lab-line); transition: background-color 0.4s, border-color 0.4s, transform 0.4s; }
+  .ac-beat.is-on .ac-dot { background: #ff7a2f; border-color: #fff; transform: scale(1.25); box-shadow: 0 0 0 6px rgba(255, 122, 47, 0.2); }
+  .ac-txt { position: absolute; left: -1rem; top: 1.4rem; width: min(17rem, 24vw); display: grid; gap: 0.25rem; opacity: 0.25; transform: translateY(8px); transition: opacity 0.5s, transform 0.5s; }
+  .ac-beat:nth-child(2) .ac-txt, .ac-beat:nth-child(4) .ac-txt { top: auto; bottom: 1.4rem; }
+  .ac-beat:last-child .ac-txt { left: auto; right: -1rem; text-align: right; }
+  .ac-beat.is-on .ac-txt { opacity: 1; transform: none; }
+  .ac-txt .lab-mono { color: #ff7a2f; font-size: 0.7rem; }
+  .ac-txt b { font: 700 1.35rem 'Inter Tight', sans-serif; letter-spacing: -0.02em; }
+  .ac-txt span:last-child { color: var(--lab-soft); font-size: 0.92rem; line-height: 1.45; }
+
+  .ac-cta { margin-top: 4rem; display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 2rem; border-top: 1px solid var(--lab-line); padding-top: 3rem; }
+  .ac-cta-t { margin: 0; max-width: 18ch; font: 700 clamp(1.7rem, 3.4vw, 3rem)/1.02 'Inter Tight', sans-serif; letter-spacing: -0.035em; }
+  .ac-cta-t .lab-serif { font-weight: 400; background: var(--lab-grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .ac-cta-row { display: flex; flex-wrap: wrap; align-items: center; gap: 1.4rem; }
+  :global(html:not(.motion)) .ac-line { --d: 0; }
+  :global(html:not(.motion)) .ac-txt { opacity: 1; transform: none; }
+
+  @media (max-width: 767px) {
+    .ac { padding: 6rem 1.25rem 5rem; }
+    .ac-stage { height: auto; margin-top: 2.5rem; }
+    .ac-svg { display: none; }
+    .ac-beats { display: grid; gap: 1.4rem; border-left: 3px solid var(--lab-line); padding-left: 1.4rem; }
+    .ac-beat { position: relative; left: auto !important; top: auto !important; width: auto; height: auto; }
+    .ac-dot { left: calc(-1.4rem - 10px); top: 0.3rem; }
+    .ac-txt, .ac-beat:nth-child(n) .ac-txt { position: relative; left: 0; right: auto; top: 0; bottom: auto; width: auto; text-align: left; }
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
+  const root = document.querySelector<HTMLElement>('[data-ac]');
+  if (root) {
+    const line = root.querySelector<SVGPathElement>('[data-ac-line]')!;
+    const beats = [...root.querySelectorAll<HTMLElement>('[data-ac-beat]')];
+    const at = [0, 0.36, 0.66, 1];
+    const set = (p: number) => {
+      line.style.setProperty('--d', String(1 - p));
+      beats.forEach((b, i) => b.classList.toggle('is-on', p >= at[i] - 0.02));
+    };
+    if (document.documentElement.classList.contains('motion')) {
+      ScrollTrigger.create({
+        trigger: root.querySelector('.ac-stage'),
+        start: 'top 75%',
+        end: 'bottom 45%',
+        scrub: true,
+        onUpdate: (self) => set(self.progress),
+      });
+    } else set(1);
+  }
+</script>

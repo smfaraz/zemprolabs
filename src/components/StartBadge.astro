@@ -1,0 +1,41 @@
+---
+interface Props { href?: string; label?: string; size?: string }
+const { href = '/contact', label = 'Start a project', size = 'size-44 md:size-52' } = Astro.props;
+const ring = `${label} ✦ ${label} ✦ `.toUpperCase();
+const id = `ring-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<span data-magnetic="0.35" class="inline-block">
+  <a href={href} class={`start-badge group relative grid place-items-center rounded-full ${size}`} aria-label={label}>
+    <!-- Rotating ring text -->
+    <svg class="badge-ring absolute inset-0 size-full" viewBox="0 0 200 200" aria-hidden="true">
+      <defs>
+        <path id={id} d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0" />
+      </defs>
+      <circle cx="100" cy="100" r="99" fill="none" stroke="currentColor" stroke-opacity="0.18" />
+      <text style="font-family: var(--font-mono)" font-size="13" fill="currentColor">
+        <textPath href={`#${id}`} startOffset="0" textLength="486" lengthAdjust="spacing">{ring}</textPath>
+      </text>
+    </svg>
+
+    <!-- Centre disc -->
+    <span class="disc absolute grid size-[46%] place-items-center rounded-full bg-ember transition-[width,height,background-color] duration-700 ease-[var(--ease-out-soft)] group-hover:size-full group-hover:bg-paper">
+      <svg class="arrow size-7 text-paper transition-[transform,color] duration-700 ease-[var(--ease-out-soft)] group-hover:rotate-45 group-hover:text-ink md:size-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M7 17 17 7M8 7h9v9" />
+      </svg>
+    </span>
+  </a>
+</span>
+
+<style>
+  .start-badge .badge-ring {
+    animation: spin 18s linear infinite;
+    transform-origin: 50% 50%;
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .start-badge .badge-ring { animation: none; }
+  }
+</style>

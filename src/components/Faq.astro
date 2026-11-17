@@ -1,0 +1,31 @@
+---
+interface Props { items: { q: string; a: string }[]; schema?: boolean }
+const { items, schema = true } = Astro.props;
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: items.map((i) => ({ '@type': 'Question', name: i.q, acceptedAnswer: { '@type': 'Answer', text: i.a } })),
+};
+---
+
+<div class="border-t border-line" data-faq>
+  {items.map((item, i) => (
+    <details class="faq group border-b border-line" data-reveal>
+      <summary class="flex cursor-pointer list-none items-center gap-6 py-7 [&::-webkit-details-marker]:hidden">
+        <span class="label w-8 shrink-0">{String(i + 1).padStart(2, '0')}</span>
+        <span class="flex-1 text-xl font-medium tracking-[-0.01em] md:text-2xl">{item.q}</span>
+        <span class="grid size-10 shrink-0 place-items-center rounded-full border border-line transition-all duration-500 group-open:rotate-45 group-open:border-ember group-open:bg-ember group-open:text-paper" aria-hidden="true">+</span>
+      </summary>
+      <div class="faq-body grid grid-rows-[0fr] transition-[grid-template-rows] duration-500 ease-[var(--ease-out-soft)]">
+        <p class="overflow-hidden pl-14 pr-14 text-ink-soft">
+          <span class="block max-w-2xl pb-8">{item.a}</span>
+        </p>
+      </div>
+    </details>
+  ))}
+</div>
+{schema && items.length > 0 && <script type="application/ld+json" set:html={JSON.stringify(ld)} />}
+
+<style>
+  .faq[open] .faq-body { grid-template-rows: 1fr; }
+</style>

@@ -1,0 +1,92 @@
+---
+import Base from '@/layouts/Base.astro';
+import WorkWheel from '@/components/lab/WorkWheel.astro';
+import WorkCard from '@/components/WorkCard.astro';
+import { work } from '@/data/work';
+
+const filters = [
+  { id: 'all', label: 'All' },
+  { id: 'build', label: 'Websites & apps', match: ['web-development', 'mobile-apps'] },
+  { id: 'ecommerce', label: 'E-commerce', match: ['ecommerce'] },
+  { id: 'grow', label: 'SEO & ads', match: ['seo', 'paid-ads-social'] },
+  { id: 'servicenow', label: 'ServiceNow', match: ['servicenow'] },
+  { id: 'more', label: 'Business & talent', match: ['business-development', 'talent-sourcing'] },
+];
+const tagsFor = (svc: string[]) => filters.filter((f) => f.match?.some((m) => svc.includes(m))).map((f) => f.id).join(' ');
+const count = (id: string) => (id === 'all' ? work.length : work.filter((w) => tagsFor(w.services).split(' ').includes(id)).length);
+---
+
+<Base
+  image="/og/work.jpg"
+  title="Work & Case Studies"
+  description="Case studies from Zemprolabs: websites, apps, online stores, SEO and ServiceNow projects for clients in the US, India, the UK and the GCC."
+>
+  <WorkWheel />
+
+  <section class="wrap pt-24 md:pt-32">
+    <div class="flex flex-wrap items-end justify-between gap-6">
+      <h2 class="display max-w-[18ch] text-[clamp(1.9rem,4vw,3.6rem)]" data-split>Built properly, <em>and still looked after.</em></h2>
+      <p class="max-w-[32rem] text-[var(--lab-soft)]" data-reveal>Clinics in Texas, learning platforms and stores in India, recruiters in the UK and the Gulf. Most of these clients still work with us today.</p>
+    </div>
+  </section>
+
+  <section class="wrap pt-10 pb-24 md:pb-36">
+    <div class="sticky top-[4.75rem] z-30 -mx-5 flex gap-2 overflow-x-auto border-b border-line bg-paper/90 px-5 py-4 backdrop-blur-md md:top-20 md:-mx-10 md:px-10 [scrollbar-width:none]" role="group" aria-label="Filter projects">
+      {filters.map((f, i) => (
+        <button
+          type="button"
+          class="shrink-0 rounded-full border border-line px-4 py-2 text-[0.9375rem] whitespace-nowrap transition-colors hover:border-ink aria-pressed:border-forest aria-pressed:bg-forest aria-pressed:text-paper"
+          aria-pressed={i === 0 ? 'true' : 'false'}
+          data-filter={f.id}
+        >
+          {f.label} <sup class="ml-0.5 font-mono text-[0.65rem] opacity-60">{count(f.id)}</sup>
+        </button>
+      ))}
+    </div>
+
+    <div class="mt-14 grid gap-x-10 gap-y-20 md:grid-cols-2" data-grid>
+      {work.map((item, i) => (
+        <div data-tags={tagsFor(item.services)} class:list={[i % 2 === 1 && 'md:mt-28']}>
+          <WorkCard item={item} index={i} />
+        </div>
+      ))}
+    </div>
+  </section>
+  <section class="wrap pb-24 md:pb-32">
+    <div class="lab-dark relative overflow-hidden rounded-[32px] px-6 py-16 md:px-16 md:py-24">
+      <div class="grid items-end gap-10 md:grid-cols-12">
+        <div class="md:col-span-8">
+          <p class="lab-mono text-[var(--lab-soft)]" data-reveal>Your project</p>
+          <h2 class="lab-h mt-5 max-w-[15ch] text-[clamp(2rem,4.6vw,4.2rem)]" data-split>Let’s make yours <span class="lab-serif lab-grad-text">number {work.length + 1}.</span></h2>
+          <p class="mt-6 max-w-lg text-[var(--lab-soft)]" data-reveal>Tell us what you’re building or fixing. We reply within one working day, usually with a couple of questions so the first call is useful.</p>
+        </div>
+        <div class="flex flex-wrap items-center gap-5 md:col-span-4 md:justify-self-end" data-reveal>
+          <a href="/contact" class="lab-btn" data-magnetic="0.3">Start a project <span aria-hidden="true">→</span></a>
+          <a href="/services" class="lab-bracket">See services</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
+  const items = [...document.querySelectorAll<HTMLElement>('[data-tags]')];
+  buttons.forEach((b) =>
+    b.addEventListener('click', () => {
+      const id = b.dataset.filter!;
+      buttons.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      const show = items.filter((el) => id === 'all' || el.dataset.tags!.split(' ').includes(id));
+      items.forEach((el) => {
+        el.hidden = !show.includes(el);
+        el.classList.remove('md:mt-28');
+      });
+      show.forEach((el, i) => i % 2 === 1 && el.classList.add('md:mt-28'));
+      const cards = show.map((el) => el.querySelector('[data-reveal]')!);
+      gsap.fromTo(cards, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.9, ease: 'expo.out', stagger: 0.06 });
+      ScrollTrigger.refresh();
+    })
+  );
+</script>

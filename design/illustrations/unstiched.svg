@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000">
+  <defs>
+    <filter id="sh" x="-60%" y="-60%" width="220%" height="260%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="22"/><feOffset dy="22"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.22"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <clipPath id="look1"><rect x="170" y="290" width="470" height="520" rx="12"/></clipPath>
+    <clipPath id="look2"><rect x="660" y="290" width="300" height="250" rx="12"/></clipPath>
+    <clipPath id="look3"><rect x="660" y="560" width="300" height="250" rx="12"/></clipPath>
+    <!-- simple garment silhouettes -->
+    <symbol id="dress" viewBox="0 0 100 200"><path d="M38 0 h24 l6 30 q-4 18 -2 34 l26 134 h-84 l26 -134 q2 -16 -2 -34 z"/></symbol>
+    <symbol id="coat" viewBox="0 0 100 200"><path d="M30 0 h40 l18 22 l8 120 h-16 l-2 58 h-56 l-2 -58 h-16 l8 -120 z"/></symbol>
+  </defs>
+  <rect width="1600" height="1000" fill="#F4EADD"/>
+  <circle cx="1480" cy="900" r="260" fill="#EADCC8"/>
+
+  <g font-family="Georgia, serif">
+    <!-- Storefront -->
+    <g filter="url(#sh)"><rect x="120" y="120" width="1080" height="760" rx="20" fill="#FBF4EA"/></g>
+    <text x="170" y="210" font-size="44" letter-spacing="6" fill="#1A1218">UNSTICHED</text>
+    <g font-family="'Segoe UI', Arial, sans-serif" font-size="15" fill="#7B6A66" letter-spacing="2">
+      <text x="640" y="202">NEW IN</text><text x="740" y="202">COUTURE</text><text x="860" y="202">DRAPES</text><text x="1050" y="202">BAG (1)</text>
+    </g>
+    <line x1="170" y1="244" x2="1150" y2="244" stroke="#E3D2C0" stroke-width="2"/>
+
+    <g clip-path="url(#look1)">
+      <rect x="170" y="290" width="470" height="520" fill="#2A1B30"/>
+      <circle cx="560" cy="380" r="90" fill="#4A2C55"/>
+      <use href="#dress" x="300" y="380" width="210" height="420" fill="#150E16"/>
+    </g>
+    <text x="200" y="770" font-size="34" fill="#FBF4EA">Chapter Noir</text>
+    <text x="200" y="796" font-family="'Segoe UI', Arial, sans-serif" font-size="14" letter-spacing="3" fill="#D7A6C2">THE COUTURE EDIT</text>
+
+    <g clip-path="url(#look2)">
+      <rect x="660" y="290" width="300" height="250" fill="#F2464B"/>
+      <use href="#coat" x="760" y="320" width="100" height="200" fill="#B8326E"/>
+    </g>
+    <g clip-path="url(#look3)">
+      <rect x="660" y="560" width="300" height="250" fill="#EADCC8"/>
+      <use href="#dress" x="760" y="585" width="100" height="200" fill="#CDB9A8"/>
+    </g>
+    <g font-family="'Segoe UI', Arial, sans-serif">
+      <rect x="980" y="290" width="170" height="250" rx="12" fill="#F4EADD"/>
+      <use href="#dress" x="1025" y="310" width="80" height="160" fill="#1A1218"/>
+      <rect x="1000" y="490" width="110" height="10" rx="5" fill="#1A1218"/><rect x="1000" y="510" width="70" height="8" rx="4" fill="#CDB9A8"/>
+      <rect x="980" y="560" width="170" height="250" rx="12" fill="#F4EADD"/>
+      <use href="#coat" x="1025" y="580" width="80" height="160" fill="#4A2C55"/>
+      <rect x="1000" y="760" width="100" height="10" rx="5" fill="#1A1218"/><rect x="1000" y="780" width="80" height="8" rx="4" fill="#CDB9A8"/>
+    </g>
+  </g>
+
+  <!-- Slide-out bag -->
+  <g font-family="'Segoe UI', Arial, sans-serif">
+    <g filter="url(#sh)"><rect x="1080" y="230" width="400" height="560" rx="20" fill="#FFFFFF"/></g>
+    <text x="1116" y="290" font-size="22" fill="#1A1218">Your bag</text>
+    <path d="M1440 274 l14 14 M1454 274 l-14 14" stroke="#1A1218" stroke-width="2.5"/>
+    <line x1="1116" y1="314" x2="1444" y2="314" stroke="#F4EADD" stroke-width="2"/>
+    <rect x="1116" y="340" width="90" height="120" rx="10" fill="#2A1B30"/>
+    <use href="#dress" x="1136" y="350" width="50" height="100" fill="#150E16"/>
+    <rect x="1226" y="352" width="150" height="12" rx="6" fill="#1A1218"/>
+    <rect x="1226" y="376" width="90" height="9" rx="4.5" fill="#CDB9A8"/>
+    <rect x="1226" y="420" width="96" height="30" rx="15" fill="#F4EADD"/>
+    <text x="1274" y="441" font-size="14" text-anchor="middle" fill="#1A1218">Size  M</text>
+    <line x1="1116" y1="490" x2="1444" y2="490" stroke="#F4EADD" stroke-width="2"/>
+    <rect x="1116" y="516" width="100" height="10" rx="5" fill="#CDB9A8"/><rect x="1364" y="516" width="80" height="10" rx="5" fill="#1A1218"/>
+    <rect x="1116" y="544" width="130" height="10" rx="5" fill="#CDB9A8"/><rect x="1384" y="544" width="60" height="10" rx="5" fill="#CDB9A8"/>
+    <rect x="1116" y="690" width="328" height="58" rx="29" fill="#1A1218"/>
+    <text x="1280" y="725" font-size="17" text-anchor="middle" fill="#FBF4EA" letter-spacing="2">CHECKOUT</text>
+  </g>
+
+  <!-- In progress badge -->
+  <g filter="url(#sh)"><rect x="70" y="830" width="300" height="80" rx="40" fill="#F2464B"/></g>
+  <circle cx="112" cy="870" r="9" fill="#FBF4EA"/>
+  <text x="134" y="878" font-family="'Segoe UI', Arial, sans-serif" font-size="20" fill="#FBF4EA">Launching soon</text>
+</svg>

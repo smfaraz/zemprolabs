@@ -1,0 +1,83 @@
+---
+/** About 01 — a manifesto that inks in word by word as you scroll, with image pills opening inside the sentence. */
+import { Image } from 'astro:assets';
+import LabMark from './LabMark.astro';
+import auvia from '@/assets/work/auvia-1.jpg';
+import qalb from '@/assets/work/the-qalb-1.jpg';
+import thc from '@/assets/work/talent-hunters-consulting-1.jpg';
+import med from '@/assets/work/meduscore-1.jpg';
+
+type Bit = string | { img?: typeof auvia; mark?: true };
+const bits: Bit[] = [
+  'We’re a small team in Hyderabad', { mark: true },
+  'building websites and apps for clinics in Texas,', { img: auvia },
+  'online stores across India,', { img: qalb },
+  'recruiters in the Gulf', { img: thc },
+  'and the UK,', { img: med },
+  'and then we stay to help run them.',
+];
+---
+
+<section class="am" data-am>
+  <p class="lab-mono am-kicker">Who we are</p>
+  <p class="am-text" aria-label="We’re a small team in Hyderabad building websites and apps for clinics in Texas, online stores across India, recruiters in the Gulf and the UK, and then we stay to help run them.">
+    {bits.map((b) =>
+      typeof b === 'string' ? (
+        b.split(' ').map((w) => <span class="am-w" aria-hidden="true">{w} </span>)
+      ) : (
+        <span class="am-pill" aria-hidden="true">
+          <span class="am-pill-in">
+            {b.mark ? <span class="am-pill-mark"><LabMark class="size-[60%]" /></span> : <Image src={b.img!} alt="" width={260} class="size-full object-cover object-top" loading="eager" />}
+          </span>
+        </span>
+      )
+    )}
+  </p>
+</section>
+
+<style>
+  .am { position: relative; padding: 7rem 6vw 8rem; }
+  .am-kicker { margin: 0 0 2rem; color: var(--lab-soft); font-size: 0.75rem; }
+  .am-text {
+    margin: 0; max-width: 30ch;
+    font-family: 'Inter Tight', 'Inter', sans-serif; font-weight: 600;
+    font-size: clamp(1.5rem, 2.9vw, 3.1rem); line-height: 1.12; letter-spacing: -0.035em;
+    color: var(--lab-ink);
+  }
+  .am-w { display: inline-block; white-space: pre; opacity: calc(0.12 + var(--t, 0) * 0.88); filter: blur(calc((1 - var(--t, 0)) * 10px)); transform: translateY(calc((1 - var(--t, 0)) * 0.12em)) scale(calc(0.96 + var(--t, 0) * 0.04)); transition: opacity 0.35s, filter 0.45s, transform 0.45s; will-change: filter, opacity; }
+  .am-w.is-key { background: var(--lab-grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .am-pill { display: inline-block; vertical-align: -0.08em; height: 0.8em; width: calc(var(--p, 0) * 1.9em); margin-right: calc(var(--p, 0) * 0.24em); border-radius: 999px; overflow: hidden; transition: width 0.35s cubic-bezier(0.2, 0.8, 0.2, 1); }
+  .am-pill-in { display: block; width: 1.9em; height: 100%; }
+  .am-pill-mark { display: grid; place-items: center; width: 100%; height: 100%; background: var(--lab-grad); }
+  :global(html:not(.motion)) .am-w { --t: 1; }
+  :global(html:not(.motion)) .am-pill { --p: 1; }
+  @media (max-width: 767px) {
+    .am { padding: 6rem 1.25rem 7rem; }
+    .am-text { font-size: 6.6vw; }
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
+  const root = document.querySelector<HTMLElement>('[data-am]');
+  if (root && document.documentElement.classList.contains('motion')) {
+    const items = [...root.querySelectorAll<HTMLElement>('.am-w, .am-pill')];
+    const keys = ['Hyderabad', 'Texas,', 'India,', 'Gulf', 'UK,', 'run'];
+    items.forEach((el) => el.classList.contains('am-w') && keys.includes(el.textContent!.trim()) && el.classList.add('is-key'));
+    ScrollTrigger.create({
+      trigger: root,
+      start: 'top 75%',
+      end: 'bottom 60%',
+      onUpdate: (self) => {
+        const head = self.progress * (items.length + 4);
+        items.forEach((el, i) => {
+          const t = Math.max(0, Math.min(1, (head - i) / 3));
+          if (el.classList.contains('am-pill')) el.style.setProperty('--p', String(t));
+          else el.style.setProperty('--t', String(t));
+        });
+      },
+    });
+  }
+</script>

@@ -1,0 +1,90 @@
+---
+/**
+ * One consistent way to present project media.
+ * Every project sits on the same dark stage, inside a browser window:
+ * - live sites show their screenshot (or video), plus a phone with the real mobile view on cards;
+ * - private builds show their illustration in the same window, labelled "Private build".
+ */
+import { Image, getImage } from 'astro:assets';
+import type { CaseStudy } from '@/data/work';
+
+interface Props {
+  item: CaseStudy;
+  size?: 'card' | 'hero';
+  play?: 'hover' | 'auto';
+  eager?: boolean;
+  sizes?: string;
+  class?: string;
+  zoom?: boolean;
+  phone?: boolean;
+}
+
+const { item, size = 'card', play = 'hover', eager = false, sizes = '(min-width: 1024px) 40vw, 90vw', class: cls = '', zoom = true, phone = true } = Astro.props;
+const isArt = item.kind === 'art';
+const domain = item.url ? new URL(item.url).hostname.replace(/^www\./, '') : '';
+const label = item.url ? domain : 'Private build';
+const poster = item.video && item.image ? (await getImage({ src: item.image, width: 1280, format: 'webp' })).src : undefined;
+const alt = `${item.client} by Zemprolabs`;
+const showPhone = phone && size === 'card' && !!item.mobile;
+---
+
+<div
+  class:list={['frame relative w-full overflow-hidden rounded-[14px] bg-[#2A1B30]', size === 'hero' ? 'aspect-[3/2] md:aspect-[2/1]' : 'aspect-[3/2]', cls]}
+  data-frame
+>
+  <div class="frame-glow" aria-hidden="true"></div>
+  <div class:list={['relative grid size-full items-center', showPhone ? 'justify-items-start' : 'justify-items-center', size === 'hero' ? 'p-[6%] md:p-0 md:justify-items-center' : 'p-[6%]']}>
+    <div class:list={['window overflow-hidden rounded-[10px] bg-paper shadow-[0_24px_50px_-24px_rgba(0,0,0,0.7)]', showPhone ? 'w-[84%]' : 'w-full', size === 'hero' && 'md:w-[68%]', zoom && 'frame-zoom']}>
+      <div class="flex h-[5.9cqw] items-center gap-[0.35em] border-b border-line/70 bg-[#EAE3D6] px-[0.9em] text-[max(0.5rem,1.6cqw)]">
+        <span class="size-[0.6em] rounded-full bg-ember"></span>
+        <span class="size-[0.6em] rounded-full bg-line"></span>
+        <span class="size-[0.6em] rounded-full bg-line"></span>
+        <span class="mx-auto max-w-[60%] truncate rounded-full bg-paper px-[1.2em] py-[0.15em] font-mono text-ink-soft">{label}</span>
+        <span class="w-[1.8em]"></span>
+      </div>
+      <div class="relative aspect-[16/9] bg-sand">
+        {item.video ? (
+          <video
+            class="absolute inset-0 size-full object-cover object-top"
+            src={`${item.video}#t=0.1`}
+            poster={poster}
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            aria-label={alt}
+            data-hover-play={play === 'hover' ? '' : undefined}
+            data-autoplay={play === 'auto' ? '' : undefined}
+          />
+        ) : item.image ? (
+          <Image src={item.image} alt={alt} widths={[640, 960, 1400, 2000]} sizes={sizes} class:list={['absolute inset-0 size-full object-cover', isArt ? 'object-center' : 'object-top']} loading={eager ? 'eager' : 'lazy'} />
+        ) : (
+          <span class="display absolute inset-0 grid place-items-center text-2xl text-ink-soft">{item.client}</span>
+        )}
+      </div>
+    </div>
+  </div>
+
+  {showPhone && (
+    <div class="phone" aria-hidden="true">
+      <Image src={item.mobile!} alt="" width={360} class="size-full object-cover object-top" loading={eager ? 'eager' : 'lazy'} />
+    </div>
+  )}
+  <slot />
+</div>
+
+<style>
+  .window { container-type: inline-size; }
+  .frame-glow { position: absolute; inset: 0; background: radial-gradient(70% 60% at 30% 20%, rgba(255, 122, 47, 0.18), transparent 70%), radial-gradient(60% 60% at 90% 100%, rgba(184, 50, 110, 0.22), transparent 70%); pointer-events: none; }
+  .phone {
+    position: absolute; right: 5%; bottom: 7%;
+    height: 74%; aspect-ratio: 9 / 19.5;
+    border-radius: 12% / 5.6%; overflow: hidden;
+    border: 3px solid #1a1218; background: #1a1218;
+    box-shadow: 0 24px 40px -16px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(255, 255, 255, 0.08);
+    transition: transform 1.2s var(--ease-out-soft);
+  }
+  .frame-zoom { transition: transform 1.2s var(--ease-out-soft); }
+  :global(.group:hover) .frame-zoom { transform: scale(1.035); }
+  :global(.group:hover) .phone { transform: translateY(-4%) rotate(-2deg); }
+</style>

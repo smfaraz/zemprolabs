@@ -1,0 +1,259 @@
+---
+/**
+ * Service deck — colourful bento cards, each with its own looping motion-graphic scene.
+ * Scenes are pure SVG + CSS (cheap to run); tilt + deal-in are driven by motion.ts.
+ */
+interface Card {
+  slug: string;
+  n: string;
+  pillar: string;
+  title: string;
+  line: string;
+  scene: 'web' | 'shop' | 'mobile' | 'seo' | 'ads' | 'ops' | 'snow';
+  bg: string;
+  fg: 'ink' | 'paper';
+  span: string;
+}
+
+const cards: Card[] = [
+  { slug: 'web-development', n: '01', pillar: 'Build', title: 'Websites & web apps', line: 'Fast sites, portals and SaaS, built properly.', scene: 'web', bg: '#C9B8F5', fg: 'ink', span: 'lg:col-span-7 lg:row-span-2' },
+  { slug: 'ecommerce', n: '02', pillar: 'Build', title: 'E-commerce', line: 'Stores that sell in rupees, dollars and dirhams.', scene: 'shop', bg: '#F4B740', fg: 'ink', span: 'lg:col-span-5' },
+  { slug: 'mobile-apps', n: '03', pillar: 'Build', title: 'Mobile apps', line: 'iOS and Android from one codebase.', scene: 'mobile', bg: '#9ED3F2', fg: 'ink', span: 'lg:col-span-5' },
+  { slug: 'seo', n: '04', pillar: 'Grow', title: 'SEO', line: 'Climb to the top of the search.', scene: 'seo', bg: '#1E8C7E', fg: 'paper', span: 'lg:col-span-4' },
+  { slug: 'paid-ads-social', n: '05', pillar: 'Grow', title: 'Ads & social', line: 'Campaigns judged on leads and sales.', scene: 'ads', bg: '#F59AA6', fg: 'ink', span: 'lg:col-span-4' },
+  { slug: 'maintenance', n: '06', pillar: 'Run', title: 'Maintenance & ops', line: 'Updates, fixes and day-to-day running.', scene: 'ops', bg: '#1F3A33', fg: 'paper', span: 'lg:col-span-4' },
+  { slug: 'servicenow', n: '07', pillar: 'Run', title: 'ServiceNow', line: 'ITSM, IRM and CMDB that stay healthy.', scene: 'snow', bg: '#C2481B', fg: 'paper', span: 'lg:col-span-12' },
+];
+---
+
+<div class="deck grid gap-4 md:grid-cols-2 lg:grid-cols-12 lg:gap-5" data-deck>
+  {cards.map((c, i) => (
+    <a
+      href={`/services/${c.slug}`}
+      class={`deck-card group relative flex min-h-[23rem] flex-col overflow-hidden rounded-[22px] p-6 md:p-7 ${c.span} ${c.fg === 'paper' ? 'text-paper' : 'text-ink'} ${c.scene === 'snow' ? 'md:col-span-2' : ''}`}
+      style={`--bg:${c.bg}`}
+      data-deck-card
+      data-cursor="Explore"
+    >
+      <!-- moving sheen -->
+      <span class="sheen" aria-hidden="true"></span>
+
+      <div class="relative z-10 flex items-center justify-between" data-depth="0.4">
+        <span class="chip-pill">{c.pillar}</span>
+        <span class="font-mono text-xs opacity-70">{c.n} / 07</span>
+      </div>
+
+      <!-- scene -->
+      <div class:list={['scene relative z-0 my-4 flex-1', c.scene === 'web' && 'lg:my-8', c.scene === 'snow' && 'lg:my-2']} data-depth="1.2" aria-hidden="true">
+        {c.scene === 'web' && (
+          <svg viewBox="0 0 520 320" class="size-full" preserveAspectRatio="xMidYMid meet">
+            <rect x="20" y="16" width="480" height="290" rx="16" fill="#F3EFE7"/>
+            <rect x="20" y="16" width="480" height="34" rx="16" fill="#EAE3D6"/><rect x="20" y="36" width="480" height="14" fill="#EAE3D6"/>
+            <circle cx="42" cy="33" r="5.5" fill="#C2481B"/><circle cx="60" cy="33" r="5.5" fill="#CFC5B2"/><circle cx="78" cy="33" r="5.5" fill="#CFC5B2"/>
+            <rect x="180" y="25" width="160" height="16" rx="8" fill="#F3EFE7"/>
+            <g class="snap" style="--d:0s"><rect x="44" y="68" width="26" height="26" rx="7" fill="#1A1C1A"/><rect x="78" y="76" width="80" height="10" rx="5" fill="#1A1C1A"/><rect x="380" y="70" width="96" height="24" rx="12" fill="#6B4FD8"/></g>
+            <g class="snap" style="--d:.35s"><rect x="44" y="118" width="230" height="22" rx="6" fill="#1A1C1A"/><rect x="44" y="148" width="190" height="22" rx="6" fill="#1A1C1A"/><rect x="44" y="178" width="150" height="22" rx="6" fill="#6B4FD8"/></g>
+            <g class="snap" style="--d:.7s"><rect x="300" y="112" width="176" height="120" rx="12" fill="#6B4FD8"/><circle cx="440" cy="142" r="18" fill="#F4B740"/><path d="M300 232 L350 180 L390 210 L430 168 L476 220 V232 Z" fill="#4A33A8"/></g>
+            <g class="snap" style="--d:1.05s"><rect x="44" y="214" width="110" height="34" rx="17" fill="#1F3A33"/><rect x="164" y="214" width="96" height="34" rx="17" fill="none" stroke="#CFC5B2" stroke-width="2"/></g>
+            <g class="snap" style="--d:1.4s"><rect x="44" y="262" width="136" height="30" rx="8" fill="#E6DECF"/><rect x="190" y="262" width="136" height="30" rx="8" fill="#E6DECF"/><rect x="336" y="262" width="140" height="30" rx="8" fill="#E6DECF"/></g>
+            <g class="cursor-move">
+              <circle class="click" cx="0" cy="0" r="16" fill="none" stroke="#6B4FD8" stroke-width="3"/>
+              <path d="M0 0 L0 24 L7 18 L12 29 L17 27 L12 16 L21 16 Z" fill="#1A1C1A" stroke="#F3EFE7" stroke-width="2"/>
+            </g>
+          </svg>
+        )}
+
+        {c.scene === 'shop' && (
+          <svg viewBox="0 0 420 220" class="size-full">
+            <g class="float" style="--d:0s"><rect x="20" y="30" width="110" height="150" rx="14" fill="#FFF6E2"/><rect x="38" y="46" width="74" height="70" rx="10" fill="#C2481B"/><rect x="38" y="126" width="60" height="9" rx="4.5" fill="#1A1C1A"/><rect class="addbtn" x="38" y="146" width="74" height="22" rx="11" fill="#1A1C1A"/></g>
+            <g class="float" style="--d:.4s"><rect x="146" y="14" width="110" height="150" rx="14" fill="#FFF6E2"/><rect x="164" y="30" width="74" height="70" rx="10" fill="#1F3A33"/><rect x="164" y="110" width="66" height="9" rx="4.5" fill="#1A1C1A"/><rect x="164" y="130" width="74" height="22" rx="11" fill="#1A1C1A"/></g>
+            <g class="float" style="--d:.8s"><rect x="272" y="30" width="110" height="150" rx="14" fill="#FFF6E2"/><rect x="290" y="46" width="74" height="70" rx="10" fill="#6B4FD8"/><rect x="290" y="126" width="54" height="9" rx="4.5" fill="#1A1C1A"/><rect x="290" y="146" width="74" height="22" rx="11" fill="#1A1C1A"/></g>
+            <g class="fly"><rect x="66" y="140" width="22" height="22" rx="6" fill="#C2481B"/></g>
+            <g transform="translate(340 166)"><circle r="26" fill="#1A1C1A"/><path d="M-10 -6 h20 l-3 16 h-14 z" fill="none" stroke="#F4B740" stroke-width="3"/><circle class="badge" cx="16" cy="-18" r="11" fill="#C2481B"/></g>
+            <g transform="translate(20 196)">
+              <rect width="112" height="22" rx="11" fill="#1A1C1A"/>
+              <svg x="0" y="0" width="112" height="22"><g class="cycle" font-family="JetBrains Mono, monospace" font-size="12" fill="#F4B740" text-anchor="middle"><text x="56" y="15">₹ UPI</text><text x="56" y="37">$ Stripe</text><text x="56" y="59">€ Cards</text><text x="56" y="81">AED Pay</text><text x="56" y="103">₹ UPI</text></g></svg>
+            </g>
+          </svg>
+        )}
+
+        {c.scene === 'mobile' && (
+          <svg viewBox="0 0 420 220" class="size-full">
+            <rect x="150" y="6" width="120" height="212" rx="22" fill="#1A1C1A"/>
+            <svg x="158" y="14" width="104" height="196"><rect width="104" height="196" rx="16" fill="#F3EFE7"/>
+              <g class="swipe">
+                <g><rect x="10" y="20" width="84" height="70" rx="10" fill="#1E8C7E"/><rect x="10" y="100" width="60" height="9" rx="4.5" fill="#1A1C1A"/><rect x="10" y="118" width="84" height="26" rx="8" fill="#E6DECF"/><rect x="10" y="150" width="84" height="26" rx="8" fill="#E6DECF"/></g>
+                <g transform="translate(104 0)"><circle cx="52" cy="60" r="34" fill="#C2481B"/><rect x="18" y="110" width="68" height="9" rx="4.5" fill="#1A1C1A"/><rect x="18" y="130" width="68" height="30" rx="15" fill="#1A1C1A"/></g>
+                <g transform="translate(208 0)"><rect x="10" y="20" width="84" height="120" rx="10" fill="#6B4FD8"/><rect x="10" y="150" width="84" height="26" rx="13" fill="#F4B740"/></g>
+                <g transform="translate(312 0)"><rect x="10" y="20" width="84" height="70" rx="10" fill="#1E8C7E"/><rect x="10" y="100" width="60" height="9" rx="4.5" fill="#1A1C1A"/><rect x="10" y="118" width="84" height="26" rx="8" fill="#E6DECF"/><rect x="10" y="150" width="84" height="26" rx="8" fill="#E6DECF"/></g>
+              </g>
+            </svg>
+            <g class="toast"><rect x="50" y="34" width="160" height="40" rx="12" fill="#FFFFFF"/><circle cx="72" cy="54" r="10" fill="#C2481B"/><rect x="90" y="46" width="100" height="7" rx="3.5" fill="#1A1C1A"/><rect x="90" y="58" width="70" height="6" rx="3" fill="#B9AF9C"/></g>
+            <g class="float" style="--d:.5s"><rect x="300" y="120" width="90" height="56" rx="12" fill="#1A1C1A"/><text x="345" y="146" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#9ED3F2">iOS</text><text x="345" y="164" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="11" fill="#9ED3F2">Android</text></g>
+          </svg>
+        )}
+
+        {c.scene === 'seo' && (
+          <svg viewBox="0 0 360 220" class="size-full">
+            <rect x="14" y="14" width="332" height="40" rx="20" fill="#F3EFE7"/>
+            <circle cx="40" cy="34" r="8" fill="none" stroke="#1E8C7E" stroke-width="3"/><path d="M46 40 l7 7" stroke="#1E8C7E" stroke-width="3" stroke-linecap="round"/>
+            <svg x="60" y="22" width="270" height="24"><g class="typing"><text x="0" y="17" font-family="Manrope, sans-serif" font-size="15" fill="#1A1C1A">best aba clinic near me</text></g></svg>
+            <rect class="caret" x="246" y="24" width="2" height="20" fill="#1A1C1A"/>
+            <g class="rank-other" style="--from:0;--to:56px"><rect x="14" y="70" width="332" height="44" rx="12" fill="#2BA597"/><rect x="30" y="86" width="150" height="10" rx="5" fill="#9FE1D8"/></g>
+            <g class="rank-other" style="--from:0;--to:56px"><rect x="14" y="122" width="332" height="44" rx="12" fill="#2BA597"/><rect x="30" y="138" width="190" height="10" rx="5" fill="#9FE1D8"/></g>
+            <g class="rank-you"><rect x="14" y="174" width="332" height="44" rx="12" fill="#F4B740"/><text x="30" y="201" font-family="Manrope, sans-serif" font-size="14" font-weight="600" fill="#1A1C1A">#1 · yourbusiness.com</text></g>
+          </svg>
+        )}
+
+        {c.scene === 'ads' && (
+          <svg viewBox="0 0 360 220" class="size-full">
+            <rect x="60" y="10" width="200" height="200" rx="18" fill="#FFF1F3"/>
+            <circle cx="84" cy="34" r="12" fill="#C2481B"/><rect x="104" y="28" width="80" height="8" rx="4" fill="#1A1C1A"/>
+            <rect x="76" y="54" width="168" height="100" rx="12" fill="#1F3A33"/><circle cx="210" cy="84" r="16" fill="#F4B740"/><path d="M76 154 L120 112 L150 136 L190 100 L244 150 V154 Z" fill="#2C4D44"/>
+            <path class="beat" d="M90 176 c0 -8 12 -8 12 0 c0 -8 12 -8 12 0 c0 8 -12 14 -12 18 c0 -4 -12 -10 -12 -18z" fill="#E0465E"/>
+            <svg x="124" y="168" width="70" height="22"><g class="cycle-likes" font-family="JetBrains Mono, monospace" font-size="13" fill="#1A1C1A"><text y="16">1,204</text><text y="38">1,317</text><text y="60">1,488</text><text y="82">1,602</text><text y="104">1,204</text></g></svg>
+            <g fill="#E0465E">
+              <path class="heart" style="--d:0s;--x:0px" d="M280 170 c0 -6 9 -6 9 0 c0 -6 9 -6 9 0 c0 6 -9 10 -9 13 c0 -3 -9 -7 -9 -13z"/>
+              <path class="heart" style="--d:.9s;--x:-14px" d="M296 176 c0 -6 9 -6 9 0 c0 -6 9 -6 9 0 c0 6 -9 10 -9 13 c0 -3 -9 -7 -9 -13z"/>
+              <path class="heart" style="--d:1.7s;--x:10px" d="M286 182 c0 -6 9 -6 9 0 c0 -6 9 -6 9 0 c0 6 -9 10 -9 13 c0 -3 -9 -7 -9 -13z"/>
+            </g>
+            <g class="float" style="--d:.3s"><rect x="250" y="30" width="96" height="34" rx="17" fill="#1A1C1A"/><text x="298" y="52" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="12" fill="#F59AA6">Leads ↑</text></g>
+          </svg>
+        )}
+
+        {c.scene === 'ops' && (
+          <svg viewBox="0 0 360 220" class="size-full">
+            <rect x="10" y="10" width="340" height="96" rx="14" fill="#12221D"/>
+            <path class="ekg" d="M24 64 H100 L112 64 L122 36 L134 90 L146 52 L156 64 H236 L248 64 L258 40 L270 86 L282 56 L292 64 H336" fill="none" stroke="#9FE1CB" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+            <text x="24" y="32" font-family="JetBrains Mono, monospace" font-size="11" fill="#9DB2AA">UPTIME</text>
+            <circle class="pulse" cx="320" cy="28" r="6" fill="#9FE1CB"/>
+            <g font-family="Manrope, sans-serif" font-size="13" fill="#F3EFE7">
+              <g class="tick" style="--d:0s"><rect x="10" y="118" width="230" height="28" rx="8" fill="#2C4D44"/><circle cx="28" cy="132" r="7" fill="#9FE1CB"/><text x="44" y="137">Security updates</text></g>
+              <g class="tick" style="--d:.6s"><rect x="10" y="152" width="230" height="28" rx="8" fill="#2C4D44"/><circle cx="28" cy="166" r="7" fill="#9FE1CB"/><text x="44" y="171">New products listed</text></g>
+              <g class="tick" style="--d:1.2s"><rect x="10" y="186" width="230" height="28" rx="8" fill="#2C4D44"/><circle cx="28" cy="200" r="7" fill="#9FE1CB"/><text x="44" y="205">Backup complete</text></g>
+            </g>
+            <g transform="translate(300 168)"><g class="gear"><circle r="30" fill="none" stroke="#F4B740" stroke-width="10" stroke-dasharray="10 7"/><circle r="17" fill="#F4B740"/><circle r="7" fill="#1F3A33"/></g></g>
+          </svg>
+        )}
+
+        {c.scene === 'snow' && (
+          <svg viewBox="0 0 1000 180" class="size-full" preserveAspectRatio="xMidYMid meet">
+            <path id="sn-path" d="M90 90 C 200 90, 220 40, 330 40 S 470 140, 580 140 S 760 60, 900 90" fill="none" stroke="#F3EFE7" stroke-opacity="0.35" stroke-width="3" stroke-dasharray="8 10"/>
+            <g font-family="Manrope, sans-serif" font-size="17" text-anchor="middle">
+              <g class="node" style="--d:0s"><rect x="20" y="62" width="140" height="56" rx="16" fill="#F3EFE7"/><text x="90" y="96" fill="#1A1C1A">Incident</text></g>
+              <g class="node" style="--d:.8s"><rect x="250" y="12" width="160" height="56" rx="16" fill="#F3EFE7"/><text x="330" y="46" fill="#1A1C1A">Triage &amp; route</text></g>
+              <g class="node" style="--d:1.6s"><rect x="500" y="112" width="160" height="56" rx="16" fill="#F3EFE7"/><text x="580" y="146" fill="#1A1C1A">Risk check</text></g>
+              <g class="node" style="--d:2.4s"><rect x="810" y="62" width="180" height="56" rx="16" fill="#1A1C1A"/><text x="900" y="96" fill="#F4B740">Released ✓</text></g>
+            </g>
+            <circle r="9" fill="#F4B740"><animateMotion dur="3.2s" repeatCount="indefinite"><mpath href="#sn-path"/></animateMotion></circle>
+            <circle r="6" fill="#F3EFE7" opacity="0.7"><animateMotion dur="3.2s" begin="1.6s" repeatCount="indefinite"><mpath href="#sn-path"/></animateMotion></circle>
+          </svg>
+        )}
+      </div>
+
+      <div class="relative z-10 mt-auto flex items-end justify-between gap-6" data-depth="0.6">
+        <div>
+          <h3 class="display text-[clamp(1.36rem,2.18vw,2.21rem)] leading-[0.95]">{c.title}</h3>
+          <p class="mt-2 max-w-xs text-[0.9375rem] opacity-80">{c.line}</p>
+        </div>
+        <span class="arrow-btn grid size-12 shrink-0 place-items-center rounded-full text-lg" aria-hidden="true">↗</span>
+      </div>
+    </a>
+  ))}
+</div>
+
+<style>
+  .deck-card {
+    background: var(--bg);
+    transform-style: preserve-3d;
+    will-change: transform;
+    box-shadow: 0 30px 60px -40px rgba(18, 34, 29, 0.45);
+  }
+  .deck-card[class*='text-paper'] .chip-pill { background: rgba(243, 239, 231, 0.16); }
+  .chip-pill {
+    display: inline-block;
+    border-radius: 999px;
+    background: rgba(26, 28, 26, 0.1);
+    padding: 0.3rem 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .arrow-btn {
+    background: rgba(26, 28, 26, 0.92);
+    color: var(--color-paper);
+    transition: transform 0.6s var(--ease-out-soft), background-color 0.3s;
+  }
+  .deck-card[class*='text-paper'] .arrow-btn { background: var(--color-paper); color: var(--color-ink); }
+  .deck-card:hover .arrow-btn { transform: rotate(45deg) scale(1.08); }
+  .sheen {
+    position: absolute;
+    inset: -40%;
+    background: radial-gradient(circle at var(--mx, 50%) var(--my, 30%), rgba(255, 255, 255, 0.35), transparent 40%);
+    opacity: 0;
+    transition: opacity 0.4s;
+    pointer-events: none;
+    z-index: 1;
+    mix-blend-mode: soft-light;
+  }
+  .deck-card:hover .sheen { opacity: 1; }
+  .scene > svg { overflow: visible; }
+  /* nested <svg> elements are clipping windows (phone screen, tickers, typing) */
+  .scene svg svg { overflow: hidden; }
+
+  /* ---------- scene animations (CSS only) ---------- */
+  .snap { animation: snap 5.6s cubic-bezier(0.22, 1, 0.36, 1) infinite; animation-delay: var(--d); }
+  @keyframes snap { 0%, 4% { opacity: 0; transform: translateY(-26px); } 14%, 86% { opacity: 1; transform: none; } 96%, 100% { opacity: 0; transform: none; } }
+  .cursor-move { animation: cur 5.6s cubic-bezier(0.65, 0, 0.35, 1) infinite; }
+  @keyframes cur { 0% { transform: translate(470px, 290px); } 35% { transform: translate(98px, 230px); } 45%, 60% { transform: translate(98px, 230px); } 85%, 100% { transform: translate(420px, 82px); } }
+  .click { transform-origin: 0 0; animation: clk 5.6s ease-out infinite; opacity: 0; }
+  @keyframes clk { 0%, 40% { opacity: 0; transform: scale(0.2); } 44% { opacity: 1; } 58%, 100% { opacity: 0; transform: scale(1.6); } }
+
+  .float { animation: flt 4.5s ease-in-out infinite; animation-delay: var(--d); }
+  @keyframes flt { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+  .fly { animation: fly 3s cubic-bezier(0.55, 0, 0.3, 1) infinite; }
+  @keyframes fly { 0%, 20% { transform: translate(0, 0) scale(1); opacity: 0; } 25% { opacity: 1; } 70% { transform: translate(272px, 24px) scale(0.5); opacity: 1; } 75%, 100% { opacity: 0; transform: translate(272px, 24px) scale(0.5); } }
+  .badge { transform-box: fill-box; transform-origin: center; animation: bdg 3s ease-out infinite; }
+  @keyframes bdg { 0%, 70% { transform: scale(1); } 78% { transform: scale(1.5); } 90%, 100% { transform: scale(1); } }
+  .addbtn { animation: add 3s ease-in-out infinite; }
+  @keyframes add { 0%, 12% { fill: #1a1c1a; } 18%, 30% { fill: #c2481b; } 40%, 100% { fill: #1a1c1a; } }
+  .cycle { animation: cyc 8s steps(1) infinite; }
+  @keyframes cyc { 0% { transform: translateY(0); } 25% { transform: translateY(-22px); } 50% { transform: translateY(-44px); } 75% { transform: translateY(-66px); } }
+
+  .swipe { animation: swp 7.5s cubic-bezier(0.65, 0, 0.35, 1) infinite; }
+  @keyframes swp { 0%, 22% { transform: translateX(0); } 30%, 52% { transform: translateX(-104px); } 60%, 82% { transform: translateX(-208px); } 90%, 100% { transform: translateX(-312px); } }
+  .toast { animation: tst 7.5s cubic-bezier(0.22, 1, 0.36, 1) infinite; }
+  @keyframes tst { 0%, 40% { transform: translateY(-60px); opacity: 0; } 46%, 70% { transform: none; opacity: 1; } 78%, 100% { transform: translateY(-60px); opacity: 0; } }
+
+  .typing { animation: typ 6s steps(24) infinite; clip-path: inset(0 100% 0 0); }
+  @keyframes typ { 0% { clip-path: inset(0 100% 0 0); } 35%, 100% { clip-path: inset(0 0 0 0); } }
+  .caret { animation: crt 6s linear infinite; }
+  @keyframes crt { 0% { transform: translateX(-186px); } 35%, 100% { transform: translateX(0); } }
+  .rank-you { animation: rku 6s cubic-bezier(0.65, 0, 0.35, 1) infinite; }
+  @keyframes rku { 0%, 45% { transform: translateY(0); } 62%, 92% { transform: translateY(-104px); } 100% { transform: translateY(0); } }
+  .rank-other { animation: rko 6s cubic-bezier(0.65, 0, 0.35, 1) infinite; }
+  @keyframes rko { 0%, 45% { transform: translateY(0); } 62%, 92% { transform: translateY(52px); } 100% { transform: translateY(0); } }
+
+  .beat { transform-box: fill-box; transform-origin: center; animation: bt 1.4s ease-in-out infinite; }
+  @keyframes bt { 0%, 100% { transform: scale(1); } 20% { transform: scale(1.3); } 40% { transform: scale(1); } }
+  .heart { transform-box: fill-box; transform-origin: center; animation: hrt 2.6s ease-out infinite; animation-delay: var(--d); opacity: 0; }
+  @keyframes hrt { 0% { opacity: 0; transform: translate(0, 0) scale(0.6); } 15% { opacity: 1; } 100% { opacity: 0; transform: translate(var(--x), -150px) scale(1.4); } }
+  .cycle-likes { animation: cyc 6s steps(1) infinite; }
+
+  .ekg { stroke-dasharray: 520; animation: ekg 2.8s linear infinite; }
+  @keyframes ekg { 0% { stroke-dashoffset: 520; } 100% { stroke-dashoffset: -520; } }
+  .pulse { transform-box: fill-box; transform-origin: center; animation: bt 1.4s ease-in-out infinite; }
+  .tick circle { animation: tk 4.5s ease-out infinite; animation-delay: var(--d); }
+  @keyframes tk { 0%, 10% { fill: #2c4d44; } 20%, 90% { fill: #9fe1cb; } 100% { fill: #2c4d44; } }
+  .gear { animation: spin 6s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .node rect { animation: nd 3.2s ease-out infinite; animation-delay: var(--d); }
+  @keyframes nd { 0%, 100% { filter: none; } 10% { filter: drop-shadow(0 0 14px rgba(244, 183, 64, 0.9)); } 30% { filter: none; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .deck-card *, .deck-card *::before { animation: none !important; }
+    .snap, .typing { opacity: 1; clip-path: none; }
+  }
+</style>
