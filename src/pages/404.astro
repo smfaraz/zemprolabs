@@ -1,0 +1,20 @@
+---
+import Base from '@/layouts/Base.astro';
+---
+
+<Base title="Page not found" description="This page doesn’t exist." noindex footerCta={false}>
+  <section class="wrap relative flex min-h-[85vh] flex-col justify-center overflow-hidden pt-32 pb-24">
+    <p class="display pointer-events-none absolute -right-4 bottom-0 text-[38vw] leading-none text-sand select-none" aria-hidden="true">404</p>
+    <div class="relative">
+      <p class="label label-ember" data-reveal>Error 404</p>
+      <h1 class="display mt-8 max-w-[14ch] text-[clamp(2.38rem,6.12vw,5.44rem)]" data-split="load">This page has <em class="accent">wandered off.</em></h1>
+      <p class="mt-8 max-w-xl text-lg text-ink-soft" data-reveal>The link may be old, or the page may have moved. These might help:</p>
+      <div class="mt-10 flex flex-wrap gap-3" data-reveal>
+        <a href="/" class="btn btn-primary">Home <span class="arrow" aria-hidden="true">→</span></a>
+        <a href="/services" class="btn btn-ghost">Services</a>
+        <a href="/work" class="btn btn-ghost">Work</a>
+        <a href="/contact" class="btn btn-ghost">Contact</a>
+      </div>
+    </div>
+  </section>
+</Base>

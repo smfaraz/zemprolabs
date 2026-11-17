@@ -1,0 +1,132 @@
+---
+import '@/styles/global.css';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import LabHeader from '@/components/lab/LabHeader.astro';
+import LabFooter from '@/components/lab/LabFooter.astro';
+import { site } from '@/data/site';
+import Analytics from '@vercel/analytics/astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  noindex?: boolean;
+  schema?: Record<string, unknown>[];
+  footerCta?: boolean;
+  headerTone?: 'light' | 'dark';
+  /** 'lab' = the new minimal grey look (home page); 'studio' = the original look */
+  theme?: 'studio' | 'lab';
+}
+
+const {
+  title,
+  description = site.description,
+  image = '/og/home.jpg',
+  noindex = false,
+  schema = [],
+  footerCta = true,
+  headerTone = 'light',
+  theme = 'lab',
+} = Astro.props;
+const lab = theme === 'lab';
+const fullTitle = title ? `${title} | ${site.name}` : `${site.name}: Websites, E-commerce, SEO & ServiceNow`;
+const canonical = new URL(Astro.url.pathname.replace(/\/$/, '') || '/', site.url).href;
+const ogImage = new URL(image, site.url).href;
+
+const org = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  '@id': `${site.url}/#org`,
+  name: site.name,
+  url: site.url,
+  logo: `${site.url}/brand/favicon/android-chrome-512x512.png`,
+  image: ogImage,
+  email: site.email,
+  telephone: site.phones[0].tel,
+  description: site.description,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: site.address.street,
+    addressLocality: site.address.city,
+    addressRegion: site.address.region,
+    addressCountry: site.address.countryCode,
+  },
+  areaServed: site.markets.map((name) => ({ '@type': 'Place', name })),
+};
+const ldjson = [org, ...schema];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={fullTitle} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content={lab ? "#e9e9ec" : "#f3efe7"} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..500;1,9..144,300..500&family=JetBrains+Mono:wght@400&family=Manrope:wght@400;500;600;700&family=Inter+Tight:wght@400;500;600&family=Inter:wght@400;500&family=Unbounded:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap"
+    />
+
+    <script is:inline>
+      (function () {
+        var d = document.documentElement;
+        d.classList.add('js');
+        if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          d.classList.add('motion');
+          // Safety net: never leave content hidden if the motion script fails to load
+          setTimeout(function () { if (!window.__zlBoot) d.classList.remove('motion'); }, 3500);
+        }
+      })();
+    </script>
+    {ldjson.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
+  </head>
+  <body class:list={["flex min-h-screen flex-col", lab && "theme-lab"]}>
+    <a href="#main" class="btn btn-primary sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[110]">Skip to content</a>
+    <div class="fixed inset-x-0 top-0 z-[60] h-[2px] origin-left scale-x-0 bg-ember" data-progress aria-hidden="true"></div>
+    {lab ? <LabHeader /> : <Header tone={headerTone} />}
+    <main id="main" class="flex-1">
+      <slot />
+    </main>
+    {lab ? <LabFooter /> : <Footer cta={footerCta} />}
+    <div class="wipe" data-wipe aria-hidden="true"></div>
+    <script is:inline>
+      (function () {
+        var w = document.querySelector('[data-wipe]');
+        try {
+          if (w && document.documentElement.classList.contains('motion') && sessionStorage.getItem('zl-wipe')) {
+            w.classList.add('wipe-in');
+            setTimeout(function () { if (!window.__zlBoot) w.classList.remove('wipe-in'); }, 3500);
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <script src="../scripts/motion.ts"></script>
+    <!-- Cookieless page-view analytics (enable Web Analytics in the Vercel dashboard) -->
+    <Analytics />
+  </body>
+</html>

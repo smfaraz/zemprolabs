@@ -1,0 +1,19 @@
+---
+import Base from '@/layouts/Base.astro';
+import { site } from '@/data/site';
+---
+
+<Base title="Thank you" description="Your message has been sent to Zemprolabs." noindex footerCta={false}>
+  <section class="wrap flex min-h-[85vh] flex-col justify-center pt-32 pb-24">
+    <p class="label label-ember flex items-center gap-2" data-reveal><span class="pulse-dot"></span> Message sent</p>
+    <h1 class="display mt-8 max-w-[14ch] text-[clamp(2.38rem,6.12vw,5.44rem)]" data-split="load">Thanks, <em class="accent">we’ve got it.</em></h1>
+    <p class="mt-8 max-w-xl text-lg text-ink-soft" data-reveal>
+      We’ll get back to you within one working day. If it’s urgent, message us on
+      <a href={site.phones[0].whatsapp} class="link-u text-ink" rel="noopener">WhatsApp</a>.
+    </p>
+    <div class="mt-10 flex flex-wrap gap-3" data-reveal>
+      <a href="/work" class="btn btn-primary">Browse our work <span class="arrow" aria-hidden="true">→</span></a>
+      <a href="/" class="btn btn-ghost">Back to home</a>
+    </div>
+  </section>
+</Base>

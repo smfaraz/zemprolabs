@@ -1,0 +1,364 @@
+---
+import { Image } from 'astro:assets';
+import Base from '@/layouts/Base.astro';
+import HomeServices from '@/components/lab/HomeServices.astro';
+import HomeMarquee from '@/components/lab/HomeMarquee.astro';
+import { work, getWork } from '@/data/work';
+import { services } from '@/data/services';
+import { site } from '@/data/site';
+
+// Rows in the tilted dashboard (real projects)
+const rowColors = ['#FF9A2E', '#FF6A2F', '#F2464B', '#C2366F', '#8A2F86', '#5B2A86'];
+const boardRows = ['auvia', 'erus-academy', 'baemeds-usa', 'the-qalb', 'meduscore', 'talent-hunters-consulting'].map((s, i) => ({
+  item: getWork(s)!,
+  color: rowColors[i],
+}));
+
+
+const main = services.filter((s) => s.pillar !== 'more');
+const featured = ['erus-academy', 'auvia', 'baemeds-usa', 'the-qalb', 'talent-hunters-consulting', 'conavlytics', 'meduscore', 'baemeds-india'].map((s) => getWork(s)!);
+
+
+const faqs = [
+  { q: 'Do you work with clients outside India?', a: 'Yes. Most of our clients are in the United States and India, and we also work with businesses in the UK and the GCC. We schedule calls in your working hours and keep everything in writing.' },
+  { q: 'Who will I actually be talking to?', a: 'The people doing the work. There’s no account manager in the middle; you talk directly to the lead on your project.' },
+  { q: 'How do you price projects?', a: 'Every project is quoted after a first call. Builds are priced by milestone; ongoing work is a monthly plan.' },
+  { q: 'Can you take over an existing website, store or app?', a: 'Yes. We review what’s there, fix anything urgent, and keep improving it.' },
+];
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+};
+---
+
+<Base theme="lab" schema={[{ '@context': 'https://schema.org', '@type': 'WebSite', name: 'Zemprolabs', url: 'https://zemprolabs.com' }, faqLd]}>
+  <!-- =========================================================
+       HERO + MORPH (pinned): ribbon hero → tilted project board
+       ========================================================= -->
+  <section class="lab-stage relative" data-lab-stage>
+    <div class="lab-stage-inner">
+      <!-- 3D slab ribbon: its three thirds = Build / Grow / Run -->
+      <div class="lab-z-area" data-z-area>
+        <canvas class="lab-z" data-ribbon aria-hidden="true"></canvas>
+      </div>
+
+      <!-- hero copy -->
+      <div class="lab-hero-copy pointer-events-none absolute inset-0" data-lab-hero-copy>
+        <div class="mx-auto flex h-full max-w-[90rem] flex-col px-5 pt-20 pb-5 md:px-10 md:pt-24">
+          <div class="lab-hero-main pointer-events-auto">
+            <h1 class="lab-h text-[clamp(2.6rem,5.3vw,6rem)]" data-split="load">
+              We make businesses <span class="lab-serif lab-grad-text">work online.</span>
+            </h1>
+            <div class="mt-8 flex flex-col gap-6 md:flex-row md:items-center md:gap-12">
+              <p class="max-w-[26rem] text-[1.05rem] leading-relaxed text-[var(--lab-ink)]/80" data-hero-in>
+                Websites, apps and online stores, the SEO and ads that bring customers to them, and the team that keeps it
+                all running.
+              </p>
+              <div class="flex shrink-0 flex-wrap items-center gap-5" data-hero-in>
+                <a href="/contact" class="lab-btn" data-magnetic="0.3">Start a project <span aria-hidden="true">→</span></a>
+                <a href="/work" class="lab-bracket">See our work</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- tilted project board (revealed by scroll) -->
+      <div class="lab-board-wrap absolute inset-0" data-lab-board>
+        <div class="mx-auto grid h-full max-w-[90rem] grid-cols-[minmax(0,1fr)] items-center gap-10 px-5 pt-24 pb-10 md:grid-cols-12 md:px-10 [&>*]:min-w-0">
+          <div class="md:col-span-4">
+            <p class="lab-mono text-[var(--lab-soft)]">02 — Clients &amp; services</p>
+            <h2 class="lab-h mt-5 text-[clamp(2rem,3.6vw,3.4rem)]">Build it. Grow it. <span class="lab-serif lab-grad-text">Run it.</span></h2>
+            <p class="mt-6 max-w-sm text-[0.95rem] leading-relaxed text-[var(--lab-soft)]">
+              Clinics in Texas, learning platforms and stores in India, recruiters in the UK and the Gulf. Most of them still
+              work with us today.
+            </p>
+            <div class="mt-8 flex items-center gap-6">
+              <a href="/work" class="lab-btn">See all work</a>
+              <a href="/services" class="lab-bracket">Services</a>
+            </div>
+          </div>
+          <div class="lab-board-scene relative md:col-span-8" aria-label="Featured projects">
+            <div class="lab-board" data-lab-board-panel>
+              <div class="lab-board-side">
+                <p class="lab-mono text-[var(--lab-soft)]">Zemprolabs · Board</p>
+                <ul class="mt-4 space-y-2.5">
+                  {main.map((s, i) => (
+                    <li class="flex items-center justify-between text-[0.8rem]">
+                      <span class="flex items-center gap-2"><span class="size-2 rounded-full" style={`background:${rowColors[i % rowColors.length]}`}></span>{s.name}</span>
+                      <span class="lab-mono text-[var(--lab-soft)]">0{i + 1}</span>
+                    </li>
+                  ))}
+                </ul>
+                <div class="mt-auto flex items-center gap-2 rounded-xl bg-white p-2.5">
+                  <span class="grid size-7 place-items-center rounded-full bg-[var(--lab-ink)] text-[0.65rem] text-white">ZL</span>
+                  <span class="text-[0.72rem] leading-tight">Your team<br /><span class="text-[var(--lab-soft)]">Hyderabad</span></span>
+                </div>
+              </div>
+              <ul class="lab-board-rows">
+                {boardRows.map(({ item, color }, i) => (
+                  <li class="lab-row" style={`--c:${color};--i:${i}`} data-lab-row>
+                    <a href={`/work/${item.slug}`} class="flex h-full items-center gap-3 px-3.5">
+                      <span class="grid size-8 shrink-0 place-items-center rounded-full bg-white/25 text-[0.68rem] font-semibold text-white">{item.client.slice(0, 2).toUpperCase()}</span>
+                      <span class="min-w-0 flex-1">
+                        <span class="block truncate text-[0.8rem] font-semibold text-white">{item.client}</span>
+                        <span class="block truncate text-[0.68rem] text-white/80">{item.sector} · {item.location}</span>
+                      </span>
+                      <span class="rounded-full bg-white/90 px-2.5 py-1 text-[0.62rem] font-semibold" style={`color:${color}`}>{item.status === 'Ongoing' ? 'Building' : item.status}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SERVICES
+       ========================================================= -->
+  <HomeServices />
+
+  <!-- =========================================================
+       WORK (horizontal on desktop)
+       ========================================================= -->
+  <section class="relative overflow-hidden lg:h-screen" data-hscroll>
+    <div class="flex h-full flex-col justify-center py-24 lg:py-0">
+      <div class="mx-auto flex w-full max-w-[90rem] flex-wrap items-end justify-between gap-6 px-5 md:px-10">
+        <div>
+          <p class="lab-mono text-[var(--lab-soft)]" data-reveal>04 — Work</p>
+          <h2 class="lab-h mt-5 text-[clamp(2.2rem,5vw,4.6rem)]" data-split>Real businesses, <span class="lab-serif lab-grad-text">still running.</span></h2>
+        </div>
+        <a href="/work" class="lab-bracket" data-reveal>All {work.length} projects</a>
+      </div>
+      <div class="mt-12 overflow-x-auto pb-4 lg:overflow-visible lg:pb-0 [scrollbar-width:none]">
+        <div class="flex w-max gap-5 px-5 md:px-10" data-hscroll-track>
+          {featured.map((item, i) => (
+            <a href={`/work/${item.slug}`} class="lab-work group block w-[78vw] shrink-0 sm:w-[46vw] lg:w-[34vw]" data-cursor="View" data-media>
+              <div class="relative aspect-[16/10] overflow-hidden rounded-[22px] bg-white p-2.5 shadow-[0_40px_80px_-50px_rgba(17,17,20,0.5)]">
+                <div class="relative size-full overflow-hidden rounded-[14px]">
+                  {item.image && (
+                    <Image src={item.image} alt={`${item.client} by Zemprolabs`} widths={[600, 1000, 1400]} sizes="(min-width: 1024px) 34vw, 78vw" class="size-full object-cover object-top transition-transform duration-[1.2s] ease-[var(--ease-out-soft)] group-hover:scale-[1.04]" loading="lazy" />
+                  )}
+                  <span class="absolute top-3 left-3 rounded-full px-3 py-1 text-[0.68rem] font-semibold text-white" style={`background:${rowColors[i % rowColors.length]}`}>{item.sector}</span>
+                </div>
+              </div>
+              <div class="mt-4 flex items-start justify-between gap-4">
+                <div>
+                  <p class="lab-mono text-[var(--lab-soft)]">{String(i + 1).padStart(2, '0')} · {item.client}</p>
+                  <p class="lab-caption mt-2 text-[1.3rem]">{item.headline}</p>
+                </div>
+                <span class="grid size-10 shrink-0 place-items-center rounded-full bg-[var(--lab-ink)] text-white transition-transform duration-500 group-hover:rotate-45" aria-hidden="true">↗</span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+      <div class="mx-auto mt-10 hidden w-full max-w-[90rem] px-10 lg:block">
+        <div class="h-[2px] w-full rounded bg-[var(--lab-line)]"><div class="h-[2px] origin-left scale-x-0 rounded" style="background:var(--lab-grad)" data-hscroll-bar></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- clients marquee (replaces the numbers band) -->
+  <HomeMarquee />
+
+  <!-- =========================================================
+       FAQ
+       ========================================================= -->
+  <section class="mx-auto max-w-[90rem] px-5 py-24 md:px-10 md:py-32">
+    <div class="grid gap-10 md:grid-cols-12">
+      <div class="md:col-span-4">
+        <p class="lab-mono text-[var(--lab-soft)]" data-reveal>05 — Questions</p>
+        <h2 class="lab-h mt-5 text-[clamp(2rem,4vw,3.4rem)]" data-split>Good to know.</h2>
+      </div>
+      <div class="md:col-span-8">
+        {faqs.map((f, i) => (
+          <details class="lab-faq group border-t border-[var(--lab-line)] last:border-b" data-reveal>
+            <summary class="flex cursor-pointer list-none items-center gap-6 py-6 [&::-webkit-details-marker]:hidden">
+              <span class="lab-mono w-6 text-[var(--lab-soft)]">0{i + 1}</span>
+              <span class="flex-1 text-[1.05rem] font-medium md:text-[1.2rem]">{f.q}</span>
+              <span class="faq-plus grid size-9 place-items-center rounded-full border border-[var(--lab-line)] transition-all duration-500 group-open:rotate-45 group-open:border-transparent group-open:text-white" aria-hidden="true">+</span>
+            </summary>
+            <p class="max-w-2xl pb-7 pl-12 text-[0.95rem] leading-relaxed text-[var(--lab-soft)]">{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       CTA
+       ========================================================= -->
+  <section class="px-5 pb-24 md:px-10 md:pb-32">
+    <div class="lab-cta lab-dark relative mx-auto max-w-[90rem] overflow-hidden rounded-[32px] px-6 py-20 text-center md:py-28">
+      <div class="lab-cta-slabs" aria-hidden="true">
+        {Array.from({ length: 28 }, (_, k) => <span style={`--k:${k}`}></span>)}
+      </div>
+      <div class="relative">
+        <p class="lab-mono text-[var(--lab-soft)]" data-reveal>06 — Start</p>
+        <h2 class="lab-h mx-auto mt-5 max-w-[16ch] text-[clamp(2.4rem,6vw,5.5rem)]" data-split>Are you ready to take the <span class="lab-serif lab-grad-text">first step?</span></h2>
+        <div class="mt-10 flex flex-wrap items-center justify-center gap-6" data-reveal>
+          <a href="/contact" class="lab-btn" data-magnetic="0.3">Start a project <span aria-hidden="true">→</span></a>
+          <a href={site.phones[0].whatsapp} class="lab-bracket" rel="noopener">WhatsApp us</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* ---------- pinned stage ---------- */
+  .lab-stage-inner { position: relative; }
+  .lab-hero-copy { position: relative; }
+  .lab-board-wrap { position: relative; }
+  /* Ribbon: a full-width layer BEHIND the text */
+  .lab-z-area { position: relative; height: 46vh; margin-top: 5rem; z-index: 0; }
+  .lab-z { display: block; width: 100%; height: 100%; touch-action: pan-y; }
+  @media (min-width: 900px) {
+    .lab-z-area { position: absolute; left: 0; right: 0; top: 30%; bottom: 13%; height: auto; margin: 0; }
+    .lab-hero-main { max-width: min(62%, 58rem); }
+  }
+  .lab-hero-copy { z-index: 1; }
+  .lab-hero-main { position: relative; margin-top: 2.5rem; }
+  @media (min-width: 900px) { .lab-hero-main { margin-top: clamp(3rem, 12vh, 8rem); } }
+  /* soft ivory glow behind the copy keeps text crisp over the ribbon */
+  .lab-hero-main::before {
+    content: '';
+    position: absolute;
+    inset: -12% -8% -18% -20%;
+    z-index: -1;
+    background: radial-gradient(closest-side, rgba(251, 244, 234, 0.92), rgba(251, 244, 234, 0.6) 55%, transparent);
+    pointer-events: none;
+  }
+
+  /* Motion on: pin the stage and layer everything */
+  :global(.motion) .lab-stage { height: 280vh; }
+  :global(.motion) .lab-stage-inner { position: sticky; top: 0; height: 100vh; overflow: hidden; }
+  :global(.motion) .lab-hero-copy, :global(.motion) .lab-board-wrap { position: absolute; }
+  :global(.motion) .lab-board-wrap { opacity: 0; pointer-events: none; }
+  :global(.motion) .lab-board-wrap.is-active { pointer-events: auto; }
+  @media (max-width: 899px) {
+    :global(.motion) .lab-z-area { position: absolute; left: 0; right: 0; top: 5.5rem; height: 30vh; margin: 0; }
+    :global(.motion) .lab-hero-main { margin-top: 31vh; }
+  }
+
+
+  /* ---------- tilted board ---------- */
+  .lab-board-scene { perspective: 1800px; height: min(70vh, 640px); display: grid; place-items: center; }
+  .lab-board {
+    display: grid;
+    grid-template-columns: 0.9fr 1.4fr;
+    gap: 14px;
+    width: min(760px, 100%);
+    aspect-ratio: 1.45;
+    padding: 16px;
+    border-radius: 34px;
+    background: var(--lab-panel);
+    border: 10px solid #fffaf3;
+    box-shadow: 0 80px 120px -60px rgba(17, 17, 20, 0.55), inset 0 0 0 1px rgba(17, 17, 20, 0.05);
+    transform: rotateX(42deg) rotateZ(-22deg) rotateY(6deg) translateY(30px);
+    transform-style: preserve-3d;
+  }
+  .lab-board-side { display: flex; flex-direction: column; border-radius: 20px; background: #f4eadd; padding: 14px; }
+  .lab-board-rows { display: flex; flex-direction: column; gap: 9px; justify-content: center; }
+  .lab-row {
+    height: 58px;
+    border-radius: 16px;
+    background: linear-gradient(120deg, var(--c), color-mix(in srgb, var(--c) 70%, #fff));
+    box-shadow: 0 18px 30px -18px var(--c);
+    transform: translateZ(calc(var(--i) * 6px + 10px));
+    transition: transform 0.5s var(--ease-out-soft);
+  }
+  @media (max-width: 767px) {
+    .lab-board { grid-template-columns: 1fr; aspect-ratio: auto; transform: rotateX(18deg) rotateZ(-6deg); }
+    .lab-board-side { display: none; }
+    .lab-board-scene { height: auto; }
+  }
+
+
+  /* ---------- FAQ ---------- */
+  .lab-faq[open] .faq-plus { background: var(--lab-grad); }
+
+  /* ---------- CTA: a CSS slab wave echoing the hero ribbon ---------- */
+  .lab-cta-slabs { position: absolute; inset: auto 0 -22% 0; display: flex; justify-content: center; gap: 6px; height: 46%; perspective: 900px; opacity: 0.7; }
+  .lab-cta-slabs > span {
+    width: 14px;
+    border-radius: 6px;
+    background: linear-gradient(180deg, color-mix(in oklch, #FFB33F calc(100% - var(--k) * 3.6%), #5B2A86), transparent);
+    animation: wave 3.6s ease-in-out infinite;
+    animation-delay: calc(var(--k) * -0.12s);
+  }
+  @keyframes wave { 0%, 100% { transform: translateY(40%) rotateY(-50deg); } 50% { transform: translateY(8%) rotateY(40deg); } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lab-cta-slabs > span { animation: none; }
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  import { createRibbon } from '../scripts/ribbon';
+
+  gsap.registerPlugin(ScrollTrigger);
+  const canvas = document.querySelector<HTMLCanvasElement>('[data-ribbon]');
+  const stage = document.querySelector<HTMLElement>('[data-lab-stage]');
+  const motionOn = document.documentElement.classList.contains('motion');
+
+  if (canvas && stage) {
+    let z: ReturnType<typeof createRibbon> | null = null;
+    try {
+      z = createRibbon(canvas, {});
+    } catch {
+      canvas.style.display = 'none'; // no WebGL: the page still works
+    }
+
+    if (motionOn) {
+      // hero load-in: paragraph, buttons, card rise in after the headline (always plays)
+      gsap.fromTo(stage.querySelectorAll('[data-hero-in]'), { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 1.2, ease: 'expo.out', stagger: 0.12, delay: 0.55 });
+
+      const copy = stage.querySelectorAll<HTMLElement>('[data-lab-hero-copy]');
+      const area = stage.querySelector<HTMLElement>('[data-z-area]')!;
+      const boardWrap = stage.querySelector<HTMLElement>('[data-lab-board]')!;
+      const panel = stage.querySelector<HTMLElement>('[data-lab-board-panel]')!;
+      const rows = stage.querySelectorAll<HTMLElement>('[data-lab-row]');
+      const clamp = (v: number) => Math.min(1, Math.max(0, v));
+
+      ScrollTrigger.create({
+        trigger: stage,
+        start: 'top top',
+        end: 'bottom bottom',
+        scrub: true,
+        onUpdate: ({ progress: p }) => {
+          // the ribbon calms, straightens and tilts away
+          z?.setProgress(clamp(p / 0.4));
+          const out = clamp(p / 0.25);
+          copy.forEach((el) => {
+            el.style.opacity = String(1 - out);
+            el.style.transform = `translateY(${-out * 70}px)`;
+          });
+          // the unfolded ribbon drifts to centre, then gives way to the board
+          area.style.opacity = String(1 - clamp((p - 0.36) / 0.2));
+          area.style.transform = `scale(${1 + clamp(p / 0.35) * 0.08})`;
+          const b = clamp((p - 0.38) / 0.28);
+          boardWrap.style.opacity = String(b);
+          boardWrap.classList.toggle('is-active', b > 0.6);
+          if (matchMedia('(min-width: 768px)').matches) {
+            const rx = 58 - b * 20 - clamp((p - 0.66) / 0.34) * 8;
+            const rz = -30 + b * 10;
+            panel.style.transform = `rotateX(${rx}deg) rotateZ(${rz}deg) rotateY(6deg) translateY(${(1 - b) * 120}px)`;
+          }
+          rows.forEach((r, i) => {
+            const k = clamp((p - 0.48 - i * 0.04) / 0.12);
+            r.style.opacity = String(k);
+            r.style.transform = `translateZ(${i * 6 + 10}px) translateX(${(1 - k) * 60}px)`;
+          });
+        },
+      });
+    }
+  }
+</script>

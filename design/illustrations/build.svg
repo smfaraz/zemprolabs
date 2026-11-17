@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000">
+  <defs>
+    <filter id="sh" x="-60%" y="-60%" width="220%" height="260%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="22"/>
+      <feOffset dy="26"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.22"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <pattern id="dots" width="28" height="28" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.6" fill="#E3D2C0"/>
+    </pattern>
+    <clipPath id="heroImg"><rect x="700" y="290" width="380" height="300" rx="14"/></clipPath>
+    <clipPath id="phoneScreen"><rect x="1222" y="168" width="232" height="488" rx="26"/></clipPath>
+  </defs>
+
+  <rect width="1600" height="1000" fill="#F4EADD"/>
+  <rect width="1600" height="1000" fill="url(#dots)" opacity="0.7"/>
+  <circle cx="1420" cy="880" r="260" fill="#EADCC8"/>
+  <circle cx="160" cy="120" r="120" fill="#EADCC8"/>
+
+  <!-- Browser window -->
+  <g filter="url(#sh)">
+    <rect x="130" y="150" width="1010" height="700" rx="20" fill="#FBF4EA"/>
+  </g>
+  <rect x="130" y="150" width="1010" height="58" rx="20" fill="#F1E5D6"/>
+  <rect x="130" y="188" width="1010" height="20" fill="#F1E5D6"/>
+  <circle cx="168" cy="179" r="7" fill="#F2464B"/>
+  <circle cx="192" cy="179" r="7" fill="#E3D2C0"/>
+  <circle cx="216" cy="179" r="7" fill="#E3D2C0"/>
+  <rect x="470" y="166" width="330" height="26" rx="13" fill="#FBF4EA"/>
+  <rect x="490" y="176" width="150" height="6" rx="3" fill="#E3D2C0"/>
+
+  <!-- Site nav -->
+  <rect x="180" y="240" width="34" height="34" rx="8" fill="#1A1218"/>
+  <rect x="226" y="252" width="110" height="10" rx="5" fill="#1A1218"/>
+  <rect x="690" y="252" width="60" height="9" rx="4.5" fill="#CDB9A8"/>
+  <rect x="770" y="252" width="60" height="9" rx="4.5" fill="#CDB9A8"/>
+  <rect x="850" y="252" width="60" height="9" rx="4.5" fill="#CDB9A8"/>
+  <rect x="960" y="238" width="130" height="38" rx="19" fill="#F2464B"/>
+  <rect x="985" y="253" width="80" height="8" rx="4" fill="#FBF4EA"/>
+
+  <!-- Hero copy -->
+  <rect x="180" y="320" width="80" height="9" rx="4.5" fill="#F2464B"/>
+  <rect x="180" y="352" width="450" height="40" rx="10" fill="#1A1218"/>
+  <rect x="180" y="404" width="380" height="40" rx="10" fill="#1A1218"/>
+  <rect x="180" y="456" width="300" height="40" rx="10" fill="#F2464B"/>
+  <rect x="180" y="520" width="420" height="10" rx="5" fill="#CDB9A8"/>
+  <rect x="180" y="542" width="360" height="10" rx="5" fill="#CDB9A8"/>
+  <rect x="180" y="588" width="150" height="46" rx="23" fill="#2A1B30"/>
+  <rect x="205" y="606" width="100" height="9" rx="4.5" fill="#FBF4EA"/>
+  <rect x="344" y="588" width="130" height="46" rx="23" fill="none" stroke="#E3D2C0" stroke-width="2"/>
+
+  <!-- Hero image -->
+  <g clip-path="url(#heroImg)">
+    <rect x="700" y="290" width="380" height="300" fill="#2A1B30"/>
+    <circle cx="975" cy="380" r="54" fill="#FFB33F"/>
+    <path d="M700 590 L800 470 L870 530 L960 430 L1080 560 L1080 590 Z" fill="#4A2C55"/>
+    <path d="M700 590 L770 520 L850 590 Z" fill="#150E16"/>
+  </g>
+
+  <!-- Card row -->
+  <g>
+    <rect x="180" y="680" width="290" height="130" rx="14" fill="#F4EADD"/>
+    <rect x="200" y="700" width="40" height="40" rx="10" fill="#2A1B30"/>
+    <rect x="200" y="756" width="180" height="10" rx="5" fill="#1A1218"/>
+    <rect x="200" y="776" width="230" height="8" rx="4" fill="#CDB9A8"/>
+    <rect x="490" y="680" width="290" height="130" rx="14" fill="#F4EADD"/>
+    <rect x="510" y="700" width="40" height="40" rx="10" fill="#F2464B"/>
+    <rect x="510" y="756" width="160" height="10" rx="5" fill="#1A1218"/>
+    <rect x="510" y="776" width="220" height="8" rx="4" fill="#CDB9A8"/>
+    <rect x="800" y="680" width="290" height="130" rx="14" fill="#F4EADD"/>
+    <rect x="820" y="700" width="40" height="40" rx="10" fill="#D7A6C2"/>
+    <rect x="820" y="756" width="170" height="10" rx="5" fill="#1A1218"/>
+    <rect x="820" y="776" width="200" height="8" rx="4" fill="#CDB9A8"/>
+  </g>
+
+  <!-- Code editor -->
+  <g filter="url(#sh)">
+    <rect x="860" y="560" width="560" height="360" rx="18" fill="#150E16"/>
+  </g>
+  <circle cx="892" cy="590" r="6" fill="#F2464B"/>
+  <circle cx="912" cy="590" r="6" fill="#3A2540"/>
+  <circle cx="932" cy="590" r="6" fill="#3A2540"/>
+  <rect x="980" y="582" width="120" height="16" rx="8" fill="#2A1B30"/>
+  <g font-family="Consolas, 'Courier New', monospace" font-size="15" fill="#8F7486">
+    <text x="888" y="640">1</text><text x="888" y="672">2</text><text x="888" y="704">3</text><text x="888" y="736">4</text>
+    <text x="888" y="768">5</text><text x="888" y="800">6</text><text x="888" y="832">7</text><text x="888" y="864">8</text>
+  </g>
+  <rect x="922" y="628" width="70" height="12" rx="6" fill="#FFB33F"/>
+  <rect x="1000" y="628" width="140" height="12" rx="6" fill="#D7A6C2"/>
+  <rect x="1148" y="628" width="60" height="12" rx="6" fill="#FBF4EA"/>
+  <rect x="946" y="660" width="110" height="12" rx="6" fill="#D7A6C2"/>
+  <rect x="1064" y="660" width="170" height="12" rx="6" fill="#F2464B"/>
+  <rect x="946" y="692" width="80" height="12" rx="6" fill="#FBF4EA"/>
+  <rect x="1034" y="692" width="200" height="12" rx="6" fill="#4A2C55"/>
+  <rect x="970" y="724" width="150" height="12" rx="6" fill="#FFB33F"/>
+  <rect x="1128" y="724" width="90" height="12" rx="6" fill="#D7A6C2"/>
+  <rect x="970" y="756" width="230" height="12" rx="6" fill="#4A2C55"/>
+  <rect x="946" y="788" width="60" height="12" rx="6" fill="#FBF4EA"/>
+  <rect x="922" y="820" width="40" height="12" rx="6" fill="#D7A6C2"/>
+  <rect x="922" y="852" width="100" height="12" rx="6" fill="#FFB33F"/>
+  <rect x="1030" y="850" width="3" height="18" fill="#FBF4EA"/>
+
+  <!-- Phone -->
+  <g filter="url(#sh)">
+    <rect x="1206" y="150" width="264" height="524" rx="40" fill="#1A1218"/>
+  </g>
+  <g clip-path="url(#phoneScreen)">
+    <rect x="1222" y="168" width="232" height="488" fill="#FBF4EA"/>
+    <rect x="1300" y="180" width="76" height="20" rx="10" fill="#1A1218"/>
+    <rect x="1242" y="226" width="90" height="10" rx="5" fill="#1A1218"/>
+    <circle cx="1420" cy="231" r="13" fill="#F4EADD"/>
+    <rect x="1242" y="260" width="192" height="150" rx="16" fill="#2A1B30"/>
+    <rect x="1262" y="282" width="60" height="8" rx="4" fill="#D7A6C2"/>
+    <rect x="1262" y="302" width="130" height="18" rx="6" fill="#FBF4EA"/>
+    <rect x="1262" y="328" width="100" height="18" rx="6" fill="#FBF4EA"/>
+    <rect x="1262" y="368" width="84" height="26" rx="13" fill="#F2464B"/>
+    <g>
+      <rect x="1242" y="430" width="192" height="58" rx="12" fill="#F4EADD"/>
+      <circle cx="1270" cy="459" r="14" fill="#F2464B"/>
+      <rect x="1294" y="450" width="100" height="8" rx="4" fill="#1A1218"/>
+      <rect x="1294" y="466" width="70" height="7" rx="3.5" fill="#CDB9A8"/>
+      <rect x="1242" y="498" width="192" height="58" rx="12" fill="#F4EADD"/>
+      <circle cx="1270" cy="527" r="14" fill="#2A1B30"/>
+      <rect x="1294" y="518" width="110" height="8" rx="4" fill="#1A1218"/>
+      <rect x="1294" y="534" width="60" height="7" rx="3.5" fill="#CDB9A8"/>
+      <rect x="1242" y="566" width="192" height="58" rx="12" fill="#F4EADD"/>
+      <circle cx="1270" cy="595" r="14" fill="#D7A6C2"/>
+      <rect x="1294" y="586" width="90" height="8" rx="4" fill="#1A1218"/>
+      <rect x="1294" y="602" width="80" height="7" rx="3.5" fill="#CDB9A8"/>
+    </g>
+  </g>
+
+  <!-- Floating badges -->
+  <g filter="url(#sh)">
+    <rect x="70" y="760" width="250" height="84" rx="42" fill="#2A1B30"/>
+  </g>
+  <circle cx="112" cy="802" r="20" fill="#F2464B"/>
+  <path d="M103 802 l6 7 l12 -14" stroke="#FBF4EA" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="146" y="790" width="140" height="10" rx="5" fill="#FBF4EA"/>
+  <rect x="146" y="808" width="96" height="8" rx="4" fill="#D7A6C2"/>
+</svg>

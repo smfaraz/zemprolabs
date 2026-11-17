@@ -1,0 +1,135 @@
+---
+import { Image } from 'astro:assets';
+import Base from '@/layouts/Base.astro';
+import WorkCard from '@/components/WorkCard.astro';
+import ScreenFrame from '@/components/ScreenFrame.astro';
+import Faq from '@/components/Faq.astro';
+import { services, pillars, type Service } from '@/data/services';
+import { work } from '@/data/work';
+import { site } from '@/data/site';
+
+export function getStaticPaths() {
+  return services.map((s, i) => ({ params: { slug: s.slug }, props: { service: s, next: services[(i + 1) % services.length] } }));
+}
+
+const { service, next } = Astro.props as { service: Service; next: Service };
+const pillar = pillars.find((p) => p.id === service.pillar)!;
+const related = work.filter((w) => w.services.includes(service.slug)).slice(0, 4);
+const heroWork = related.find((r) => r.video) ?? related[0];
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: service.name,
+    description: service.metaDescription,
+    provider: { '@id': `${site.url}/#org` },
+    areaServed: site.markets,
+    url: `${site.url}/services/${service.slug}`,
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Services', item: `${site.url}/services` },
+      { '@type': 'ListItem', position: 2, name: service.name, item: `${site.url}/services/${service.slug}` },
+    ],
+  },
+];
+---
+
+<Base title={service.metaTitle} description={service.metaDescription} image={`/og/service-${service.slug}.jpg`} schema={schema}>
+  <section class="wrap pt-36 pb-14 md:pt-48 md:pb-20">
+    <nav class="label flex items-center gap-2" aria-label="Breadcrumb" data-reveal>
+      <a href="/services" class="link-u hover:text-ink">Services</a><span>/</span><span class="label-ember">{pillar.name}</span>
+    </nav>
+    <h1 class="display mt-8 max-w-[17ch] text-[clamp(2.04rem,5.1vw,4.93rem)]" data-split="load">{service.headline}</h1>
+    <div class="mt-12 grid gap-8 md:grid-cols-12 md:items-end">
+      <p class="text-lg text-ink-soft md:col-span-6 md:text-xl" data-reveal>{service.intro}</p>
+      <div class="md:col-span-4 md:col-start-9 md:justify-self-end" data-reveal>
+        <span data-magnetic="0.3" class="inline-block">
+          <a href={`/contact?service=${service.slug}`} class="btn btn-primary">Discuss your project <span class="arrow" aria-hidden="true">→</span></a>
+        </span>
+      </div>
+    </div>
+  </section>
+
+  {service.image ? (
+    <div class="wrap">
+      <div class="relative aspect-[16/10] overflow-hidden rounded-[14px]" data-mask>
+        <div class="absolute inset-0">
+          <Image src={service.image} alt={`${service.name} by Zemprolabs`} widths={[800, 1280, 1920, 2400]} sizes="100vw" class="size-full object-cover" loading="eager" />
+        </div>
+      </div>
+    </div>
+  ) : heroWork && (
+    <div class="wrap">
+      <div class="overflow-hidden rounded-[14px]" data-mask>
+        <div><ScreenFrame item={heroWork} size="hero" eager play="auto" zoom={false} sizes="(min-width: 768px) 70vw, 100vw" /></div>
+      </div>
+      <p class="label mt-4">Shown: {heroWork.client}</p>
+    </div>
+  )}
+
+  <!-- Sticky title + scrolling offerings -->
+  <section class="wrap grid gap-12 py-24 md:grid-cols-12 md:py-36">
+    <div class="md:col-span-4">
+      <div class="md:sticky md:top-28">
+        <p class="label label-ember" data-reveal>What we do</p>
+        <h2 class="display mt-6 text-[clamp(1.7rem,3.06vw,2.72rem)]" data-split>{service.name}, <em>done properly.</em></h2>
+        <div class="mt-8 flex flex-wrap gap-2" data-reveal>
+          {service.tools.map((t) => <span class="chip">{t}</span>)}
+        </div>
+      </div>
+    </div>
+    <ol class="md:col-span-7 md:col-start-6">
+      {service.offerings.map((o, i) => (
+        <li class="group border-t border-line py-10 first:border-t-0 first:pt-0 md:py-14" data-reveal>
+          <div class="flex items-baseline gap-6">
+            <span class="display text-4xl text-ember md:text-5xl">0{i + 1}</span>
+            <div>
+              <h3 class="display text-[1.53rem] md:text-[1.87rem]">{o.title}</h3>
+              <p class="mt-4 max-w-lg text-lg text-ink-soft">{o.body}</p>
+            </div>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  {related.length > 0 && (
+    <section class="bg-deep py-24 text-paper md:py-36">
+      <div class="wrap">
+        <div class="flex flex-wrap items-end justify-between gap-6">
+          <h2 class="display text-[clamp(1.7rem,3.4vw,3.06rem)]" data-split>{service.name} <em class="text-ember-soft">in practice.</em></h2>
+          <a href="/work" class="btn btn-ghost-dark" data-reveal>All work <span class="arrow" aria-hidden="true">→</span></a>
+        </div>
+        <div class="mt-14 grid gap-x-8 gap-y-16 md:grid-cols-2">
+          {related.map((item) => <WorkCard item={item} dark />)}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {service.faqs.length > 0 && (
+    <section class="wrap py-24 md:py-36">
+      <div class="grid gap-12 md:grid-cols-12">
+        <div class="md:col-span-4">
+          <p class="label label-ember" data-reveal>Questions</p>
+          <h2 class="display mt-6 text-[clamp(1.7rem,3.06vw,2.72rem)]" data-split>Common <em>questions.</em></h2>
+        </div>
+        <div class="md:col-span-8"><Faq items={service.faqs} /></div>
+      </div>
+    </section>
+  )}
+
+  <a href={`/services/${next.slug}`} class="group block border-t border-line" data-cursor="Next">
+    <div class="wrap flex items-center justify-between gap-6 py-14 md:py-20">
+      <div>
+        <p class="label">Next service</p>
+        <p class="display mt-3 text-[clamp(1.7rem,4.08vw,3.74rem)] transition-colors duration-300 group-hover:text-ember">{next.name}</p>
+      </div>
+      <span class="grid size-16 shrink-0 place-items-center rounded-full border border-line text-xl transition-all duration-500 group-hover:-rotate-45 group-hover:border-forest group-hover:bg-forest group-hover:text-paper md:size-24">→</span>
+    </div>
+  </a>
+</Base>

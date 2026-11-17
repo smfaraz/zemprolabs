@@ -1,0 +1,33 @@
+---
+import Base from '@/layouts/Base.astro';
+import { services } from '@/data/services';
+import HomeServices from '@/components/lab/HomeServices.astro';
+import ServiceReel from '@/components/lab/ServiceReel.astro';
+
+---
+
+<Base
+  image="/og/services.jpg"
+  title="Services"
+  description="Websites, web apps, e-commerce, mobile apps, SEO, ads, maintenance and ServiceNow. Everything Zemprolabs builds, grows and runs for businesses in the US and India."
+>
+  <h1 class="sr-only">Services: websites, e-commerce, mobile apps, SEO, ads, maintenance and ServiceNow</h1>
+  <ServiceReel />
+
+  <HomeServices
+    id="all-services"
+    kicker={`All ${services.length} services`}
+    line1="All of it,"
+    line2="from one team."
+    lead="Pick one service or let us handle the lot. Open any card for what’s included, the tools we use and common questions."
+  />
+
+  <section class="wrap py-24 text-center md:py-32">
+    <p class="label label-ember" data-reveal>Not sure where to start?</p>
+    <h2 class="display mx-auto mt-6 max-w-[18ch] text-[clamp(1.9rem,4vw,3.6rem)]" data-split>Tell us the goal, <em>we’ll map the route.</em></h2>
+    <div class="mt-10 flex flex-wrap items-center justify-center gap-5" data-reveal>
+      <a href="/contact" class="lab-btn">Start a project <span aria-hidden="true">→</span></a>
+      <a href="/work" class="lab-bracket">See our work</a>
+    </div>
+  </section>
+</Base>

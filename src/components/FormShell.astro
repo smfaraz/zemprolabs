@@ -1,0 +1,175 @@
+---
+import { site } from '@/data/site';
+
+interface Props { subject: string; submitLabel: string; id: string; steps?: string[] }
+const { subject, submitLabel, id, steps = [] } = Astro.props;
+const redirect = new URL('/thank-you', site.url).href;
+const stepped = steps.length > 1;
+---
+
+{!site.formKey && import.meta.env.DEV && (
+  <p class="mb-6 rounded-[10px] border border-dashed border-ember p-4 text-sm text-ember">
+    Dev note: PUBLIC_WEB3FORMS_KEY is not set, so submissions will not be delivered. Add it to <code>.env</code> locally and to Vercel’s environment variables.
+  </p>
+)}
+
+<form id={id} action="https://api.web3forms.com/submit" method="POST" data-w3f data-stepped={stepped ? '' : undefined} novalidate>
+  <input type="hidden" name="access_key" value={site.formKey} />
+  <input type="hidden" name="subject" value={subject} />
+  <input type="hidden" name="from_name" value="Zemprolabs website" />
+  <input type="hidden" name="redirect" value={redirect} />
+  <input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+  {stepped && (
+    <div class="mb-10" data-step-progress>
+      <div class="flex justify-between gap-2">
+        {steps.map((s, i) => (
+          <span class="label step-name transition-colors duration-300" data-step-name={i}>
+            0{i + 1} · {s}
+          </span>
+        ))}
+      </div>
+      <div class="mt-3 h-[3px] overflow-hidden rounded-full bg-sand">
+        <div class="h-full origin-left rounded-full bg-ember transition-transform duration-700 ease-[var(--ease-out-soft)]" style={`transform:scaleX(${1 / steps.length})`} data-step-bar></div>
+      </div>
+    </div>
+  )}
+
+  <slot />
+
+  <div class="mt-10 flex flex-col-reverse gap-4 sm:flex-row sm:items-center sm:justify-between">
+    <p class="text-sm text-ink-soft">We reply within one working day.</p>
+    <div class="flex items-center gap-3">
+      {stepped && <button type="button" class="btn btn-ghost hidden" data-back>← Back</button>}
+      {stepped && <button type="button" class="btn btn-primary hidden" data-next>Continue <span class="arrow" aria-hidden="true">→</span></button>}
+      <button type="submit" class="btn btn-ember justify-center disabled:opacity-60" data-submit>
+        <span data-label>{submitLabel}</span> <span class="arrow" aria-hidden="true">→</span>
+      </button>
+    </div>
+  </div>
+  <p class="mt-4 text-sm" role="status" aria-live="polite" data-status></p>
+</form>
+
+<style is:global>
+  .field { display: flex; flex-direction: column; gap: 0.5rem; }
+  .field > span { font-size: 0.875rem; font-weight: 600; }
+  .field > span i { font-style: normal; color: var(--color-ink-soft); font-weight: 400; }
+  .input {
+    width: 100%;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--color-line);
+    padding: 0.85rem 0;
+    font-size: 1.125rem;
+    border-radius: 0;
+    transition: border-color 0.3s;
+  }
+  .input:focus { outline: none; border-color: var(--color-forest); }
+  .input::placeholder { color: #a39b8a; }
+  select.input { appearance: none; cursor: pointer; background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%); background-position: calc(100% - 10px) 55%, calc(100% - 5px) 55%; background-size: 5px 5px; background-repeat: no-repeat; }
+  .input[aria-invalid='true'] { border-color: var(--color-ember); }
+  .opt { position: relative; display: block; cursor: pointer; }
+  .opt input { position: absolute; opacity: 0; pointer-events: none; }
+  .opt > span { display: flex; height: 100%; flex-direction: column; gap: 0.35rem; border: 1px solid var(--color-line); border-radius: 12px; padding: 1rem 1.1rem; transition: all 0.3s var(--ease-out-soft); }
+  .opt:hover > span { border-color: var(--color-ink); }
+  .opt input:checked + span { background: var(--color-forest); border-color: var(--color-forest); color: var(--color-paper); }
+  .opt input:checked + span small { color: var(--color-mist); }
+  .opt input:focus-visible + span { outline: 2px solid var(--color-ember); outline-offset: 2px; }
+  .opt small { font-size: 0.8125rem; color: var(--color-ink-soft); line-height: 1.4; }
+  .js [data-stepped] [data-step]:not(.is-active) { display: none; }
+  .js [data-stepped] .step-name.is-done { color: var(--color-forest); }
+  .js [data-stepped] .step-name.is-active { color: var(--color-ember); }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+
+  const errorStyle = 'mt-4 text-sm text-ember';
+
+  document.querySelectorAll<HTMLFormElement>('form[data-w3f]').forEach((form) => {
+    const status = form.querySelector<HTMLElement>('[data-status]')!;
+    const submit = form.querySelector<HTMLButtonElement>('[data-submit]')!;
+    const label = submit.querySelector<HTMLElement>('[data-label]')!;
+    const original = label.textContent;
+
+    const validate = (scope: ParentNode) => {
+      let first: HTMLElement | null = null;
+      scope.querySelectorAll<HTMLInputElement>('[required]').forEach((el) => {
+        const bad = !el.checkValidity();
+        el.setAttribute('aria-invalid', String(bad));
+        if (bad && !first) first = el;
+      });
+      scope.querySelectorAll<HTMLFieldSetElement>('fieldset[data-min-one]').forEach((fs) => {
+        const ok = fs.querySelector('input:checked');
+        fs.querySelector('[data-hint]')?.classList.toggle('!text-ember', !ok);
+        if (!ok && !first) first = fs.querySelector('input');
+      });
+      if (first) {
+        status.textContent = 'Please fill in the highlighted fields.';
+        status.className = errorStyle;
+        (first as HTMLElement).focus();
+        return false;
+      }
+      status.textContent = '';
+      return true;
+    };
+
+    /* ----- Stepped mode ----- */
+    if (form.hasAttribute('data-stepped')) {
+      const steps = [...form.querySelectorAll<HTMLElement>('[data-step]')];
+      const names = [...form.querySelectorAll<HTMLElement>('[data-step-name]')];
+      const bar = form.querySelector<HTMLElement>('[data-step-bar]')!;
+      const back = form.querySelector<HTMLButtonElement>('[data-back]')!;
+      const next = form.querySelector<HTMLButtonElement>('[data-next]')!;
+      let i = 0;
+      const show = (n: number, focus = true) => {
+        i = n;
+        steps.forEach((s, k) => s.classList.toggle('is-active', k === n));
+        names.forEach((s, k) => {
+          s.classList.toggle('is-active', k === n);
+          s.classList.toggle('is-done', k < n);
+        });
+        bar.style.transform = `scaleX(${(n + 1) / steps.length})`;
+        back.classList.toggle('hidden', n === 0);
+        next.classList.toggle('hidden', n === steps.length - 1);
+        submit.classList.toggle('hidden', n !== steps.length - 1);
+        gsap.fromTo(steps[n].children, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.8, ease: 'expo.out', stagger: 0.05 });
+        if (focus) steps[n].querySelector<HTMLElement>('input, select, textarea')?.focus({ preventScroll: true });
+      };
+      next.addEventListener('click', () => validate(steps[i]) && show(i + 1));
+      back.addEventListener('click', () => show(i - 1));
+      show(0, false);
+    }
+
+    /* ----- Submit ----- */
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!validate(form)) return;
+
+      const data = new FormData(form);
+      const picked = data.getAll('services[]');
+      data.delete('services[]');
+      if (picked.length) data.set('Services', picked.join(', '));
+
+      if (!data.get('access_key')) {
+        status.innerHTML = 'Sorry, the form isn’t connected yet. Please email <a class="underline" href="mailto:info@zemprolabs.com">info@zemprolabs.com</a>.';
+        status.className = errorStyle;
+        return;
+      }
+
+      submit.disabled = true;
+      label.textContent = 'Sending…';
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { Accept: 'application/json' }, body: data });
+        const json = await res.json();
+        if (!res.ok || !json.success) throw new Error(json.message);
+        location.href = '/thank-you';
+      } catch {
+        status.innerHTML = 'Something went wrong. Please try again or email <a class="underline" href="mailto:info@zemprolabs.com">info@zemprolabs.com</a>.';
+        status.className = errorStyle;
+        submit.disabled = false;
+        label.textContent = original;
+      }
+    });
+  });
+</script>

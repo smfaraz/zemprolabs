@@ -1,0 +1,118 @@
+---
+import LabMark from './LabMark.astro';
+import { nav } from '@/data/site';
+
+const path = Astro.url.pathname.replace(/\.html$/, '').replace(/\/$/, '') || '/';
+const isActive = (href: string) => path === href || path.startsWith(href + '/');
+---
+
+<header class="lab-nav-wrap fixed inset-x-0 top-0 z-50 flex justify-center px-3 pt-3 md:pt-4" data-lab-header>
+  <div class="lab-nav flex w-full max-w-[64rem] items-center justify-between gap-4 rounded-full py-2 pr-2 pl-4 md:pl-5">
+    <a href="/" class="group flex shrink-0 items-center gap-2.5" aria-label="Zemprolabs home">
+      <LabMark class="size-6 transition-transform duration-500 group-hover:-rotate-12" />
+      <span class="lab-h text-[0.95rem] tracking-[0.02em]">Zemprolabs</span>
+    </a>
+
+    <nav class="hidden items-center gap-1 md:flex" aria-label="Main">
+      {nav.map((l) => (
+        <a
+          href={l.href}
+          class:list={['lab-nav-link', isActive(l.href) && 'is-active']}
+          aria-current={isActive(l.href) ? 'page' : undefined}
+        >
+          {l.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="flex shrink-0 items-center gap-2">
+      <a href="/contact" class="lab-btn lab-nav-cta !py-2.5 !px-4" data-magnetic="0.25">Start a project <span aria-hidden="true">→</span></a>
+      <button
+        type="button"
+        class="lab-dots md:hidden"
+        aria-expanded="false"
+        aria-controls="lab-menu"
+        aria-label="Open menu"
+        data-lab-menu-btn
+      >
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div id="lab-menu" class="fixed inset-0 z-40 hidden flex-col px-5 pt-24 pb-10 md:hidden" data-lab-menu data-lenis-prevent>
+  <nav class="flex flex-col" aria-label="Mobile">
+    {nav.map((l, i) => (
+      <a href={l.href} class="lab-h flex items-baseline justify-between border-b border-[var(--lab-line)] py-4 text-3xl">
+        {l.label}<span class="lab-mono text-[var(--lab-soft)]">0{i + 1}</span>
+      </a>
+    ))}
+    <a href="/contact" class="lab-h flex items-baseline justify-between border-b border-[var(--lab-line)] py-4 text-3xl">Contact<span class="lab-mono text-[var(--lab-soft)]">0{nav.length + 1}</span></a>
+  </nav>
+  <a href="/contact" class="lab-btn mt-10 self-start">Start a project →</a>
+  <p class="lab-mono mt-auto text-[var(--lab-soft)]">info@zemprolabs.com · +91 744 755 7577</p>
+</div>
+
+<style>
+  .lab-nav {
+    background: rgba(255, 250, 243, 0.62);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 18px 40px -22px rgba(26, 18, 24, 0.35), 0 0 0 1px rgba(26, 18, 24, 0.05);
+    backdrop-filter: blur(18px) saturate(1.4);
+    -webkit-backdrop-filter: blur(18px) saturate(1.4);
+    transition: max-width 0.6s var(--ease-out-soft), padding 0.6s var(--ease-out-soft), background-color 0.4s, box-shadow 0.4s;
+  }
+  .lab-nav-wrap { transition: transform 0.6s var(--ease-out-soft); }
+  .lab-nav-wrap[data-solid] .lab-nav { max-width: 58rem; background: rgba(255, 250, 243, 0.82); }
+  .lab-nav-wrap[data-hide] { transform: translateY(-120%); }
+  .lab-nav-link {
+    position: relative;
+    border-radius: 999px;
+    padding: 0.55rem 0.95rem;
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--lab-ink);
+    transition: background-color 0.3s, color 0.3s;
+  }
+  .lab-nav-link:hover { background: rgba(26, 18, 24, 0.06); }
+  .lab-nav-link.is-active { background: var(--lab-ink); color: #fff; }
+  .lab-nav-cta { display: none; }
+  @media (min-width: 640px) { .lab-nav-cta { display: inline-flex; } }
+  .lab-dots { position: relative; display: grid; place-items: center; grid-auto-flow: column; gap: 4px; width: 2.6rem; height: 2.6rem; border-radius: 999px; background: var(--lab-ink); }
+  @media (min-width: 768px) { .lab-dots { display: none; } }
+  .lab-dots { transition: transform 0.45s var(--ease-out-soft), background-color 0.3s; }
+  .lab-dots[aria-expanded='true'] { transform: rotate(90deg); background: #f2464b; }
+  .lab-dots span { width: 5px; height: 5px; border-radius: 50%; background: #fff; transition: transform 0.4s var(--ease-out-soft), opacity 0.3s; }
+  #lab-menu { background: rgba(251, 244, 234, 0.96); backdrop-filter: blur(20px); }
+</style>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-lab-header]');
+  const btn = document.querySelector<HTMLButtonElement>('[data-lab-menu-btn]');
+  const menu = document.querySelector<HTMLElement>('[data-lab-menu]');
+  if (header && btn && menu) {
+    let last = 0;
+    const onScroll = () => {
+      const y = scrollY;
+      header.toggleAttribute('data-solid', y > 30);
+      header.toggleAttribute('data-hide', y > 500 && y > last + 2 && menu.classList.contains('hidden'));
+      if (y < last - 2) header.removeAttribute('data-hide');
+      last = y;
+    };
+    addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    const set = (open: boolean) => {
+      menu.classList.toggle('hidden', !open);
+      menu.classList.toggle('flex', open);
+      btn.setAttribute('aria-expanded', String(open));
+      btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      const lenis = (window as any).__lenis;
+      open ? lenis?.stop() : lenis?.start();
+      document.body.style.overflow = open ? 'hidden' : '';
+    };
+    btn.addEventListener('click', () => set(btn.getAttribute('aria-expanded') !== 'true'));
+    addEventListener('keydown', (e) => e.key === 'Escape' && set(false));
+  }
+</script>

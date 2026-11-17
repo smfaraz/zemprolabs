@@ -1,0 +1,101 @@
+---
+/** About hero — one short line, with project cards fanning open behind it as you scroll. */
+import { Image } from 'astro:assets';
+import { getWork } from '@/data/work';
+
+const picks = ['meduscore', 'erus-academy', 'the-qalb', 'baemeds-usa', 'talent-hunters-consulting', 'auvia', 'conavlytics'].map((s) => getWork(s)!);
+const mid = (picks.length - 1) / 2;
+---
+
+<section class="ah" data-ah>
+  <div class="ah-pin">
+    <div class="ah-top">
+      <span class="lab-mono">About Zemprolabs</span>
+      <span class="lab-mono">Hyderabad · India</span>
+    </div>
+
+    <h1 class="ah-title" data-ah-title>
+      <span class="lab-h ah-l1">A small studio</span>
+      <span class="lab-serif ah-l2">that sticks around.</span>
+    </h1>
+
+    <div class="ah-fan" data-ah-fan>
+      {picks.map((w, i) => (
+        <a href={`/work/${w.slug}`} class="ah-card" data-ah-card style={`--k:${i - mid};z-index:${10 - Math.abs(i - mid)}`} aria-label={`${w.client} case study`}>
+          <Image src={w.mobile ?? w.image!} alt="" width={480} class="size-full object-cover object-top" loading="eager" />
+          <span class="ah-card-tag lab-mono">{w.client}</span>
+        </a>
+      ))}
+    </div>
+
+    <p class="lab-mono ah-hint" aria-hidden="true">Scroll ↓</p>
+  </div>
+</section>
+
+<style>
+  .ah { position: relative; height: 200vh; }
+  .ah-pin { position: sticky; top: 0; height: 100vh; overflow: hidden; }
+  :global(html:not(.motion)) .ah { height: auto; }
+  :global(html:not(.motion)) .ah-pin { position: relative; }
+  .ah-top { position: absolute; left: 6vw; right: 6vw; top: 6.8rem; display: flex; justify-content: space-between; color: var(--lab-soft); font-size: 0.75rem; z-index: 30; }
+
+  .ah-title { position: absolute; left: 0; right: 0; top: 17vh; z-index: 30; margin: 0; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0 5vw; transform: translateY(var(--ty, 0)); }
+  .ah-l1 { font-size: clamp(2.4rem, 6.6vw, 7rem); line-height: 0.95; }
+  .ah-l2 { font-size: clamp(2.8rem, 7.6vw, 8.2rem); line-height: 1; text-transform: none; background: var(--lab-grad); -webkit-background-clip: text; background-clip: text; color: transparent; padding-bottom: 0.1em; }
+
+  .ah-fan { --p: 0.18; --h: min(54vh, 34vw); position: absolute; left: 50%; bottom: calc(var(--h) * -0.08); width: 0; height: 0; }
+  .ah-card {
+    position: absolute; left: 0; bottom: 0;
+    width: calc(var(--h) * 0.74); height: var(--h); margin-left: calc(var(--h) * -0.37);
+    border-radius: 18px; overflow: hidden; background: #fff;
+    box-shadow: 0 30px 60px -28px rgba(26, 18, 24, 0.55), 0 0 0 1px rgba(26, 18, 24, 0.06);
+    transform-origin: 50% 160%;
+    transform: rotate(calc(var(--k) * 15deg * var(--p)));
+  }
+  .ah-card img { transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1); }
+  .ah-card:hover img { transform: scale(1.05); }
+  .ah-card-tag { position: absolute; left: 10px; top: 10px; border-radius: 999px; background: rgba(26, 18, 24, 0.86); color: #fff; padding: 0.2rem 0.6rem; font-size: 0.62rem; opacity: var(--p); }
+  .ah-hint { position: absolute; left: 6vw; bottom: 2rem; margin: 0; color: var(--lab-soft); font-size: 0.75rem; z-index: 30; }
+  :global(html:not(.motion)) .ah-fan { --p: 1; }
+
+  @media (max-width: 767px) {
+    .ah-top { top: 6rem; }
+    .ah-title { top: 22vh; }
+    .ah-l1 { font-size: 9vw; }
+    .ah-l2 { font-size: 11.5vw; }
+    .ah-fan { --h: 30vh; bottom: 4vh; }
+    .ah-card { transform-origin: 50% 170%; border-radius: 14px; }
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
+
+  const root = document.querySelector<HTMLElement>('[data-ah]');
+  if (root && document.documentElement.classList.contains('motion')) {
+    const fan = root.querySelector<HTMLElement>('[data-ah-fan]')!;
+    const title = root.querySelector<HTMLElement>('[data-ah-title]')!;
+    const ease = (t: number) => 1 - Math.pow(1 - t, 3);
+    // a small opening on load, then the scroll opens the rest of the fan
+    const state = { intro: 0, scroll: 0 };
+    const render = () => {
+      const p = 0.18 * state.intro + 0.82 * ease(state.scroll);
+      fan.style.setProperty('--p', String(p));
+      fan.style.transform = `translateY(${-state.scroll * 10}vh) scale(${1 + state.scroll * 0.06})`;
+      title.style.setProperty('--ty', `${-state.scroll * 6}vh`);
+    };
+    fan.style.setProperty('--p', '0');
+    gsap.to(state, { intro: 1, duration: 1.4, delay: 0.3, ease: 'expo.out', onUpdate: render });
+    ScrollTrigger.create({
+      trigger: root,
+      start: 'top top',
+      end: 'bottom bottom',
+      onUpdate: (self) => {
+        state.scroll = self.progress;
+        render();
+      },
+    });
+  }
+</script>

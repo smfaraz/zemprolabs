@@ -1,0 +1,73 @@
+---
+/**
+ * Home: replaces the numbers band. A minimalist marquee: client names only,
+ * two lines drifting in opposite directions, a little faster while you scroll.
+ */
+import { work } from '@/data/work';
+
+const names = work.map((w) => ({ name: w.client.replace(' (confidential)', ''), slug: w.slug }));
+const rows = [names.filter((_, i) => i % 2 === 0), names.filter((_, i) => i % 2 === 1)];
+---
+
+<section class="mq lab-dark" data-mq aria-label="Clients">
+  <p class="lab-mono mq-label">Clients · US · India · UK · GCC</p>
+  {rows.map((row, r) => (
+    <div class="mq-row">
+      <div class="mq-track" data-mq-track>
+        {[0, 1].map((copy) => (
+          <ul class="mq-set" aria-hidden={copy === 1 ? 'true' : undefined}>
+            {row.map((c) => (
+              <li><a href={`/work/${c.slug}`} class="mq-name" tabindex={copy === 1 ? -1 : undefined}>{c.name}</a></li>
+            ))}
+          </ul>
+        ))}
+      </div>
+    </div>
+  ))}
+</section>
+
+<style>
+  .mq { padding: 5.5rem 0 6rem; overflow: hidden; border-top: 1px solid rgba(251, 244, 234, 0.08); }
+  .mq-label { margin: 0 0 2.2rem; padding: 0 2.5rem; color: rgba(251, 244, 234, 0.45); font-size: 0.72rem; }
+  .mq-row + .mq-row { margin-top: 0.6rem; }
+  .mq-track { display: flex; width: max-content; will-change: transform; }
+  .mq-set { display: flex; margin: 0; padding: 0; list-style: none; }
+  .mq-set li { display: flex; align-items: center; }
+  .mq-set li::after { content: ''; width: 6px; height: 6px; margin: 0 clamp(1.4rem, 3vw, 2.8rem); border-radius: 50%; background: rgba(251, 244, 234, 0.2); }
+  .mq-name { font: 500 clamp(1.8rem, 4.2vw, 4rem)/1.1 'Inter Tight', sans-serif; letter-spacing: -0.04em; color: rgba(251, 244, 234, 0.3); white-space: nowrap; transition: color 0.35s; }
+  .mq-name:hover, .mq-name:focus-visible { color: #fbf4ea; }
+  @media (max-width: 767px) { .mq { padding: 4rem 0 4.5rem; } .mq-label { padding: 0 1.25rem; } }
+</style>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-mq]');
+  if (root && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const tracks = [...root.querySelectorAll<HTMLElement>('[data-mq-track]')];
+    const dirs = [-1, 1];
+    const pos = [0, 0];
+    let lastY = scrollY;
+    let boost = 0;
+    let visible = false;
+    new IntersectionObserver(([e]) => (visible = e.isIntersecting)).observe(root);
+    let last = performance.now();
+    const tick = (now: number) => {
+      const dt = Math.min(0.05, (now - last) / 1000);
+      last = now;
+      const dy = Math.abs(scrollY - lastY);
+      lastY = scrollY;
+      boost += (Math.min(500, dy * 25) - boost) * Math.min(1, dt * 5);
+      if (visible) {
+        tracks.forEach((t, i) => {
+          const half = t.scrollWidth / 2;
+          pos[i] += dirs[i] * (30 + boost) * dt;
+          if (pos[i] <= -half) pos[i] += half;
+          if (pos[i] > 0) pos[i] -= half;
+          t.style.transform = `translate3d(${pos[i]}px,0,0)`;
+        });
+      }
+      requestAnimationFrame(tick);
+    };
+    pos[1] = -tracks[1].scrollWidth / 2;
+    requestAnimationFrame(tick);
+  }
+</script>

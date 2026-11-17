@@ -1,0 +1,88 @@
+---
+import Logo from './Logo.astro';
+import StartBadge from './StartBadge.astro';
+import { site, nav } from '@/data/site';
+import { services } from '@/data/services';
+
+interface Props { cta?: boolean }
+const { cta = true } = Astro.props;
+const year = new Date().getFullYear();
+const ticker = [site.email, site.phones[0].display, 'Hyderabad → worldwide', 'Websites · Stores · Apps · Growth'];
+---
+
+<footer class="relative overflow-hidden bg-deep text-paper">
+  {cta && (
+    <section class="wrap relative pt-28 pb-20 md:pt-40 md:pb-28">
+      <p class="label !text-ember-soft" data-reveal>Have a project in mind?</p>
+      <h2 class="display mt-8 text-[clamp(2.38rem,8.16vw,7.48rem)]" data-split>
+        Let’s build <em class="text-ember-soft">something</em> good.
+      </h2>
+      <div class="mt-14 flex flex-wrap items-center gap-6" data-reveal>
+        <StartBadge />
+        <div class="space-y-2 text-mist">
+          <a href={`mailto:${site.email}`} class="link-u block text-2xl text-paper md:text-3xl">{site.email}</a>
+          <a href={site.phones[0].whatsapp} class="link-u inline-block" rel="noopener">WhatsApp {site.phones[0].display}</a>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <div class="marquee border-y border-deep-line py-4 font-mono text-sm text-mist" aria-hidden="true" style="--speed:45s">
+    {[0, 1].map(() => (
+      <div class="marquee-track">
+        {ticker.map((t) => <span class="flex shrink-0 items-center gap-8 pr-8">{t}<span class="text-ember-soft">✦</span></span>)}
+        {ticker.map((t) => <span class="flex shrink-0 items-center gap-8 pr-8">{t}<span class="text-ember-soft">✦</span></span>)}
+      </div>
+    ))}
+  </div>
+
+  <div class="wrap grid gap-12 py-16 md:grid-cols-12">
+    <div class="md:col-span-4">
+      <Logo inverted />
+      <p class="mt-5 max-w-xs text-[0.9375rem] text-mist">
+        A digital studio in Hyderabad. We build, grow and run digital businesses in the US, India, the UK and the GCC.
+      </p>
+      <p class="label mt-8 flex items-center gap-2 !text-mist">
+        <span class="pulse-dot text-ember-soft"></span> Hyderabad <span data-clock="Asia/Kolkata" class="text-paper">--:--</span>
+      </p>
+    </div>
+
+    <div class="md:col-span-3">
+      <h3 class="label !text-mist">Services</h3>
+      <ul class="mt-5 space-y-2.5 text-[0.9375rem]">
+        {services.map((s) => <li><a href={`/services/${s.slug}`} class="link-u">{s.name}</a></li>)}
+      </ul>
+    </div>
+
+    <div class="md:col-span-2">
+      <h3 class="label !text-mist">Studio</h3>
+      <ul class="mt-5 space-y-2.5 text-[0.9375rem]">
+        {nav.map((l) => <li><a href={l.href} class="link-u">{l.label}</a></li>)}
+        <li><a href="/contact" class="link-u">Contact</a></li>
+      </ul>
+    </div>
+
+    <div class="md:col-span-3">
+      <h3 class="label !text-mist">Visit</h3>
+      <address class="mt-5 text-[0.9375rem] not-italic leading-relaxed">
+        {site.address.street},<br />{site.address.locality}, {site.address.city},<br />{site.address.country}
+      </address>
+      <ul class="mt-5 space-y-1.5 text-[0.9375rem]">
+        {site.phones.map((p) => <li><a href={`tel:${p.tel}`} class="link-u">{p.display}</a></li>)}
+      </ul>
+    </div>
+  </div>
+
+  <div class="wrap flex flex-col gap-2 border-t border-deep-line py-6 text-sm text-mist sm:flex-row sm:justify-between">
+    <p>© {year} Zemprolabs. All rights reserved.</p>
+    <div class="flex flex-wrap gap-x-6 gap-y-2">
+      <a href="/privacy" class="link-u">Privacy policy</a>
+      <a href="/terms" class="link-u">Terms of use</a>
+      <a href="#main" class="link-u">Back to top ↑</a>
+    </div>
+  </div>
+
+  <p class="pointer-events-none select-none px-2 pb-[3vw] text-center font-display text-[21vw] leading-[0.85] font-light tracking-[-0.06em] text-forest" aria-hidden="true">
+    zemprolabs
+  </p>
+</footer>

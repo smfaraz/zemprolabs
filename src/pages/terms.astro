@@ -1,0 +1,73 @@
+---
+import Legal from '@/layouts/Legal.astro';
+import { site } from '@/data/site';
+
+const sections = [
+  { id: 'about', title: 'About these terms' },
+  { id: 'content', title: 'Our content' },
+  { id: 'work', title: 'Client work shown' },
+  { id: 'no-offer', title: 'No offer or advice' },
+  { id: 'links', title: 'Links to other sites' },
+  { id: 'liability', title: 'Liability' },
+  { id: 'law', title: 'Governing law' },
+  { id: 'changes', title: 'Changes & contact' },
+];
+---
+
+<Legal
+  title="Terms of use"
+  description="The terms that apply when you use zemprolabs.com: our content, client work shown, links, liability and governing law."
+  image="/og/terms.jpg"
+  updated="13 November 2026"
+  sections={sections}
+>
+  <h2 id="about">About these terms</h2>
+  <p>
+    These terms apply to your use of zemprolabs.com, run by Zemprolabs, {site.address.city}, {site.address.country}.
+    By using the site you agree to them. If you don’t agree, please don’t use the site.
+  </p>
+
+  <h2 id="content">Our content</h2>
+  <p>
+    The text, design, illustrations and code of this website belong to Zemprolabs unless stated otherwise. You’re
+    welcome to share links to any page. Please don’t copy or reuse our content or design without written permission.
+  </p>
+
+  <h2 id="work">Client work shown</h2>
+  <p>
+    We show client projects to explain what we do. Names, logos, screenshots and websites of our clients belong to
+    those clients. Some projects are described without identifying details to respect confidentiality.
+  </p>
+
+  <h2 id="no-offer">No offer or advice</h2>
+  <p>
+    Information on this site is general and may change. It isn’t a binding offer, quote or professional advice. Any
+    project we take on is governed by a separate written proposal or agreement, which takes priority over anything on
+    this site.
+  </p>
+
+  <h2 id="links">Links to other sites</h2>
+  <p>
+    The site links to client websites and other third-party sites. We don’t control them and aren’t responsible for
+    their content or privacy practices.
+  </p>
+
+  <h2 id="liability">Liability</h2>
+  <p>
+    We work to keep the site accurate and available, but we provide it “as is” without guarantees. To the extent the
+    law allows, Zemprolabs isn’t liable for any loss arising from your use of the site. Nothing in these terms limits
+    liability that cannot legally be limited.
+  </p>
+
+  <h2 id="law">Governing law</h2>
+  <p>
+    These terms are governed by the laws of India. Any dispute relating to the site will be handled by the courts of
+    Hyderabad, Telangana.
+  </p>
+
+  <h2 id="changes">Changes &amp; contact</h2>
+  <p>
+    We may update these terms from time to time; the date at the top shows the latest version. Questions:
+    <a href={`mailto:${site.email}`}>{site.email}</a>. See also our <a href="/privacy">privacy policy</a>.
+  </p>
+</Legal>

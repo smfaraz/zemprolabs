@@ -1,0 +1,66 @@
+---
+/**
+ * Case-study gallery: extra screens in browser frames + zoomed detail crops.
+ * Works for every project: video projects use stills captured from the walkthrough,
+ * image projects get detail crops of their main screen or illustration.
+ */
+import { Image } from 'astro:assets';
+import ScreenFrame from './ScreenFrame.astro';
+import type { CaseStudy } from '@/data/work';
+
+interface Props { item: CaseStudy }
+const { item } = Astro.props;
+
+// Skip any still that is identical to the hero poster
+const screens = (item.gallery ?? []).filter((g) => g !== item.image);
+const asScreen = (img: NonNullable<CaseStudy['image']>): CaseStudy => ({ ...item, image: img, video: undefined, kind: 'screen' });
+
+// Detail crops: where to zoom on the main image
+// Only add detail crops when there aren't already enough real screens to show
+const detailSrc = screens.length >= 2 ? undefined : item.image;
+const crops = [
+  { origin: '0% 0%', label: 'Detail · header & navigation' },
+  { origin: '100% 100%', label: 'Detail · content & layout' },
+];
+const tintBg: Record<string, string> = { sand: 'bg-sand', forest: 'bg-forest', ember: 'bg-ember', mist: 'bg-[#F2CFC4]' };
+const bg = item.kind === 'art' ? 'bg-sand' : tintBg[item.tint ?? 'sand'];
+---
+
+{(screens.length > 0 || detailSrc) && (
+  <section class="wrap pb-24 md:pb-36" aria-labelledby="screens-title">
+    <div class="flex flex-wrap items-end justify-between gap-6 border-t border-line pt-14">
+      <div>
+        <p class="label label-ember" data-reveal>04 · Inside the build</p>
+        <h2 id="screens-title" class="display mt-5 text-[clamp(1.7rem,3.4vw,3.06rem)]" data-split>A closer <em>look.</em></h2>
+      </div>
+      {item.url && <p class="label" data-reveal>Live at {new URL(item.url).hostname.replace(/^www\./, '')}</p>}
+    </div>
+
+    <div class="mt-14 grid gap-6 md:grid-cols-2 md:gap-8">
+      {screens.map((g, i) => (
+        <figure class:list={[screens.length % 2 === 1 && i === 0 && 'md:col-span-2']} data-reveal>
+          <ScreenFrame item={asScreen(g)} size={screens.length % 2 === 1 && i === 0 ? 'hero' : 'card'} zoom={false} sizes="(min-width: 768px) 60vw, 100vw" />
+        </figure>
+      ))}
+
+      {detailSrc && crops.map((c) => (
+        <figure data-reveal>
+          <div class={`relative aspect-[3/2] overflow-hidden rounded-[14px] p-[6%] ${bg}`}>
+            <div class="relative size-full overflow-hidden rounded-[10px] bg-paper shadow-[0_24px_50px_-24px_rgba(18,34,29,0.55)]">
+              <Image
+                src={detailSrc}
+                alt=""
+                widths={[1000, 1600]}
+                sizes="(min-width: 768px) 85vw, 190vw"
+                class="absolute inset-0 size-full scale-[1.4] object-cover object-top"
+                style={`transform-origin:${c.origin}`}
+                loading="lazy"
+              />
+            </div>
+          </div>
+          <figcaption class="label mt-3">{c.label}</figcaption>
+        </figure>
+      ))}
+    </div>
+  </section>
+)}

@@ -1,0 +1,16 @@
+---
+interface Props { eyebrow: string; title: string; lead?: string; index?: string }
+const { eyebrow, title, lead, index } = Astro.props;
+---
+
+<section class="wrap relative pt-36 pb-16 md:pt-48 md:pb-24">
+  <div class="flex items-center justify-between">
+    <p class="label label-ember" data-reveal>{eyebrow}</p>
+    {index && <p class="label hidden md:block" data-reveal>{index}</p>}
+  </div>
+  <h1 class="display mt-8 max-w-[15ch] text-[clamp(2.21rem,6.12vw,5.78rem)]" data-split="load" set:html={title} />
+  <div class="mt-10 grid gap-8 md:grid-cols-12">
+    {lead && <p class="text-lg text-ink-soft md:col-span-6 md:col-start-7 md:text-xl" data-reveal>{lead}</p>}
+  </div>
+  <slot />
+</section>

@@ -1,0 +1,86 @@
+---
+/** About 03 — three crafts as separate circles that slide together into one team as you scroll. */
+const crafts = [
+  { name: 'Engineers', line: 'Websites, apps, stores and ServiceNow.', pillar: 'Build', c: '#ffb33f', x: -1, y: -0.35 },
+  { name: 'Marketers', line: 'SEO, ads, social and the leads they bring.', pillar: 'Grow', c: '#f2464b', x: 1, y: -0.35 },
+  { name: 'Operators', line: 'Updates, catalogues and the day-to-day.', pillar: 'Run', c: '#8a3fb0', x: 0, y: 0.75 },
+];
+---
+
+<section class="at" data-at>
+  <div class="at-pin">
+    <div class="at-head">
+      <p class="lab-mono at-kicker">How we’re built</p>
+      <h2 class="lab-h at-title">Three crafts.<br /><span class="lab-serif at-em">One team.</span></h2>
+      <p class="at-lead">Most businesses hire a developer, an agency and a freelancer, then spend their time passing messages between them. We put all three under one roof.</p>
+    </div>
+    <div class="at-stage" aria-hidden="true">
+      {crafts.map((c, i) => (
+        <div class="at-circle" data-circle={i} style={`--c:${c.c};--x:${c.x};--y:${c.y}`}>
+          <span class="at-c-pillar lab-mono">{c.pillar}</span>
+          <span class="at-c-name">{c.name}</span>
+          <span class="at-c-line">{c.line}</span>
+        </div>
+      ))}
+      <div class="at-core" data-core><span class="lab-h">Zemprolabs</span><span class="lab-mono">one point of contact</span></div>
+    </div>
+    <ul class="sr-only">
+      {crafts.map((c) => <li>{c.name} ({c.pillar}): {c.line}</li>)}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .at { position: relative; height: 230vh; }
+  .at-pin { position: sticky; top: 0; height: 100vh; overflow: hidden; display: grid; grid-template-columns: minmax(18rem, 1fr) 1.4fr; align-items: center; gap: 4vw; padding: 6rem 6vw 3rem; }
+  :global(html:not(.motion)) .at { height: auto; }
+  :global(html:not(.motion)) .at-pin { position: relative; height: auto; min-height: 100vh; }
+  .at-kicker { margin: 0 0 0.8rem; color: var(--lab-soft); font-size: 0.75rem; }
+  .at-title { margin: 0; font-size: clamp(1.8rem, 3.6vw, 3.4rem); line-height: 1; }
+  .at-em { text-transform: none; font-size: 1.15em; background: var(--lab-grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .at-lead { margin: 1.5rem 0 0; max-width: 30rem; color: var(--lab-soft); font-size: 1.05rem; line-height: 1.6; }
+
+  .at-stage { --R: min(11.5vw, 22vh); --spread: calc(var(--R) * (0.55 + var(--apart, 1) * 0.6)); position: relative; height: min(78vh, 46vw); }
+  .at-circle {
+    position: absolute; left: 50%; top: 50%; width: calc(var(--R) * 2); height: calc(var(--R) * 2);
+    margin: calc(var(--R) * -1) 0 0 calc(var(--R) * -1); border-radius: 50%;
+    background: color-mix(in srgb, var(--c) 78%, transparent); mix-blend-mode: multiply;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 12%;
+    transform: translate(calc(var(--x) * var(--spread)), calc(var(--y) * var(--spread)));
+    color: #1a1218;
+  }
+  .at-c-pillar { font-size: 0.7rem; opacity: calc(var(--apart, 1) * 0.7); }
+  .at-c-name { opacity: calc(0.15 + var(--apart, 1) * 0.85); margin-top: 0.3rem; font: 700 clamp(1rem, 1.7vw, 1.6rem) 'Inter Tight', sans-serif; letter-spacing: -0.02em; }
+  .at-c-line { margin-top: 0.4rem; font-size: 0.85rem; line-height: 1.35; opacity: var(--apart, 1); }
+  .at-core { position: absolute; left: 50%; top: 50%; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 0.35rem; padding: 1rem 1.4rem; border-radius: 999px; background: #1a1218; color: #fbf4ea; transform: translate(-50%, -30%) scale(calc(1 - var(--apart, 1))); opacity: calc(1 - var(--apart, 1)); }
+  .at-core .lab-h { font-size: clamp(0.95rem, 1.4vw, 1.25rem); }
+  .at-core .lab-mono { font-size: 0.62rem; color: #ffb33f; }
+  :global(html:not(.motion)) .at-stage { --apart: 0.25; }
+
+  @media (max-width: 900px) {
+    .at-pin { grid-template-columns: 1fr; align-content: center; gap: 1rem; padding: 6rem 1.25rem 2rem; }
+    .at-lead { font-size: 0.95rem; margin-top: 1rem; }
+    .at-stage { --R: 21vw; height: 58vh; }
+    .at-c-line { display: none; }
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
+  const root = document.querySelector<HTMLElement>('[data-at]');
+  if (root && document.documentElement.classList.contains('motion')) {
+    const stage = root.querySelector<HTMLElement>('.at-stage')!;
+    ScrollTrigger.create({
+      trigger: root,
+      start: 'top top',
+      end: 'bottom bottom',
+      onUpdate: (self) => {
+        const t = Math.max(0, Math.min(1, (self.progress - 0.15) / 0.65));
+        const e = 1 - Math.pow(1 - t, 3);
+        stage.style.setProperty('--apart', String(1 - e));
+      },
+    });
+  }
+</script>

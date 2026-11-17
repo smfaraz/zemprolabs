@@ -1,0 +1,399 @@
+---
+/**
+ * Contact: a short stepped form.
+ * Step 1 picks what they need; step 2 asks only the questions that matter for that choice;
+ * step 3 is timing; step 4 is contact details. A brief card on the side fills in as they go.
+ * Submissions go to Web3Forms (PUBLIC_WEB3FORMS_KEY). Hidden branches are disabled, so only
+ * the answers that apply are sent.
+ */
+import Base from '@/layouts/Base.astro';
+import { site } from '@/data/site';
+
+type Q = { label: string; name: string; options: string[]; multi?: boolean };
+const needs: { id: string; label: string; slugs: string[]; questions: Q[] }[] = [
+  {
+    id: 'website', label: 'A website or web app', slugs: ['web-development'],
+    questions: [
+      { label: 'What kind?', name: 'Website type', options: ['New website', 'Redesign', 'Web app or portal'] },
+      { label: 'Roughly how many pages?', name: 'Pages', options: ['1–5', '5–15', '15+', 'Not sure'] },
+    ],
+  },
+  {
+    id: 'store', label: 'An online store', slugs: ['ecommerce'],
+    questions: [
+      { label: 'Which platform?', name: 'Store platform', options: ['Shopify', 'Custom build', 'Not sure'] },
+      { label: 'How many products?', name: 'Products', options: ['Under 50', '50–500', '500+'] },
+    ],
+  },
+  {
+    id: 'app', label: 'A mobile app', slugs: ['mobile-apps'],
+    questions: [
+      { label: 'Which platforms?', name: 'App platforms', options: ['iOS', 'Android', 'Both'] },
+      { label: 'Do you have designs?', name: 'Designs', options: ['Yes', 'Some', 'No'] },
+    ],
+  },
+  {
+    id: 'marketing', label: 'More customers (SEO, ads, social)', slugs: ['seo', 'paid-ads-social'],
+    questions: [
+      { label: 'What should we run?', name: 'Marketing', options: ['SEO', 'Google Ads', 'Meta Ads', 'Social media'], multi: true },
+      { label: 'Do you have a website?', name: 'Has website', options: ['Yes', 'No'] },
+    ],
+  },
+  {
+    id: 'care', label: 'Help with an existing site', slugs: ['maintenance'],
+    questions: [
+      { label: 'What is it built on?', name: 'Built on', options: ['WordPress', 'Shopify', 'Custom code', 'Not sure'] },
+      { label: 'What do you need most?', name: 'Main need', options: ['Fixes and updates', 'Speed and security', 'Ongoing changes'] },
+    ],
+  },
+  {
+    id: 'servicenow', label: 'ServiceNow', slugs: ['servicenow'],
+    questions: [
+      { label: 'Which area?', name: 'ServiceNow area', options: ['ITSM', 'IRM / GRC', 'CMDB', 'Custom apps', 'Upgrade'], multi: true },
+      { label: 'How many people use it?', name: 'Users', options: ['Under 50', '50–500', '500+'] },
+    ],
+  },
+  {
+    id: 'other', label: 'Something else', slugs: ['business-development', 'talent-sourcing'],
+    questions: [{ label: 'What is it about?', name: 'Topic', options: ['Business development', 'Talent sourcing', 'Something else'] }],
+  },
+];
+const timelines = ['As soon as possible', 'In 1–3 months', 'In 3–6 months', 'Just exploring'];
+const countries = ['United States', 'India', 'United Kingdom', 'United Arab Emirates', 'Saudi Arabia', 'Qatar', 'Kuwait', 'Oman', 'Bahrain', 'Canada', 'Australia', 'Singapore', 'Other'];
+const redirect = new URL('/thank-you', site.url).href;
+const steps = ['What you need', 'A bit more', 'Timing', 'Your details'];
+---
+
+<Base
+  image="/og/contact.jpg"
+  title="Contact"
+  description="Tell Zemprolabs about your project. Websites, apps, e-commerce, SEO, ads, maintenance or ServiceNow. We reply within one working day."
+  footerCta={false}
+>
+  <section class="cb">
+    <header class="cb-head">
+      <p class="lab-mono cb-kicker">Contact</p>
+      <h1 class="lab-h cb-title">Let’s write <span class="lab-serif lab-grad-text">your brief.</span></h1>
+      <p class="cb-lead">
+        Four quick steps. We reply within one working day. Rather talk?
+        <a href={site.phones[0].whatsapp} rel="noopener" class="cb-link">WhatsApp us</a> or email
+        <a href={`mailto:${site.email}`} class="cb-link">{site.email}</a>.
+      </p>
+    </header>
+
+    <div class="cb-grid">
+      <form id="contact-form" class="cb-form" action="https://api.web3forms.com/submit" method="POST" novalidate data-cb-form>
+        <input type="hidden" name="access_key" value={site.formKey} />
+        <input type="hidden" name="subject" value="New project brief: zemprolabs.com" />
+        <input type="hidden" name="from_name" value="Zemprolabs website" />
+        <input type="hidden" name="redirect" value={redirect} />
+        <input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+        <div class="cb-progress">
+          <span class="lab-mono">Step <b data-cb-stepnum>1</b> of {steps.length} · <span data-cb-stepname>{steps[0]}</span></span>
+          <div class="cb-progress-bar"><i data-cb-progress></i></div>
+        </div>
+
+        <!-- 1: what they need -->
+        <fieldset class="cb-step is-on" data-step="0">
+          <legend class="cb-qt">What can we help you with?</legend>
+          <div class="cb-chips">
+            {needs.map((n) => (
+              <label class="cb-chip">
+                <input type="radio" name="Need" value={n.label} data-need={n.id} data-slugs={n.slugs.join(' ')} required />
+                <span>{n.label}</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <!-- 2: questions for the chosen need -->
+        <div class="cb-step" data-step="1">
+          {needs.map((n) => (
+            <div class="cb-branch" data-branch={n.id} hidden>
+              {n.questions.map((q) => (
+                <fieldset class="cb-sub" data-q={q.name} data-multi={q.multi ? '' : undefined}>
+                  <legend class="cb-qt">{q.label}{q.multi && <span class="cb-hint"> Pick any</span>}</legend>
+                  <div class="cb-chips">
+                    {q.options.map((o) => (
+                      <label class="cb-chip">
+                        <input type={q.multi ? 'checkbox' : 'radio'} name={q.name} value={o} disabled />
+                        <span>{o}</span>
+                      </label>
+                    ))}
+                  </div>
+                </fieldset>
+              ))}
+            </div>
+          ))}
+        </div>
+
+        <!-- 3: timing + notes -->
+        <div class="cb-step" data-step="2">
+          <fieldset class="cb-sub" data-q="timeline">
+            <legend class="cb-qt">When would you like to start?</legend>
+            <div class="cb-chips">
+              {timelines.map((t) => (
+                <label class="cb-chip"><input type="radio" name="Start" value={t} /><span>{t}</span></label>
+              ))}
+            </div>
+          </fieldset>
+          <label class="cb-field">
+            <span class="cb-qt">Anything else we should know? <i>optional</i></span>
+            <textarea name="Notes" rows="4" placeholder="A link to your current site, a deadline, or what success looks like."></textarea>
+          </label>
+        </div>
+
+        <!-- 4: contact details -->
+        <div class="cb-step" data-step="3">
+          <p class="cb-qt">How do we reach you?</p>
+          <div class="cb-fields">
+            <label class="cb-field"><span>Your name</span><input name="name" autocomplete="name" required placeholder="Sarah Khan" /></label>
+            <label class="cb-field"><span>Email</span><input type="email" name="email" autocomplete="email" required placeholder="sarah@company.com" /></label>
+            <label class="cb-field"><span>Phone or WhatsApp <i>optional</i></span><input type="tel" name="phone" autocomplete="tel" placeholder="+1 555 010 2030" /></label>
+            <label class="cb-field">
+              <span>Country</span>
+              <select name="country" required>
+                <option value="" disabled selected>Choose one</option>
+                {countries.map((c) => <option>{c}</option>)}
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <p class="cb-err" role="alert" data-cb-err hidden></p>
+
+        <div class="cb-nav">
+          <button type="button" class="cb-back" data-cb-back hidden>← Back</button>
+          <button type="button" class="lab-btn" data-cb-next>Continue <span aria-hidden="true">→</span></button>
+          <button type="submit" class="lab-btn" data-cb-submit hidden><span data-cb-label>Send my brief</span> <span aria-hidden="true">→</span></button>
+        </div>
+      </form>
+
+      <aside class="cb-side" aria-label="Your brief so far">
+        <div class="cb-card" data-cb-card>
+          <span class="lab-mono cb-card-top">Your brief</span>
+          <p class="cb-card-title" data-cb-title>Your project</p>
+          <dl class="cb-rows" data-cb-rows></dl>
+          <div class="cb-stamp" aria-hidden="true">Sent ✓</div>
+        </div>
+      </aside>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .cb { max-width: 76rem; margin: 0 auto; padding: 8.5rem 1.25rem 6rem; }
+  @media (min-width: 768px) { .cb { padding: 10rem 2.5rem 8rem; } }
+  .cb-kicker { margin: 0; color: var(--lab-soft); font-size: 0.75rem; }
+  .cb-title { margin: 1rem 0 0; font-size: clamp(2.2rem, 5vw, 4.4rem); line-height: 1; }
+  .cb-title .lab-serif { text-transform: none; font-size: 1.12em; }
+  .cb-lead { margin: 1.2rem 0 0; max-width: 38rem; color: var(--lab-soft); font-size: 1.02rem; line-height: 1.65; }
+  .cb-link { color: var(--lab-ink); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: #ff7a2f; }
+
+  .cb-grid { display: grid; gap: 2.5rem; margin-top: 3rem; }
+  @media (min-width: 1024px) { .cb-grid { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 5vw; align-items: start; } }
+
+  .cb-form { min-height: 22rem; scroll-margin-top: 7rem; }
+  .cb-progress { display: grid; gap: 0.7rem; margin-bottom: 2rem; font-size: 0.75rem; color: var(--lab-soft); }
+  .cb-progress b { color: var(--lab-ink); font-weight: 600; }
+  .cb-progress-bar { height: 4px; border-radius: 999px; background: rgba(26, 18, 24, 0.1); overflow: hidden; }
+  .cb-progress-bar i { display: block; height: 100%; width: 25%; border-radius: 999px; background: var(--lab-grad); transition: width 0.5s var(--ease-out-soft); }
+
+  .cb-step { display: none; border: 0; margin: 0; padding: 0; min-width: 0; }
+  .cb-step.is-on { display: grid; gap: 2rem; animation: cb-in 0.45s var(--ease-out-soft); }
+  @keyframes cb-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+  .cb-branch { display: grid; gap: 2rem; }
+  .cb-branch[hidden] { display: none; }
+  .cb-sub { border: 0; margin: 0; padding: 0; min-width: 0; }
+  .cb-qt { display: block; margin: 0; padding: 0; font: 700 clamp(1.25rem, 2vw, 1.6rem) 'Inter Tight', sans-serif; letter-spacing: -0.025em; color: var(--lab-ink); }
+  .cb-qt i, .cb-hint { font: 400 0.9rem 'Inter', sans-serif; letter-spacing: 0; color: var(--lab-soft); font-style: normal; }
+
+  .cb-chips { display: flex; flex-wrap: wrap; gap: 0.55rem; margin-top: 1rem; }
+  .cb-chip { position: relative; cursor: pointer; }
+  .cb-chip input { position: absolute; opacity: 0; pointer-events: none; }
+  .cb-chip span { display: inline-flex; align-items: center; gap: 0.45rem; padding: 0.75rem 1.15rem; border-radius: 999px; border: 1px solid rgba(26, 18, 24, 0.16); background: rgba(255, 255, 255, 0.6); font-size: 0.97rem; color: var(--lab-ink); transition: background-color 0.25s, color 0.25s, border-color 0.25s, transform 0.2s; }
+  .cb-chip:hover span { border-color: var(--lab-ink); }
+  .cb-chip input:checked + span { background: var(--lab-ink); border-color: var(--lab-ink); color: #fbf4ea; }
+  .cb-chip input:checked + span::before { content: '✓'; color: #ffb33f; font-size: 0.85em; }
+  .cb-chip input:focus-visible + span { outline: 2px solid #ff7a2f; outline-offset: 3px; }
+  .cb-chip:active span { transform: scale(0.97); }
+
+  .cb-fields { display: grid; gap: 1rem; }
+  @media (min-width: 640px) { .cb-fields { grid-template-columns: 1fr 1fr; } }
+  .cb-field { display: grid; gap: 0.5rem; }
+  .cb-field > span { font-size: 0.85rem; font-weight: 600; color: var(--lab-ink); }
+  .cb-field > span.cb-qt { font-size: clamp(1.25rem, 2vw, 1.6rem); font-weight: 700; margin-bottom: 0.5rem; }
+  .cb-field > span i { font-style: normal; font-weight: 400; color: var(--lab-soft); }
+  .cb-field input, .cb-field select, .cb-field textarea { width: 100%; padding: 0.85rem 1rem; border-radius: 14px; border: 1px solid rgba(26, 18, 24, 0.14); background: rgba(255, 255, 255, 0.7); font: inherit; font-size: 1rem; color: var(--lab-ink); transition: border-color 0.25s, box-shadow 0.25s, background-color 0.25s; }
+  .cb-field textarea { resize: vertical; line-height: 1.55; }
+  .cb-field select { appearance: none; cursor: pointer; background-image: linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%); background-position: calc(100% - 20px) 55%, calc(100% - 15px) 55%; background-size: 5px 5px; background-repeat: no-repeat; }
+  .cb-field ::placeholder { color: #a8998f; }
+  .cb-field input:focus, .cb-field select:focus, .cb-field textarea:focus { outline: none; border-color: #ff7a2f; background: #fff; box-shadow: 0 0 0 4px rgba(255, 122, 47, 0.15); }
+  .cb-field [aria-invalid='true'] { border-color: #f2464b; }
+
+  .cb-err { margin: 1.4rem 0 0; color: #d23a3f; font-size: 0.92rem; font-weight: 500; }
+  .cb-nav { display: flex; align-items: center; gap: 1rem; margin-top: 2.4rem; }
+  .cb-back { padding: 0.8rem 1.2rem; border-radius: 999px; border: 1px solid rgba(26, 18, 24, 0.16); background: transparent; font: 600 0.9rem 'Inter Tight', sans-serif; color: var(--lab-ink); cursor: pointer; }
+  .cb-back:hover { border-color: var(--lab-ink); }
+  .cb-nav [hidden] { display: none; }
+  .cb-nav .lab-btn:disabled { opacity: 0.6; }
+
+  /* brief summary card */
+  @media (min-width: 1024px) { .cb-side { position: sticky; top: 7rem; } }
+  .cb-card { position: relative; overflow: hidden; border-radius: 24px; padding: 1.5rem 1.5rem 1.2rem; background: #ffb33f; color: #1a1218; box-shadow: 0 40px 70px -36px rgba(26, 18, 24, 0.5); }
+  @media (min-width: 1024px) { .cb-card { transform: rotate(1.5deg); } }
+  .cb-card-top { font-size: 0.72rem; color: rgba(26, 18, 24, 0.65); }
+  .cb-card-title { margin: 0.8rem 0 0; font: 700 clamp(1.4rem, 2.2vw, 1.9rem)/1.05 'Inter Tight', sans-serif; letter-spacing: -0.035em; }
+  .cb-rows { margin: 1.1rem 0 0; display: grid; }
+  :global(.cb-row) { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr); gap: 1rem; padding: 0.7rem 0; border-top: 1px dashed rgba(26, 18, 24, 0.25); animation: cb-in 0.4s var(--ease-out-soft); }
+  :global(.cb-row dt) { font: 500 0.72rem 'JetBrains Mono', monospace; color: rgba(26, 18, 24, 0.6); padding-top: 0.15rem; }
+  :global(.cb-row dd) { margin: 0; font-size: 0.95rem; font-weight: 500; overflow-wrap: anywhere; }
+  :global(.cb-row-empty) { margin: 0; color: rgba(26, 18, 24, 0.5); font-size: 0.92rem; padding: 0.7rem 0; border-top: 1px dashed rgba(26, 18, 24, 0.25); }
+  .cb-stamp { position: absolute; right: 1.2rem; top: 1.2rem; padding: 0.35rem 0.9rem; border: 3px solid #5b2a86; border-radius: 10px; color: #5b2a86; font: 800 1.2rem 'Unbounded', sans-serif; text-transform: uppercase; transform: rotate(-12deg) scale(2); opacity: 0; pointer-events: none; }
+  .cb-card.is-sent .cb-stamp { animation: cb-stamp 0.5s cubic-bezier(0.3, 1.6, 0.6, 1) forwards; }
+  @keyframes cb-stamp { to { opacity: 1; transform: rotate(-12deg) scale(1); } }
+
+  /* phones: the brief appears only on the last step, as a review above the details */
+  @media (max-width: 1023px) {
+    .cb-side { display: none; }
+    .cb-grid.is-last .cb-side { display: block; order: -1; }
+  }
+  @media (prefers-reduced-motion: reduce) { .cb-step.is-on, :global(.cb-row) { animation: none; } }
+</style>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-cb-form]');
+  if (form) {
+    const grid = document.querySelector<HTMLElement>('.cb-grid')!;
+    const steps = [...form.querySelectorAll<HTMLElement>('[data-step]')];
+    const names = ['What you need', 'A bit more', 'Timing', 'Your details'];
+    const stepNum = form.querySelector<HTMLElement>('[data-cb-stepnum]')!;
+    const stepName = form.querySelector<HTMLElement>('[data-cb-stepname]')!;
+    const bar = form.querySelector<HTMLElement>('[data-cb-progress]')!;
+    const err = form.querySelector<HTMLElement>('[data-cb-err]')!;
+    const back = form.querySelector<HTMLButtonElement>('[data-cb-back]')!;
+    const next = form.querySelector<HTMLButtonElement>('[data-cb-next]')!;
+    const submit = form.querySelector<HTMLButtonElement>('[data-cb-submit]')!;
+    const label = submit.querySelector<HTMLElement>('[data-cb-label]')!;
+    const card = document.querySelector<HTMLElement>('[data-cb-card]')!;
+    const rows = document.querySelector<HTMLElement>('[data-cb-rows]')!;
+    const title = document.querySelector<HTMLElement>('[data-cb-title]')!;
+    const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]!);
+    let step = 0;
+
+    const need = () => form.querySelector<HTMLInputElement>('input[name="Need"]:checked');
+
+    // only the follow-up questions for the chosen need are shown; the rest are disabled so they aren't sent
+    const syncBranch = () => {
+      const id = need()?.dataset.need;
+      form.querySelectorAll<HTMLElement>('[data-branch]').forEach((b) => {
+        const on = b.dataset.branch === id;
+        b.hidden = !on;
+        b.querySelectorAll<HTMLInputElement>('input').forEach((i) => (i.disabled = !on));
+      });
+    };
+
+    const show = (n: number, scroll = true) => {
+      step = n;
+      steps.forEach((s, k) => s.classList.toggle('is-on', k === n));
+      stepNum.textContent = String(n + 1);
+      stepName.textContent = names[n];
+      bar.style.width = `${((n + 1) / steps.length) * 100}%`;
+      back.hidden = n === 0;
+      next.hidden = n === steps.length - 1;
+      submit.hidden = n !== steps.length - 1;
+      grid.classList.toggle('is-last', n === steps.length - 1);
+      err.hidden = true;
+      if (scroll && form.getBoundingClientRect().top < 0) form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    const fail = (msg: string, el?: Element | null) => {
+      err.textContent = msg;
+      err.hidden = false;
+      if (el instanceof HTMLElement) el.focus();
+      return false;
+    };
+
+    const valid = () => {
+      if (step === 0) return need() ? true : fail('Pick one to continue.');
+      if (step === 1) {
+        const branch = form.querySelector<HTMLElement>('[data-branch]:not([hidden])');
+        const missing = [...(branch?.querySelectorAll<HTMLElement>('[data-q]') ?? [])].find((q) => !q.querySelector('input:checked'));
+        return missing ? fail('Answer each question, or pick the closest option.') : true;
+      }
+      if (step === 2) return form.querySelector('input[name="Start"]:checked') ? true : fail('Pick when you’d like to start.');
+      let first: HTMLElement | null = null;
+      (['name', 'email', 'country'] as const).forEach((n) => {
+        const el = form.elements.namedItem(n) as HTMLInputElement;
+        const bad = !el.value.trim() || (n === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(el.value.trim()));
+        el.setAttribute('aria-invalid', String(bad));
+        if (bad && !first) first = el;
+      });
+      return first ? fail('Add your name, a valid email and your country.', first) : true;
+    };
+
+    // the brief card: one row per answer given so far
+    const render = () => {
+      const data = new FormData(form);
+      const list: [string, string][] = [];
+      const add = (k: string, v: string) => { if (v) list.push([k, v]); };
+      add('Need', String(data.get('Need') ?? ''));
+      form.querySelector<HTMLElement>('[data-branch]:not([hidden])')?.querySelectorAll<HTMLElement>('[data-q]').forEach((q) => {
+        add(q.dataset.q!, [...q.querySelectorAll<HTMLInputElement>('input:checked')].map((i) => i.value).join(', '));
+      });
+      add('Start', String(data.get('Start') ?? ''));
+      const notes = String(data.get('Notes') ?? '').trim();
+      add('Notes', notes.length > 140 ? notes.slice(0, 137) + '…' : notes);
+      add('Contact', [String(data.get('name') ?? '').trim(), String(data.get('email') ?? '').trim()].filter(Boolean).join(' · '));
+      add('Country', String(data.get('country') ?? ''));
+      rows.innerHTML = list.length
+        ? list.map(([k, v]) => `<div class="cb-row"><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')
+        : '<p class="cb-row-empty">Your answers will appear here.</p>';
+      const first = String(data.get('name') ?? '').trim().split(' ')[0];
+      title.textContent = first ? `${first}’s project` : 'Your project';
+    };
+
+    form.addEventListener('change', (e) => {
+      if ((e.target as HTMLInputElement).name === 'Need') syncBranch();
+      err.hidden = true;
+      render();
+    });
+    form.addEventListener('input', render);
+    next.addEventListener('click', () => valid() && show(step + 1));
+    back.addEventListener('click', () => show(step - 1));
+
+    // ?service=slug preselects the matching need
+    const want = new URLSearchParams(location.search).get('service');
+    if (want) form.querySelector<HTMLInputElement>(`input[name="Need"][data-slugs~="${CSS.escape(want)}"]`)?.click();
+    syncBranch();
+    render();
+    show(0, false);
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!valid()) return;
+      const data = new FormData(form);
+      if (!data.get('access_key')) {
+        err.innerHTML = 'Sorry, the form isn’t connected yet. Please email <a class="underline" href="mailto:info@zemprolabs.com">info@zemprolabs.com</a>.';
+        err.hidden = false;
+        return;
+      }
+      submit.disabled = true;
+      label.textContent = 'Sending…';
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { Accept: 'application/json' }, body: data });
+        const json = await res.json();
+        if (!res.ok || !json.success) throw new Error(json.message);
+        card.classList.add('is-sent');
+        label.textContent = 'Sent';
+        setTimeout(() => (location.href = '/thank-you'), 1400);
+      } catch {
+        err.innerHTML = 'Something went wrong. Please try again or email <a class="underline" href="mailto:info@zemprolabs.com">info@zemprolabs.com</a>.';
+        err.hidden = false;
+        submit.disabled = false;
+        label.textContent = 'Send my brief';
+      }
+    });
+  }
+</script>
