@@ -54,6 +54,13 @@ const needs: { id: string; label: string; slugs: string[]; questions: Q[] }[] = 
     ],
   },
   {
+    id: 'accounts', label: 'Accounting & taxation', slugs: ['accounting-taxation'],
+    questions: [
+      { label: 'What do you need?', name: 'Accounting needs', options: ['Bookkeeping', 'Tax filing', 'GST / sales tax', 'Payroll'], multi: true },
+      { label: 'Where is the business registered?', name: 'Registered in', options: ['India', 'United States', 'United Kingdom', 'UAE / GCC', 'Other'] },
+    ],
+  },
+  {
     id: 'other', label: 'Something else', slugs: ['business-development', 'talent-sourcing'],
     questions: [{ label: 'What is it about?', name: 'Topic', options: ['Business development', 'Talent sourcing', 'Something else'] }],
   },

@@ -10,7 +10,7 @@ const TINT = { sand: C.sand, forest: C.forest, ember: C.ember, mist: C.mist };
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/’/g, '’');
 
 /* ---------- read data files (lightweight parse, no TS runtime needed) ---------- */
-const src = (f) => fs.readFile(f, 'utf8');
+const src = async (f) => (await fs.readFile(f, 'utf8')).replace(/\r\n/g, '\n'); // tolerate Windows line endings
 const importsOf = (code) => Object.fromEntries([...code.matchAll(/import (\w+) from '@\/(assets\/[^']+)'/g)].map((m) => [m[1], 'src/' + m[2]]));
 const blocks = (code) => code.split(/\n  \{\n/).slice(1).map((b) => '\n' + b);
 const field = (b, k) => b.match(new RegExp(`\\n    ${k}:\\s*\\n?\\s*'((?:[^'\\\\]|\\\\.)*)'`))?.[1]?.replace(/\\'/g, "'");

@@ -33,6 +33,7 @@ const scene: Record<string, string> = {
   servicenow: 'flow',
   'business-development': 'growth',
   'talent-sourcing': 'talent',
+  'accounting-taxation': 'ledger',
 };
 ---
 
@@ -102,6 +103,13 @@ const scene: Record<string, string> = {
                 <div class="m-talent">
                   {[0, 1, 2].map((k) => <div class="m-cv" style={`--k:${k}`}><i></i><b></b><b></b></div>)}
                   <span class="m-hired">Hired ✓</span>
+                </div>
+              )}
+              {scene[s.slug] === 'ledger' && (
+                <div class="m-ledger">
+                  <div class="m-led-head"><span>Invoice</span><span>Amount</span></div>
+                  {['Sales', 'Payroll', 'Software', 'GST / Tax'].map((t, k) => <div class="m-led-row" style={`--k:${k}`}><span>{t}</span><b></b><i>✓</i></div>)}
+                  <div class="m-led-total"><span>Filed</span><em>On time</em></div>
                 </div>
               )}
             </div>
@@ -240,6 +248,17 @@ const scene: Record<string, string> = {
   .m-cv b { height: 8px; border-radius: 4px; background: #e2d2c2; } .m-cv b + b { width: 60%; }
   @keyframes m-deal { 0% { transform: translateY(40px) rotate(-6deg); opacity: 0; } 20% { transform: translateY(calc(var(--k) * -14px)) rotate(calc((var(--k) - 1) * 5deg)); opacity: 1; } 85% { opacity: 1; } 100% { opacity: 0; } }
   .m-hired { position: absolute; right: -8%; bottom: 4%; padding: 0.4rem 0.8rem; border-radius: 999px; background: #1a1218; color: #ffb33f; font: 600 0.8rem 'Inter Tight', sans-serif; border: 1px solid rgba(251, 244, 234, 0.15); animation: m-pinin 4.5s 1.6s infinite; opacity: 0; }
+
+  /* --- ledger: books reconciled, tax filed --- */
+  .m-ledger { width: 66%; display: grid; gap: 7px; padding: 14px; border-radius: 14px; background: #fbf4ea; color: #1a1218; font: 600 0.78rem 'Inter Tight', sans-serif; }
+  .m-led-head { display: flex; justify-content: space-between; color: rgba(26, 18, 24, 0.5); font: 500 0.66rem 'JetBrains Mono', monospace; padding-bottom: 4px; border-bottom: 1px dashed rgba(26, 18, 24, 0.2); }
+  .m-led-row { display: grid; grid-template-columns: 1fr 34% 1.2rem; align-items: center; gap: 8px; opacity: 0; animation: m-led 4.4s infinite; animation-delay: calc(var(--k) * 0.45s); }
+  .m-led-row b { height: 7px; border-radius: 4px; background: #e2d2c2; }
+  .m-led-row i { font-style: normal; color: #3ddc84; text-align: right; }
+  .m-led-total { display: flex; justify-content: space-between; align-items: center; margin-top: 4px; padding-top: 7px; border-top: 1px solid rgba(26, 18, 24, 0.2); opacity: 0; animation: m-led 4.4s 1.9s infinite; }
+  .m-led-total em { font-style: normal; padding: 0.15rem 0.55rem; border-radius: 999px; background: #1a1218; color: #ffb33f; font-size: 0.7rem; }
+  @keyframes m-led { 0% { opacity: 0; transform: translateX(-8px); } 12%, 85% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+  .is-light .m-ledger { background: #fff; box-shadow: 0 18px 36px -18px rgba(26, 18, 24, 0.35), 0 0 0 1px rgba(26, 18, 24, 0.06); }
 
   @media (prefers-reduced-motion: reduce) { .hs-scene *, .hs-scene *::before { animation: none !important; opacity: 1; } }
 </style>

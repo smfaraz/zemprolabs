@@ -226,6 +226,30 @@ export const services: Service[] = [
     metaDescription:
       'Sourcing and screening for software, ServiceNow and healthcare roles, with embedded team options. Zemprolabs.',
   },
+  {
+    slug: 'accounting-taxation',
+    pillar: 'more',
+    name: 'Accounting & Taxation',
+    short: 'Bookkeeping, tax filing, payroll and compliance, kept up to date every month.',
+    headline: 'Clean books and on-time tax filings, every month.',
+    intro:
+      'We keep your books up to date, prepare and file your taxes, and handle the monthly compliance work, so you always know where the business stands and never miss a deadline. We work in the accounting software you already use, or set one up for you.',
+    offerings: [
+      { title: 'Bookkeeping', body: 'Monthly reconciliation of bank, card and payment-gateway transactions, with clear profit and loss and balance sheet reports.' },
+      { title: 'Tax filing', body: 'Preparation and filing of business tax returns, plus GST in India and sales tax for US online stores.' },
+      { title: 'Payroll', body: 'Monthly payroll runs, payslips and the statutory deductions and filings that come with them.' },
+      { title: 'Compliance & reporting', body: 'Deadlines tracked for you, plus the reports your bank, investors or auditors ask for.' },
+    ],
+    tools: ['QuickBooks', 'Xero', 'Zoho Books', 'Tally'],
+    faqs: [
+      { q: 'Can you work with the accounting software we already use?', a: 'Yes. We work in QuickBooks, Xero, Zoho Books or Tally, and can move you to a new tool if the current one no longer fits.' },
+      { q: 'Do you work with businesses outside India?', a: 'Yes. We keep books for businesses in India and the US, and can coordinate with your local accountant or auditor wherever you file.' },
+      { q: 'Can you help an online store with sales tax or GST?', a: 'Yes. We set up the right tax settings in your store, reconcile what you collect, and prepare the filings each period.' },
+    ],
+    metaTitle: 'Accounting, Bookkeeping & Tax Filing',
+    metaDescription:
+      'Monthly bookkeeping, tax filing, GST and sales tax, payroll and compliance for businesses in India and the US. Zemprolabs.',
+  },
 ];
 
 export const getService = (slug: string) => services.find((s) => s.slug === slug);
