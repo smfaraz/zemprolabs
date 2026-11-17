@@ -120,6 +120,7 @@ const scene: Record<string, string> = {
 
 <style>
   .hs { position: relative; height: calc(var(--n) * 55vh + 100vh); }
+  @media (max-width: 899px) { .hs { height: calc(var(--n) * 30vh + 100vh); } }
   .hs-pin { position: sticky; top: 0; height: 100vh; overflow: hidden; display: grid; grid-template-columns: minmax(16rem, 1fr) 1.25fr; align-items: center; gap: 4vw; padding: 6rem 6vw 3rem; }
   :global(html:not(.motion)) .hs { height: auto; }
   :global(html:not(.motion)) .hs-pin { position: relative; height: auto; display: block; }

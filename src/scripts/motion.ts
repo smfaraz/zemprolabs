@@ -29,11 +29,17 @@ function clocks() {
 /* ---------------- Smooth scroll ---------------- */
 let lenis: Lenis | null = null;
 function smoothScroll() {
-  lenis = new Lenis({ duration: 1.15, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
-  lenis.on('scroll', ScrollTrigger.update);
-  gsap.ticker.add((time) => lenis!.raf(time * 1000));
-  gsap.ticker.lagSmoothing(0);
-  (window as any).__lenis = lenis;
+  // Phones keep the browser's own momentum scrolling: it's what fingers expect, and the
+  // address bar showing/hiding must not make the page re-measure itself mid-scroll.
+  ScrollTrigger.config({ ignoreMobileResize: true });
+  const touch = matchMedia('(hover: none), (pointer: coarse)').matches;
+  if (!touch) {
+    lenis = new Lenis({ duration: 1.15, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => lenis!.raf(time * 1000));
+    gsap.ticker.lagSmoothing(0);
+    (window as any).__lenis = lenis;
+  }
 
   document.querySelectorAll<HTMLAnchorElement>('a[href^="#"]').forEach((a) =>
     a.addEventListener('click', (e) => {
@@ -42,7 +48,8 @@ function smoothScroll() {
       const target = document.querySelector(id);
       if (!target) return;
       e.preventDefault();
-      lenis!.scrollTo(target as HTMLElement, { offset: -80 });
+      if (lenis) lenis.scrollTo(target as HTMLElement, { offset: -80 });
+      else window.scrollTo({ top: (target as HTMLElement).getBoundingClientRect().top + scrollY - 80, behavior: 'smooth' });
     })
   );
 }

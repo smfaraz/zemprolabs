@@ -59,6 +59,7 @@ const step = 360 / n;
 
 <style>
   .ww { position: relative; height: calc(var(--n) * 22vh + 100vh); background: #ececea; color: #1a1218; }
+  @media (max-width: 899px) { .ww { height: calc(var(--n) * 12vh + 100vh); } }
   :global(.theme-lab) .ww { background: #f3ebe0; }
   .ww-pin { position: sticky; top: 0; height: 100vh; overflow: hidden; }
   :global(html:not(.motion)) .ww { height: auto; }
@@ -177,9 +178,12 @@ const step = 360 / n;
     }
 
     let last = performance.now();
+    let onScreen = true;
+    new IntersectionObserver(([e]) => (onScreen = e.isIntersecting)).observe(root);
     const tick = (now: number) => {
       const dt = Math.min(0.05, (now - last) / 1000);
       last = now;
+      if (!onScreen) { requestAnimationFrame(tick); return; }
       const target = -progress * (n - 1) * step;
       wheelAngle += (target - wheelAngle) * Math.min(1, dt * 7);
       ringAngle += (reduce ? 0 : 18) * dt;
